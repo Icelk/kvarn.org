@@ -1,4 +1,7 @@
 !> hide
+<head>
+    <title>Kvarn web server</title>
+</head>
 
 # Kvarn web server
 
