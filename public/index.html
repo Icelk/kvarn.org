@@ -2,7 +2,7 @@
 [head]
     <title>Kvarn web server</title>
 [dependencies][md-imports][close-head][navigation]
-<main><md style="text-align: center;"></head>
+<main><md></head>
 <h1>Kvarn web server</h1>
 <p>Welcome to the Kvarn web server. It is a experimental web server running <a href="https://kvarn.org">this</a> site
 and <a href="https://icelk.dev">icelk.dev</a>. It’s under rapid development. You can follow progress on <a href="https://github.com/Iselk/kvarn/tree/tokio/">GitHub</a> where the project is hosted.</p>
@@ -22,6 +22,11 @@ making any other async requests to a database or to proxy another server does no
 <p>This is a <em>real</em> performance uplift. It’s essentially a complete rewrite of Kvarn.
 <a href="https://github.com/Iselk/kvarn/tree/tokio/extensions.md">extensions.md</a> and <a href="https://github.com/Iselk/kvarn/tree/tokio/routing.md">routing.md</a> are documents designed to make the server’s
 architecture more <em>transparent</em>, even for non-programmers. It should make it easier to integrate with Kvarn.</p>
+<blockquote>
+<p>One other big thing is HTTP/2 Push, which makes loading web sites more than 2 times faster.
+Without doing anything from your part, you can expect automatic push to work, resulting in the
+described benefits. Soon, Smart Push will be part of Kvarn, further increasing performance.</p>
+</blockquote>
 <h3>Left to do</h3>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>

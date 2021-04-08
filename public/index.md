@@ -33,6 +33,10 @@ This is a *real* performance uplift. It's essentially a complete rewrite of Kvar
 [extensions.md](https://github.com/Iselk/kvarn/tree/tokio/extensions.md) and [routing.md](https://github.com/Iselk/kvarn/tree/tokio/routing.md) are documents designed to make the server's
 architecture more *transparent*, even for non-programmers. It should make it easier to integrate with Kvarn.
 
+> One other big thing is HTTP/2 Push, which makes loading web sites more than 2 times faster.
+> Without doing anything from your part, you can expect automatic push to work, resulting in the
+> described benefits. Soon, Smart Push will be part of Kvarn, further increasing performance.
+
 ### Left to do
 
 - [x] limiting
