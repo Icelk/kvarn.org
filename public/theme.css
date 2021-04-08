@@ -27,9 +27,9 @@ bar-height // The height of the bar
   --transition-speed: 0.2s;
   --bar-height: 3em;
 }
-.sol
+/* .sol
 {
-  /* Order opposite, since it's a bright theme */
+  Order opposite, since it's a bright theme
   --bg-darker: #e6e8f2;
   --bg-dark: #cbd7ed;
   --bg-light: #acc4e5;
@@ -50,4 +50,4 @@ bar-height // The height of the bar
   :root {
     content: "dark";
   }
-}
+} */

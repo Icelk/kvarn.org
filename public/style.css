@@ -2,17 +2,17 @@
 
 :root {
   text-align: center;
-  font-family: 'Recursive', sans-serif;
+  /* font-family: 'Recursive', sans-serif;
   font-weight: 350;
-  font-variation-settings: 'CASL'0.25, 'slnt'0, 'CRSV'1;
+  font-variation-settings: 'CASL'0.25, 'slnt'0, 'CRSV'1; */
 }
 
 body {
   color: var(--text-normal);
   margin: 0;
-  transition-property: background, background-color, color;
+  /* transition-property: background, background-color, color;
   transition-duration: calc(var(--transition-speed) * 2);
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out; */
   
   background: linear-gradient(to right, var(--bg-dark), var(--bg-darker));
   /* So the scrollbar track gets the right color */
@@ -48,9 +48,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   font-variation-settings: "slnt"-5, "CRSV"0;
 }
-h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
+/* h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
   font-variation-settings: "slnt"-10, "CRSV"0;
-}
+} */
 a:link {
   color: var(--text-color);
 }
