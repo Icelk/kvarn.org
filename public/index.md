@@ -39,11 +39,17 @@ architecture more *transparent*, even for non-programmers. It should make it eas
 
 ### Left to do
 
+- [x] Tokio
+- [x] Async io
+- [x] Async extensions
+- [x] Flexible interface for HTTP versions
+- [x] HTTP/2
 - [x] limiting
-- [ ] HEAD
+- [x] HEAD
 - [ ] check routing and extensions.md plan
+- [ ] more #\\[inline\\]
+- [x] Referrer header in `Extensions::new()`
 - [x] cfg (https, multithreading, http2)
-
 
 ## v0.3.0 Core
 
