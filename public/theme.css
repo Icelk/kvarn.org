@@ -1,0 +1,53 @@
+/* 
+
+# Colours
+bg-darker // Darkest background. Should contrast a bit to bg-dark
+bg-dark // Dark background
+bg-light // A subtle color used for shadows
+gb-lighter // Light background to contrast much with bg-dark*
+
+text-normal // Normal text to contrast well with bg-*
+text-color // Text with some color
+
+# Variables
+transition-speed // Speed all transitions are based on
+bar-height // The height of the bar
+
+*/
+
+:root, .ice {
+  --bg-darker: #020619;
+  --bg-dark: #070c26;
+  --bg-light: #1a1f3a;
+  --bg-lighter: #2a2f4c;
+  
+  --text-normal: #fffffa;
+  --text-color: #a2c6d8;
+
+  --transition-speed: 0.2s;
+  --bar-height: 3em;
+}
+.sol
+{
+  /* Order opposite, since it's a bright theme */
+  --bg-darker: #e6e8f2;
+  --bg-dark: #cbd7ed;
+  --bg-light: #acc4e5;
+  --bg-lighter: #98acd3;
+
+  --text-normal: #262c3f;
+  --text-color: #6688cc;
+}
+
+@media (prefers-color-scheme: light)
+{
+  :root {
+    content: "light";
+  }
+}
+@media (prefers-color-scheme: dark)
+{
+  :root {
+    content: "dark";
+  }
+}
