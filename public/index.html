@@ -14,20 +14,22 @@ and <a href="https://icelk.dev">icelk.dev</a>. It’s under rapid development. Y
 the features of 0.4.0 might come out as version 0.3.0</p>
 </blockquote>
 <h2>v0.1.0</h2>
-<p>This milestone is reached. It was the first working state of the web server, and is currently running <a href="https://icelk.dev">icelk.dev</a> and <a href="https://kvarn.org">kvarn.org</a>.</p>
+<p>This milestone is reached. It was the first working state of the web server.</p>
 <p>It’s slow, not having async IO except for requests; FS is utterly slow and
 making any other async requests to a database or to proxy another server does not work
 (technically it does, but performance is miserable).</p>
-<h2>v0.2.0 Tokio</h2>
+<h1>v0.2.0 Tokio</h1>
+<p>We have now reached this milestone, with HTTP/2, fast async IO, a new superior extension system, and nearly no code left from v0.1.0!
+This release is now currently running <a href="https://icelk.dev">icelk.dev</a> and <a href="https://kvarn.org">kvarn.org</a>.</p>
 <p>This is a <em>real</em> performance uplift. It’s essentially a complete rewrite of Kvarn.
-<a href="https://github.com/Iselk/kvarn/tree/tokio/extensions.md">extensions.md</a> and <a href="https://github.com/Iselk/kvarn/tree/tokio/routing.md">routing.md</a> are documents designed to make the server’s
-architecture more <em>transparent</em>, even for non-programmers. It should make it easier to integrate with Kvarn.</p>
+<a href="extensions.md">extensions.md</a> and <a href="routing.md">routing.md</a> are documents designed to make the server’s
+architecture more <em>transparent</em>. It should be understandable even for non-programmers. It should make it easier to integrate with Kvarn.</p>
 <blockquote>
 <p>One other big thing is HTTP/2 Push, which makes loading web sites more than 2 times faster.
 Without doing anything from your part, you can expect automatic push to work, resulting in the
 described benefits. Soon, Smart Push will be part of Kvarn, further increasing performance.</p>
 </blockquote>
-<h3>Left to do</h3>
+<h2>Left to do</h2>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>
 Tokio</li>
@@ -43,10 +45,10 @@ HTTP/2</li>
 limiting</li>
 <li><input disabled="" type="checkbox" checked=""/>
 HEAD</li>
-<li><input disabled="" type="checkbox"/>
+<li><input disabled="" type="checkbox" checked=""/>
 check routing and extensions.md plan</li>
-<li><input disabled="" type="checkbox"/>
-more #\[inline\]</li>
+<li><input disabled="" type="checkbox" checked=""/>
+more #[inline]</li>
 <li><input disabled="" type="checkbox" checked=""/>
 Referrer header in <code>Extensions::new()</code></li>
 <li><input disabled="" type="checkbox" checked=""/>
