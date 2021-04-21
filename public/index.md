@@ -6,10 +6,10 @@
 # Kvarn web server
 
 Welcome to the Kvarn web server. It is a experimental web server running [this](https://kvarn.org) site
-and [icelk.dev](https://icelk.dev). It's under rapid development. You can follow progress on [GitHub](https://github.com/Iselk/kvarn/) where the project is hosted.
+and [icelk.dev](https://icelk.dev). It's under rapid development. You can follow progress on [GitHub](https://github.com/Icelk/kvarn/) where the project is hosted.
 Make sure to check any branches for experimental development.
 
-Bellow, you find the current roadmap. The original is located at [GitHub](https://github.com/Iselk/kvarn/roadmap.md).
+Bellow, you find the current roadmap. The original is located at [GitHub](https://github.com/Icelk/kvarn/roadmap.md).
 
 # Roadmap
 
