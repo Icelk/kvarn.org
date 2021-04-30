@@ -5,8 +5,9 @@
 <main><md></head>
 <h1>Kvarn web server</h1>
 <p>Welcome to the Kvarn web server. It is a experimental web server running <a href="https://kvarn.org">this</a> site
-and <a href="https://icelk.dev">icelk.dev</a>. It’s under rapid development. You can follow progress on <a href="https://github.com/Icelk/kvarn/tree/tokio/">GitHub</a> where the project is hosted.</p>
-<p>Bellow, you find the current roadmap. The original is located at <a href="https://github.com/Icelk/kvarn/tree/tokio/roadmap.md">GitHub</a>.</p>
+and <a href="https://icelk.dev">icelk.dev</a>. It’s under rapid development. You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted.
+Make sure to check any branches for experimental development.</p>
+<p>Bellow, you find the current roadmap. The original is located at <a href="https://github.com/Icelk/kvarn/roadmap.md">GitHub</a>.</p>
 <h1>Roadmap</h1>
 <p>This is the roadmap for future development of Kvarn.</p>
 <blockquote>
@@ -18,7 +19,7 @@ the features of 0.4.0 might come out as version 0.3.0</p>
 <p>It’s slow, not having async IO except for requests; FS is utterly slow and
 making any other async requests to a database or to proxy another server does not work
 (technically it does, but performance is miserable).</p>
-<h1>v0.2.0 Tokio</h1>
+<h2>v0.2.0 Tokio</h2>
 <p>We have now reached this milestone, with HTTP/2, fast async IO, a new superior extension system, and nearly no code left from v0.1.0!
 This release is now currently running <a href="https://icelk.dev">icelk.dev</a> and <a href="https://kvarn.org">kvarn.org</a>.</p>
 <p>This is a <em>real</em> performance uplift. It’s essentially a complete rewrite of Kvarn.
@@ -29,7 +30,7 @@ architecture more <em>transparent</em>. It should be understandable even for non
 Without doing anything from your part, you can expect automatic push to work, resulting in the
 described benefits. Soon, Smart Push will be part of Kvarn, further increasing performance.</p>
 </blockquote>
-<h2>Left to do</h2>
+<h3>Left to do</h3>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>
 Tokio</li>
@@ -55,10 +56,16 @@ Referrer header in <code>Extensions::new()</code></li>
 cfg (https, multithreading, http2)</li>
 </ul>
 <h2>v0.3.0 Core</h2>
-<p>This is a smaller release, fixing several bugs, increasing performance, and adding small future necessary for a good web server.</p>
-<p>Name comes from the current plan to move core stuff into it’s own crate.</p>
+<p>This is a <del>smaller</del> less headline-feature-rich release, fixing several bugs, increasing performance, and adding small features necessary for a <em>solid</em> web server.</p>
+<p>The name comes from the current plan to move core stuff into it’s own crate.</p>
 <h3>To do</h3>
 <ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Full doc coverage (this took <em>way</em> too long…)</li>
+<li><input disabled="" type="checkbox"/>
+Partial test coverage</li>
+<li><input disabled="" type="checkbox" checked=""/>
+Extension macros</li>
 <li><input disabled="" type="checkbox"/>
 Cache handling of Vary header (definitely the hardest)</li>
 <li><input disabled="" type="checkbox"/>
