@@ -49,7 +49,7 @@ architecture more *transparent*. It should be understandable even for non-progra
 - [x] limiting
 - [x] HEAD
 - [x] check routing and extensions.md plan
-- [x] more #[inline]
+- [x] more #\\[inline\\]
 - [x] Referrer header in `Extensions::new()`
 - [x] cfg (https, multithreading, http2)
 
@@ -65,7 +65,7 @@ The name comes from the current plan to move core stuff into it's own crate.
 - [ ] Partial test coverage
 - [x] Extension macros
 - [ ] Cache handling of Vary header (definitely the hardest)
-- [ ] Byte ranges
+- [x] Byte ranges
 - [ ] `read_to_bytes()` performance
 - [ ] Implement an easy-to-configure proxy extension in kvarn_extensions
 - [ ] If-Modified-Since header to increase client cache performance
