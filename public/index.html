@@ -1,135 +1,43 @@
-!> tmpl standard.html markdown.html
+!> tmpl standard.html
 [head]
-    <title>Kvarn web server</title>
-[dependencies][md-imports][close-head][navigation]
-<main><md><h1 id="kvarn-web-server">Kvarn web server</h1>
-<p>Welcome to the Kvarn web server. It is a experimental web server running <a href="https://kvarn.org">this</a> site
-and <a href="https://icelk.dev">icelk.dev</a>. It’s under rapid development. You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted.
-Make sure to check any branches for experimental development.</p>
-<p>Bellow, you find the current roadmap. The original is located at <a href="https://github.com/Icelk/kvarn/roadmap.md">GitHub</a>.</p>
-<h1 id="roadmap">Roadmap</h1>
-<p>This is the roadmap for future development of Kvarn.</p>
-<blockquote>
-<p>The work will be taking place in branches, named after the target release. The order of these feature releases are not set in stone;
-the features of 0.4.0 might come out as version 0.3.0</p>
-</blockquote>
-<h2 id="v0.1.0">v0.1.0</h2>
-<p>This milestone is reached. It was the first working state of the web server.</p>
-<p>It’s slow, not having async IO except for requests; FS is utterly slow and
-making any other async requests to a database or to proxy another server does not work
-(technically it does, but performance is miserable).</p>
-<h2 id="v0.2.0-tokio">v0.2.0 Tokio</h2>
-<p>We have now reached this milestone, with HTTP/2, fast async IO, a new superior extension system, and nearly no code left from v0.1.0!
-This release is now currently running <a href="https://icelk.dev">icelk.dev</a> and <a href="https://kvarn.org">kvarn.org</a>.</p>
-<p>This is a <em>real</em> performance uplift. It’s essentially a complete rewrite of Kvarn.
-<a href="extensions.md">extensions.md</a> and <a href="routing.md">routing.md</a> are documents designed to make the server’s
-architecture more <em>transparent</em>. It should be understandable even for non-programmers. It should make it easier to integrate with Kvarn.</p>
-<blockquote>
-<p>One other big thing is HTTP/2 Push, which makes loading web sites more than 2 times faster.
-Without doing anything from your part, you can expect automatic push to work, resulting in the
-described benefits. Soon, Smart Push will be part of Kvarn, further increasing performance.</p>
-</blockquote>
-<h3 id="left-to-do">Left to do</h3>
-<ul>
-<li><input disabled="" type="checkbox" checked=""/>
-Tokio</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Async io</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Async extensions</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Flexible interface for HTTP versions</li>
-<li><input disabled="" type="checkbox" checked=""/>
-HTTP/2</li>
-<li><input disabled="" type="checkbox" checked=""/>
-limiting</li>
-<li><input disabled="" type="checkbox" checked=""/>
-HEAD</li>
-<li><input disabled="" type="checkbox" checked=""/>
-check routing and extensions.md plan</li>
-<li><input disabled="" type="checkbox" checked=""/>
-more #\[inline\]</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Referrer header in <code>Extensions::new()</code></li>
-<li><input disabled="" type="checkbox" checked=""/>
-cfg (https, multithreading, http2)</li>
-</ul>
-<h2 id="v0.3.0-core">v0.3.0 Core</h2>
-<p>This is a <del>smaller</del> less headline-feature-rich release, fixing several bugs, increasing performance, and adding small features necessary for a <em>solid</em> web server.</p>
-<p>The name comes from the current plan to move core stuff into it’s own crate.</p>
-<h3 id="to-do">To do</h3>
-<ul>
-<li><input disabled="" type="checkbox" checked=""/>
-Full doc coverage (this took <em>way</em> too long…)</li>
-<li><input disabled="" type="checkbox"/>
-Partial test coverage</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Extension macros</li>
-<li><input disabled="" type="checkbox"/>
-Cache handling of Vary header (definitely the hardest)</li>
-<li><input disabled="" type="checkbox" checked=""/>
-Byte ranges</li>
-<li><input disabled="" type="checkbox"/>
-<code>read_to_bytes()</code> performance</li>
-<li><input disabled="" type="checkbox"/>
-Implement an easy-to-configure proxy extension in kvarn_extensions</li>
-<li><input disabled="" type="checkbox"/>
-If-Modified-Since header to increase client cache performance</li>
-<li><input disabled="" type="checkbox"/>
-Move core stuff</li>
-</ul>
-<h2 id="v0.4.0-websockets-&-auth">v0.4.0 WebSockets &amp; Auth</h2>
-<p>This release should contain good WebSocket integration and an easy-to-use Auth API
-for quickly adding secure and <em>extremely speedy</em> authentication.</p>
-<h3 id="to-do-1">To do</h3>
-<ul>
-<li><input disabled="" type="checkbox"/>
-WebSocket integration</li>
-<li><input disabled="" type="checkbox"/>
-Authentication API in Layer 6</li>
-</ul>
-<h2 id="v0.5.0-http/3">v0.5.0 HTTP/3</h2>
-<p>This is where Kvarn becomes cutting-edge.</p>
-<blockquote>
-<p>Kvarn already has a good flexible design, so adding this is largely making
-a glue-crate to make HTTP/3 accessible like it is in the <code>h2</code> crate.</p>
-</blockquote>
-<h3 id="to-do-2">To do</h3>
-<p><em>Well…</em></p>
-<ul>
-<li><input disabled="" type="checkbox"/>
-HTTP/3 crate</li>
-<li><input disabled="" type="checkbox"/>
-HTTP/3 support in Kvarn</li>
-<li><input disabled="" type="checkbox"/>
-cfg to disable new feature</li>
-</ul>
-<h2 id="v0.6.0-dynlan">v0.6.0 DynLan</h2>
-<p>This is where <em><strong>dyn</strong></em>amic <em><strong>lan</strong></em>guages are introduced to Kvarn. I currently plan on integrating <code>Wren</code> and <code>Lua</code> to <code>kvarn_extensions</code>,
-because <code>Wren</code> seems very fast and interesting, while <code>Lua</code> is simply a classic, with JIT support in Rust.</p>
-<p>Also, I’ll maybe crate bindings for the Zend engine (PHP) and make a PHP crate. It would allow to run the PHP interpreter
-from within Kvarn, possibly improving performance.</p>
-<h3 id="to-do-3">To do</h3>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Make a good API in <code>kvarn_extensions</code> to add dynamic languages
-<blockquote>
-<p>Callbacks to Rust function like getting the cache
-(or the contents of a file from the cache) will be the difficult part.</p>
-</blockquote>
-</li>
-<li><input disabled="" type="checkbox"/>
-Wren</li>
-<li><input disabled="" type="checkbox"/>
-Lua</li>
-<li><input disabled="" type="checkbox"/>
-cfg</li>
-<li><input disabled="" type="checkbox"/>
-PHP bindings</li>
-<li><input disabled="" type="checkbox"/>
-PHP crate</li>
-<li><input disabled="" type="checkbox"/>
-isolating PHP requests while keeping VM alive.</li>
-</ul>
-</md></main>
+<title>Kvarn web server</title>
+[dependencies]
+<style>
+    .top-bar .middle {
+        width: 18rem;
+    }
+
+    #main-logo-container {
+        --height: 24rem;
+
+        z-index: 10;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        height: calc(var(--height) - 1.75rem);
+        background: var(--bg-head);
+        clip-path: polygon(100% -100%, 100% 40%, 90% 60%, 75% 72%, 63% 100%, 40% 100%, 20% 57%, 0 35%, 0 -100%);
+    }
+
+    #main-logo {
+        position: absolute;
+        top: 1rem;
+
+        width: var(--height);
+
+        margin-left: auto;
+        margin-right: auto;
+
+        pointer-events: none;
+    }
+</style>
+[close-head]
+[navigation]
+
+<div id="main-logo-container">
+    <img id="main-logo" src="/logo.svg" alt="Kvarn logo">
+</div>
+
+
 [footer]

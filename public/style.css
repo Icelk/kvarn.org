@@ -2,17 +2,22 @@
 
 :root {
     text-align: justify;
-    /* font-family: 'Recursive', sans-serif;
-  font-weight: 350;
-  font-variation-settings: 'CASL'0.25, 'slnt'0, 'CRSV'1; */
+
+    --bg-darker: #0f0f0f;
+    --bg-dark: #111216;
+    --bg-light: #28292a;
+    --bg-lighter: #272c38;
+
+    --text-normal: #fffffa;
+    --text-color: #a2c6d8;
+
+    --transition-speed: 0.2s;
+    --bar-height: 3rem;
 }
 
 body {
     color: var(--text-normal);
     margin: 0;
-    /* transition-property: background, background-color, color;
-  transition-duration: calc(var(--transition-speed) * 2);
-  transition-timing-function: ease-in-out; */
 
     background: linear-gradient(to right, var(--bg-dark), var(--bg-darker));
     /* So the scrollbar track gets the right color */
@@ -29,7 +34,7 @@ p {
 /* Scrollbar */
 
 body::-webkit-scrollbar {
-    width: 0.25rem;
+    width: 0.4rem;
 }
 
 body::-webkit-scrollbar-track {
@@ -48,13 +53,9 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Recursive", sans-serif;
-    font-weight: 500;
-    font-variation-settings: "slnt"-5, "CRSV" 0;
+    font-family: "Kurale", serif;
+    font-weight: 400;
 }
-/* h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {
-  font-variation-settings: "slnt"-10, "CRSV"0;
-} */
 a:link {
     color: var(--text-color);
 }
@@ -62,105 +63,48 @@ a:visited {
     color: var(--text-color);
 }
 
-/* Used in most project pages */
-.title {
-    letter-spacing: 0.1em;
-    font-size: 3em;
-    display: inline-block;
-    padding: 0.25em;
-}
-.title.box {
-    background-color: var(--bg-light);
-    margin-left: 0.15em;
-    margin-right: 0.15em;
-}
-
-.icon {
-    width: 4em;
-}
-.icon.small {
-    width: 2em;
-}
-.icon.inline {
-    width: 1em;
-    vertical-align: -0.15em;
-}
-.icon.box {
-    background-color: var(--bg-light);
-}
-
-.card {
-    display: inline-block;
-    font-size: 1.25rem;
-    padding: 1em;
-    text-align: justify;
-    max-width: 80%;
-}
-.card > p:first-child {
-    margin-top: 0;
-}
-.card > p:last-child {
-    margin-bottom: 0;
-}
-.card.wrap {
-    white-space: pre-wrap;
-}
-.card.box {
-    background-color: var(--bg-light);
-}
-
 /* Top navigation bar */
 .top-bar {
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+
     width: 100%;
     margin: 0;
     padding: 0;
     margin-bottom: -4px;
     background: var(--bg-head);
 
+    font-family: "Kurale", serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
+
     /* So we can make it fixed if we want to */
     position: relative;
 }
 /* All links in top bar */
-.top-bar a {
+.top-bar a.item {
     color: inherit !important;
     text-decoration: none;
     transition: filter ease-out var(--transition-speed);
+
+    width: 6rem;
+
     display: block;
     padding: 0 1em;
-}
-
-.top-bar .item {
     margin: 0 2px;
     line-height: var(--bar-height);
-    font-variation-settings: "CASL" 0.25, "slnt" 0, "CRSV" 0;
-
-    float: left;
 }
+
 /* Dim item while hovering */
-.top-bar a:hover {
+.top-bar a.item:hover {
     filter: opacity(0.5);
 }
 
 /* Change background when page is the one shown */
-.top-bar .item.visiting {
+.top-bar a.item.visiting {
     background-color: var(--bg-light);
-}
-
-/* Circle to show theme */
-.theme-circle::before {
-    content: " ";
-    display: inline-block;
-    width: 1.25em;
-    height: 1.25em;
-    border-radius: 50%;
-    border: 2px solid var(--text-color);
-    background-color: var(--bg-darker);
-    vertical-align: -15%;
-}
-/* Add margin (to the right) in the ::before sudo element */
-.before-margin::before {
-    margin-right: 1em;
 }
 
 /* If dropdown is hovered or has focus, show dropdown! */
@@ -225,49 +169,4 @@ code {
 /* Enable pointers on all elements with href class */
 .href {
     cursor: pointer;
-}
-
-/* Articles */
-div.article.container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-
-    width: 100%;
-}
-
-article {
-    height: 25rem;
-    padding: 1rem;
-    box-sizing: border-box;
-
-    flex-shrink: 1;
-    flex-grow: 1;
-    max-width: 21rem;
-    flex-basis: 17rem;
-
-    margin: 2rem;
-
-    font-size: 1.15em;
-
-    background: linear-gradient(to right, var(--bg-lighter), var(--bg-light));
-
-    transition-property: box-shadow, transform, filter;
-    transition-duration: calc(var(--transition-speed) / 2);
-    transition-timing-function: ease-out;
-
-    transform: translateZ(1px);
-    filter: none;
-
-    box-shadow: 4px 4px 1px 1px var(--bg-darker);
-}
-
-article:hover {
-    box-shadow: 3px 3px 1px 0px var(--bg-darker);
-    filter: brightness(1.1);
-
-    transform: translateZ(1px) scale(1.1);
-
-    z-index: 5;
 }
