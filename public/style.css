@@ -182,8 +182,7 @@ code {
 }
 
 .solid-button,
-button.solid,
-.solid-input-container {
+button.solid {
     --padding: 0.5rem;
 
     /* height: 1rem; */
@@ -195,17 +194,22 @@ button.solid,
     color: inherit !important;
     text-decoration: none;
 
+    transition: _ calc(var(--transition-speed) / 3) ease-in-out;
+    transition-property: transform, filter;
+
     border: none;
     border-radius: 0.2rem;
 }
-.solid-input-container {
+.solid-button.input {
     position: relative;
 }
-.solid-input-container input {
+.solid-button.input input {
     border: none;
     background: transparent;
 
     font-size: 1em;
+    font-family: inherit;
+    color: inherit;
 
     outline: none;
 
@@ -216,6 +220,14 @@ button.solid,
     left: var(--padding);
     width: calc(100% - calc(var(--padding) * 2));
 }
-.solid-input-container:focus-within > .solid-input-overlay {
+.solid-button.input:focus-within > .overlay {
     visibility: hidden;
+}
+.solid-button.input:not(:focus-within) input {
+    color: transparent;
+}
+.solid-button:active,
+.solid-button.input:focus-within {
+    transform: scale(0.9);
+    filter: brightness(1.4);
 }
