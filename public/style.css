@@ -73,8 +73,6 @@ a:visited {
     width: 100%;
     margin: 0;
     padding: 0;
-    margin-bottom: -4px;
-    background: var(--bg-head);
 
     font-family: "Kurale", serif;
     font-size: 1.3rem;
@@ -83,28 +81,46 @@ a:visited {
     /* So we can make it fixed if we want to */
     position: relative;
 }
+.top-bar-bg {
+    position: absolute;
+
+    height: var(--bar-height);
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: var(--bg-head);
+}
 /* All links in top bar */
-.top-bar a.item {
+.top-bar .item {
+    width: 6rem;
+    padding: 0 1em;
+}
+.top-bar .item,
+.top-bar .middle {
     color: inherit !important;
     text-decoration: none;
     transition: filter ease-out var(--transition-speed);
 
-    width: 6rem;
-
     display: block;
-    padding: 0 1em;
     margin: 0 2px;
     line-height: var(--bar-height);
+    max-height: var(--bar-height);
 }
 
 /* Dim item while hovering */
-.top-bar a.item:hover {
+.top-bar .item:hover,
+.top-bar .middle:hover {
     filter: opacity(0.5);
 }
 
 /* Change background when page is the one shown */
-.top-bar a.item.visiting {
+.top-bar .item.visiting {
     background-color: var(--bg-light);
+}
+.top-bar .middle img {
+    height: var(--bar-height);
 }
 
 /* If dropdown is hovered or has focus, show dropdown! */
@@ -152,9 +168,6 @@ a:visited {
 
 /* Other style */
 code {
-    font-family: "Recursive", monospace;
-    font-variation-settings: "MONO" 1, "CASL" 0.1, "slnt" 0, "CRSV" 1;
-
     vertical-align: middle;
     padding: 0.2em 0.4em;
     margin: 0;
@@ -162,11 +175,47 @@ code {
     background-color: var(--bg-lighter);
     border-radius: 6px;
 }
-.box code {
-    background-color: var(--bg-dark);
-}
 
 /* Enable pointers on all elements with href class */
 .href {
     cursor: pointer;
+}
+
+.solid-button,
+button.solid,
+.solid-input-container {
+    --padding: 0.5rem;
+
+    /* height: 1rem; */
+    background-color: var(--bg-lighter);
+    padding: var(--padding);
+    font-size: 1.25rem;
+    margin: 0.25rem;
+
+    color: inherit !important;
+    text-decoration: none;
+
+    border: none;
+    border-radius: 0.2rem;
+}
+.solid-input-container {
+    position: relative;
+}
+.solid-input-container input {
+    border: none;
+    background: transparent;
+
+    font-size: 1em;
+
+    outline: none;
+
+    padding: 0;
+    margin: 0;
+
+    position: absolute;
+    left: var(--padding);
+    width: calc(100% - calc(var(--padding) * 2));
+}
+.solid-input-container:focus-within > .solid-input-overlay {
+    visibility: hidden;
 }

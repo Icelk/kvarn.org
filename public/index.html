@@ -7,6 +7,10 @@
         width: 18rem;
     }
 
+    .top-bar .middle a {
+        display: none;
+    }
+
     #main-logo-container {
         --height: 24rem;
 
@@ -15,7 +19,7 @@
         flex-direction: row;
         justify-content: center;
 
-        height: calc(var(--height) - 1.75rem);
+        height: calc(var(--height) - 2rem);
         background: var(--bg-head);
         clip-path: polygon(100% -100%, 100% 40%, 90% 60%, 75% 72%, 63% 100%, 40% 100%, 20% 57%, 0 35%, 0 -100%);
     }
@@ -31,12 +35,35 @@
 
         pointer-events: none;
     }
+
+    #shortcut-buttons {
+        margin: 1rem;
+    }
+
+    #shortcut-buttons div {
+        display: flex;
+        justify-content: center;
+    }
 </style>
 [close-head]
 [navigation]
 
 <div id="main-logo-container">
     <img id="main-logo" src="/logo.svg" alt="Kvarn logo">
+</div>
+<div id="shortcut-buttons">
+    <div>
+        <a href="https://doc.kvarn.org/" class="solid-button">Rust doc</a>
+        <a href="#getting-started" class="solid-button">Getting started</a>
+        <span class="solid-input-container">
+            <a class="solid-input-overlay">Search</a>
+            <input type="text" name="search" id="search">
+        </span>
+    </div>
+    <div>
+        <a href="#applications" class="solid-button">Applications</a>
+        <a href="https://github.com/Icelk/kvarn" class="solid-button">Github</a>
+    </div>
 </div>
 
 
