@@ -44,6 +44,11 @@
         display: flex;
         justify-content: center;
     }
+
+    #search {
+        flex-basis: 8em;
+        flex-shrink: 1;
+    }
 </style>
 [close-head]
 [navigation]
@@ -55,9 +60,9 @@
     <div>
         <a href="https://doc.kvarn.org/" class="solid-button">Rust doc</a>
         <a href="#getting-started" class="solid-button">Getting started</a>
-        <span class="solid-button input">
+        <span class="solid-button input hide-overlay-on-input" id="search">
+            <input type="text" name="search" id="searchInput" placeholder=" ">
             <a class="overlay">Search</a>
-            <input type="text" name="search" id="search">
         </span>
     </div>
     <div>

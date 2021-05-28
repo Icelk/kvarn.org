@@ -220,10 +220,22 @@ button.solid {
     left: var(--padding);
     width: calc(100% - calc(var(--padding) * 2));
 }
+.solid-button.input > .overlay {
+    user-select: none;
+}
+/* If you want to see the overlay when the item is deselected, do nothing.
+   If you want the input text to be shown when it's deselected, add the class `hide-overlay-on-input`
+   to the .input element. 
+   The last option requires newer browsers. */
+.solid-button.input.hide-overlay-on-input
+    input:not(:placeholder-shown)
+    ~ .overlay {
+    visibility: hidden;
+}
 .solid-button.input:focus-within > .overlay {
     visibility: hidden;
 }
-.solid-button.input:not(:focus-within) input {
+.solid-button.input:not(.hide-overlay-on-input):not(:focus-within) input {
     color: transparent;
 }
 .solid-button:active,
