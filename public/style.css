@@ -238,8 +238,15 @@ button.solid {
 .solid-button.input:not(.hide-overlay-on-input):not(:focus-within) input {
     color: transparent;
 }
+.solid-button:hover {
+    transform: scale(1.05);
+}
 .solid-button:active,
 .solid-button.input:focus-within {
     transform: scale(0.9);
+}
+.solid-button:active,
+.solid-button.input:focus-within,
+.solid-button:hover {
     filter: brightness(1.4);
 }
