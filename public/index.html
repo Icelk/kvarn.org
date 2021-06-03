@@ -49,6 +49,10 @@
         flex-basis: 8em;
         flex-shrink: 1;
     }
+
+    md {
+        margin-bottom: 5rem;
+    }
 </style>
 [close-head]
 [navigation]
@@ -59,17 +63,47 @@
 <div id="shortcut-buttons">
     <div>
         <a href="https://doc.kvarn.org/" class="solid-button">Rust doc</a>
-        <a href="#getting-started" class="solid-button">Getting started</a>
+        <a href="https://github.com/Icelk/kvarn" class="solid-button">Github</a>
         <span class="solid-button input hide-overlay-on-input" id="search">
             <input type="text" name="search" id="searchInput" placeholder=" ">
             <a class="overlay">Search</a>
         </span>
     </div>
     <div>
+        <a href="#getting-started" class="solid-button">Getting started</a>
         <a href="#applications" class="solid-button">Applications</a>
-        <a href="https://github.com/Icelk/kvarn" class="solid-button">Github</a>
+        <a href="#license" class="solid-button">License</a>
+        <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md" class="solid-button">Roadmap</a>
     </div>
 </div>
+
+<md>
+    <center>
+        <blockquote style="display: inline-block; margin: 0 1rem;"><b>A forward-thinking fast web server designed to fit <i>your</i> needs, efficiently.</b></blockquote>
+    </center>
+    <h1>About</h1>
+    <p>
+        You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted.
+    </p>
+
+    <h1 id="getting-started">Getting started</h1>
+  
+    <h1 id="applications">Applications</h1>
+
+    <h1 id="license">License</h1>
+    <p>
+        The text and logo on this website is licensed under the <a href="text-license.txt">CC-BY-SA-4.0 License</a>.
+        The code examples and JavaScript source code is licensed under the <a href="code-license.txt">MIT</a> license.
+    </p>
+
+    <h1 id="resources">Resources</h1>
+    <div class="list">
+        <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md">Roadmap</a>
+        <a href="https://www.ralfj.de/blog/2019/07/14/uninit.html">In-depth about uninitialized memory</a>
+        <a href="https://rust-lang.github.io/rfcs/2930-read-buf.html">Rust ReadBuf RFC</a>
+        <a href="https://tonsky.me/blog/font-size/">Article about font-size on the web</a>
+    </div>
+</md>
 
 
 [footer]

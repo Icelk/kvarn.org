@@ -58,7 +58,16 @@ search.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") {
         return
     }
+    let newWindow = e.metaKey || e.ctrlKey
+
     let input = search.value
     let percentEncoded = encodeURIComponent(input)
-    location.href = `https://duckduckgo.com/?q=site%3Akvarn.org+${percentEncoded}`
+
+    let href = `https://duckduckgo.com/?q=site%3Akvarn.org+${percentEncoded}`
+
+    if (newWindow) {
+        window.open(href, "_blank")
+    } else {
+        location.href = href
+    }
 })

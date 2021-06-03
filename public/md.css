@@ -9,7 +9,7 @@ md {
     text-align: justify;
 }
 
-md > pre {
+md pre {
     padding: 16px;
     overflow: auto;
     font-size: 85%;
@@ -28,7 +28,7 @@ md > pre {
 
     max-width: 90%;
 }
-md > pre code {
+md pre code {
     padding: 0;
     margin: 0;
     overflow: visible;
@@ -75,20 +75,21 @@ md pre,
 md p,
 md blockquote {
     margin: 1.5rem 1rem;
+    margin-top: 0.5rem;
 }
 md img {
     max-width: 75%;
     max-height: 80vh;
 }
 
-md > li {
+md li {
     list-style-type: "-  ";
 }
-md > li p {
+md li p {
     display: inline-block;
     margin: 0;
 }
-md > li p:first-child:before {
+md li p:first-child:before {
     vertical-align: middle;
     list-style-type: initial;
     content: " ";
@@ -100,12 +101,12 @@ md > li p:first-child:before {
 
     margin: 3px 10.5px 3px 6px;
 }
-md > blockquote {
+md blockquote {
     padding: 0.25em 1em;
     border-left: 0.25em solid var(--bg-lighter);
     text-align: left;
     opacity: 0.8;
 }
-md > blockquote > p {
+md blockquote > p {
     margin: 0;
 }
