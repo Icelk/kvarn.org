@@ -1,7 +1,6 @@
-!> tmpl standard.html
-[head]
+!> tmpl standard.html [head]
 <title>Kvarn web server</title>
-[dependencies]
+[highlight] [dependencies]
 <style>
     .top-bar .middle {
         width: 18rem;
@@ -54,18 +53,17 @@
         margin-bottom: 5rem;
     }
 </style>
-[close-head]
-[navigation]
+[close-head] [navigation]
 
 <div id="main-logo-container">
-    <img id="main-logo" src="/logo.svg" alt="Kvarn logo">
+    <img id="main-logo" src="/logo.svg" alt="Kvarn logo" />
 </div>
 <div id="shortcut-buttons">
     <div>
         <a href="https://doc.kvarn.org/" class="solid-button">Rust doc</a>
         <a href="https://github.com/Icelk/kvarn" class="solid-button">Github</a>
         <span class="solid-button input hide-overlay-on-input" id="search">
-            <input type="text" name="search" id="searchInput" placeholder=" ">
+            <input type="text" name="search" id="searchInput" placeholder=" " />
             <a class="overlay">Search</a>
         </span>
     </div>
@@ -79,31 +77,84 @@
 
 <md>
     <center>
-        <blockquote style="display: inline-block; margin: 0 1rem;"><b>A forward-thinking fast web server designed to fit <i>your</i> needs, efficiently.</b></blockquote>
+        <blockquote style="display: inline-block; margin: 0 1rem">
+            <b>A forward-thinking fast web server designed to fit <i>your</i> needs, efficiently.</b>
+        </blockquote>
     </center>
     <h1>About</h1>
     <p>
-        You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted.
+        Kvarn is a rusty, <a href="https://github.com/Icelk/kvarn/blob/main/LICENSE">open-source</a>, forwards-thinking
+        web server designed with <a href="extensions/">extensibility</a>, out of the box
+        <a href="security/">security</a>, and consistent <a href="features/#performance">performance</a> with it's
+        <a href="cache.">built-in cache.</a>
+    </p>
+    <p>
+        You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted. The
+        project is under active development to add features, reduce complexity, improve performance, and fix issues.
     </p>
 
     <h1 id="getting-started">Getting started</h1>
-  
+    <p>
+        Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>. You'll need to
+        <a href="https://www.rust-lang.org/tools/install">download it</a> before using the Kvarn web server.
+    </p>
+    <p>Then, go to a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
+    <pre><code class="language-shell">$ cargo init --bin</code></pre>
+    <p>
+        The best way to use Kvarn (for now, when the structure of the code is about to change) is to add it as a git
+        submodule.
+    </p>
+    <pre><code class="language-shell">$ git submodule add https://github.com/Icelk/kvarn</code></pre>
+    <p>Next, add these dependencies in your `Cargo.toml`.</p>
+    <pre><code class="language-ini">kvarn = { path = "kvarn" }
+tokio = { version = "^1", features = \["macros", "rt-multi-thread"] }
+env_logger = "^0.8"</code></pre>
+    <p>Now, you can edit `src/main.rs` and replace the `Hello world!` example with this.</p>
+    <pre><code class="language–rust">use kvarn::prelude::*;
+
+#\[tokio::main]
+async fn main() {
+    // Create a host with hostname "localhost", serving files from directory "./web/public/", with the default extensions and the default options.
+    let host = Host::non_secure("localhost", PathBuf::from("web"), Extensions::default(), host::Options::default());
+    // Create a set of virtual hosts (`Data`) with `host` as the default.
+    let data = Data::builder(host).build();
+    // Bind port 8080 with `data`.
+    let port_descriptor = PortDescriptor::new(8080, data);
+
+    // Run with the configured ports.
+    let shutdown_manager = run(vec!\[port_descriptor]).await;
+    // Waits for shutdown.
+    shutdown_manager.wait().await;
+}</code></pre>
+    <p>Start it with the following command.</p>
+    <pre><code class="language-shell">$ cargo run</code></pre>
+    <p>
+        Now you have a web server running at <a href="http://localhost:8080/">localhost:8080</a> serving files from
+        `web/public` relative to the directory.
+    </p>
+    <blockquote>
+        Soon, the <a href="https://github.com/Icelk/kvarn-reference">reference implementation</a> will use a
+        configuration file. Until then, we have to compile in all the hosts and extensions. For a more complete example,
+        see the link above.
+    </blockquote>
+
     <h1 id="applications">Applications</h1>
 
     <h1 id="license">License</h1>
     <p>
-        The text and logo on this website is licensed under the <a href="text-license.txt">CC-BY-SA-4.0 License</a>.
-        The code examples and JavaScript source code is licensed under the <a href="code-license.txt">MIT</a> license.
+        The text and logo on this website is licensed under the
+        <a href="text-license.txt">CC-BY-SA-4.0 License</a>. The code examples and JavaScript source code is licensed
+        under the <a href="code-license.txt">MIT</a> license.
     </p>
 
     <h1 id="resources">Resources</h1>
     <div class="list">
         <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md">Roadmap</a>
+        <a href="https://github.com/Icelk/kvarn.org">GitHub repo for this website</a>
         <a href="https://www.ralfj.de/blog/2019/07/14/uninit.html">In-depth about uninitialized memory</a>
         <a href="https://rust-lang.github.io/rfcs/2930-read-buf.html">Rust ReadBuf RFC</a>
         <a href="https://tonsky.me/blog/font-size/">Article about font-size on the web</a>
     </div>
 </md>
-
 
 [footer]
