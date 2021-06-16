@@ -71,3 +71,7 @@ search.addEventListener("keydown", (e) => {
         location.href = href
     }
 })
+
+if (typeof hljs !== "undefined") {
+    hljs.highlightAll()
+}
