@@ -6,7 +6,7 @@
 
     --bg-darker: #0f0f0f;
     --bg-dark: #111216;
-    --bg-light: #28292a;
+    --bg-light: #181b21;
     --bg-lighter: #272c38;
 
     --text-normal: #fffffa;
@@ -16,7 +16,10 @@
     --bar-height: 3rem;
 }
 
-a, p, div, span {
+a,
+p,
+div,
+span {
     line-height: 1.3em;
 }
 
@@ -131,8 +134,7 @@ a:visited {
 }
 .top-bar .middle img {
     height: var(--bar-height);
-    transition: height calc(var(--transition-speed) * 0.75)
-        cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
+    transition: height calc(var(--transition-speed) * 0.75) cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
         /* cubic-bezier(0.18, 0.89, 0.32, 1.28) */;
 }
 .top-bar .middle img:hover {
@@ -207,8 +209,7 @@ div.list {
 button.solid {
     --padding: 0.5rem;
 
-    /* height: 1rem; */
-    background-color: var(--bg-lighter);
+    background: linear-gradient(0.35turn, var(--bg-lighter), var(--bg-light));
     padding: var(--padding);
     font-size: 1.25rem;
     margin: 0.25rem;
@@ -255,9 +256,7 @@ button.solid {
    If you want the input text to be shown when it's deselected, add the class `hide-overlay-on-input`
    to the .input element. 
    The last option requires newer browsers. */
-.solid-button.input.hide-overlay-on-input
-    input:not(:placeholder-shown)
-    ~ .overlay {
+.solid-button.input.hide-overlay-on-input input:not(:placeholder-shown) ~ .overlay {
     visibility: hidden;
 }
 .solid-button.input:focus-within > .overlay {
