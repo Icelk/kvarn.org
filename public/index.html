@@ -114,6 +114,8 @@ env_logger = "^0.8"</code></pre>
 
 #\[tokio::main]
 async fn main() {
+    // Initiate the logger. Set the environment variable `RUST_LOG` to `info` to get finer logging.
+    env_logger::init();
     // Create a host with hostname "localhost", serving files from directory "./web/public/", with the default extensions and the default options.
     let host = Host::non_secure("localhost", PathBuf::from("web"), Extensions::default(), host::Options::default());
     // Create a set of virtual hosts (`Data`) with `host` as the default.
