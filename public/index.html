@@ -105,11 +105,11 @@
         submodule.
     </p>
     <pre><code class="language-shell">$ git submodule add https://github.com/Icelk/kvarn</code></pre>
-    <p>Next, add these dependencies in your `Cargo.toml`.</p>
+    <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
     <pre><code class="language-ini">kvarn = { path = "kvarn" }
 tokio = { version = "^1", features = \["macros", "rt-multi-thread"] }
 env_logger = "^0.8"</code></pre>
-    <p>Now, you can edit `src/main.rs` and replace the `Hello world!` example with this.</p>
+    <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
     <pre><code class="language–rust">use kvarn::prelude::*;
 
 #\[tokio::main]
@@ -132,7 +132,7 @@ async fn main() {
     <pre><code class="language-shell">$ cargo run</code></pre>
     <p>
         Now you have a web server running at <a href="http://localhost:8080/">localhost:8080</a> serving files from
-        `web/public` relative to the directory.
+        <code>web/public/</code> relative to the directory.
     </p>
     <blockquote>
         Soon, the <a href="https://github.com/Icelk/kvarn-reference">reference implementation</a> will use a
