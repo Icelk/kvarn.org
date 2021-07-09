@@ -74,7 +74,7 @@ a:visited {
 }
 
 /* Top navigation bar */
-.top-bar {
+#top-bar {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -91,7 +91,7 @@ a:visited {
     /* So we can make it fixed if we want to */
     position: relative;
 }
-.top-bar-bg {
+#top-bar-bg {
     position: absolute;
 
     height: var(--bar-height);
@@ -103,12 +103,15 @@ a:visited {
     background: var(--bg-head);
 }
 /* All links in top bar */
-.top-bar .item {
-    width: 6rem;
-    padding: 0 1em;
+#top-bar .item {
+    /* width: 6rem; */
+    padding: 0 0.8em;
 }
-.top-bar .item,
-.top-bar .middle {
+#top-bar .middle {
+    padding: 0 0.4em;
+}
+#top-bar .item,
+#top-bar .middle {
     color: inherit !important;
     text-decoration: none;
     transition: filter ease-out var(--transition-speed);
@@ -120,36 +123,37 @@ a:visited {
 }
 
 /* Dim item while hovering */
-.top-bar .item:hover,
-.top-bar .middle:hover {
+#top-bar .item:hover,
+#top-bar .middle:hover {
     filter: opacity(0.7);
 }
 
 /* Change background when page is the one shown */
-.top-bar .item.visiting {
-    background-color: var(--bg-light);
+#top-bar .item.visiting {
+    background-color: var(--bg-lighter);
+    filter: brightness(1.1);
 }
-.top-bar .middle {
+#top-bar .middle {
     display: flex;
 }
-.top-bar .middle img {
+#top-bar .middle img {
     height: var(--bar-height);
     transition: height calc(var(--transition-speed) * 0.75) cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
         /* cubic-bezier(0.18, 0.89, 0.32, 1.28) */;
 }
-.top-bar .middle img:hover {
+#top-bar .middle img:hover {
     height: calc(var(--bar-height) * 2);
 }
 
 /* If dropdown is hovered or has focus, show dropdown! */
-.top-bar .has-dropdown:hover .dropdown,
-.top-bar .has-dropdown:focus-within .dropdown {
+#top-bar .has-dropdown:hover .dropdown,
+#top-bar .has-dropdown:focus-within .dropdown {
     opacity: 1;
     pointer-events: auto;
 }
 
 /* Dropdown in top bar */
-.top-bar .dropdown {
+#top-bar .dropdown {
     width: max-content;
     max-width: 40em;
     position: absolute;
@@ -172,12 +176,12 @@ a:visited {
 }
 
 @media only screen and (max-width: 40em) {
-    .top-bar .dropdown .item {
+    #top-bar .dropdown .item {
         float: none;
         display: inline-block;
         flex-grow: 1;
     }
-    .top-bar .dropdown {
+    #top-bar .dropdown {
         left: 0;
         width: 100vw;
         transform: none;
