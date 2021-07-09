@@ -1,11 +1,42 @@
+const initTopBar = () => {
+    const projects = document.getElementById("top-bar").children
+    for (let child = 0; child < projects.length; child++) {
+        const listItem = projects[child]
+        const listItemChildren = listItem.children
+        let link = listItem.getAttribute("href") !== null ? listItem : null
+        if (link === null) {
+            for (let liChild = 0; liChild < listItemChildren.length; liChild++) {
+                const element = listItemChildren[liChild]
+
+                if (element.getAttribute("href") !== null) {
+                    link = element
+                    break
+                }
+            }
+        }
+        if (link === null) {
+            continue
+        }
+
+        if (link.getAttribute("href") === window.location.pathname) {
+            listItem.classList.add("visiting")
+            link.addEventListener("click", (e) => {
+                if (e.metaKey || e.ctrlKey) {
+                    return
+                }
+                document.documentElement.scrollTo({ top: 0, behavior: "smooth" })
+                e.preventDefault()
+            })
+            break
+        }
+    }
+}
 const initSmoothScrolling = () => {
     document.querySelectorAll('a[href^="#"]').forEach((anchor_link) => {
         anchor_link.addEventListener("click", function (e) {
             e.preventDefault()
 
-            let anchor = document.getElementById(
-                this.getAttribute("href").substring(1)
-            )
+            let anchor = document.getElementById(this.getAttribute("href").substring(1))
 
             if (anchor !== null) {
                 anchor.scrollIntoView({
@@ -23,10 +54,7 @@ const initCopyHeading = () => {
         return
     }
 
-    let queryString =
-        content === "not-titles"
-            ? "h2, h3, h4, h5, h6"
-            : "h1, h2, h3, h4, h5, h6"
+    let queryString = content === "not-titles" ? "h2, h3, h4, h5, h6" : "h1, h2, h3, h4, h5, h6"
 
     document.querySelectorAll(queryString).forEach((heading) => {
         let id = heading.getAttribute("id")
@@ -50,27 +78,30 @@ const initCopyHeading = () => {
     })
 }
 
+initTopBar()
 initSmoothScrolling()
 initCopyHeading()
 
 let search = document.getElementById("searchInput")
-search.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter") {
-        return
-    }
-    let newWindow = e.metaKey || e.ctrlKey
+if (search !== null) {
+    search.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") {
+            return
+        }
+        let newWindow = e.metaKey || e.ctrlKey
 
-    let input = search.value
-    let percentEncoded = encodeURIComponent(input)
+        let input = search.value
+        let percentEncoded = encodeURIComponent(input)
 
-    let href = `https://duckduckgo.com/?q=site%3Akvarn.org+${percentEncoded}`
+        let href = `https://duckduckgo.com/?q=site%3Akvarn.org+${percentEncoded}`
 
-    if (newWindow) {
-        window.open(href, "_blank")
-    } else {
-        location.href = href
-    }
-})
+        if (newWindow) {
+            window.open(href, "_blank")
+        } else {
+            location.href = href
+        }
+    })
+}
 
 if (typeof hljs !== "undefined") {
     hljs.highlightAll()
