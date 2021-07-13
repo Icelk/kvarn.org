@@ -14,8 +14,6 @@ Here is a incomplete list of Kvarn's features, most of which have guides in thei
 > and some require `kvarn_extensions`.
 > This will be explicitly noted.
 
-# Table of contents
-
 ${toc}
 
 # Sane defaults
