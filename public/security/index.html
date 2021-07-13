@@ -1,0 +1,50 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Security</title>
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>A web-server needs good security practises to
+avoid
+leaking data,
+allowing unauthenticated API calls,
+or go offline due to a DOS attacks.</p>
+<p>Kvarn is built on top of these principles to provide security out of the box.</p>
+<table><thead><tr><th>Contents</th></tr></thead><tbody>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#cors">1 CORS</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#rust">2 Rust</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#internal-api">3 Internal API</a></td></tr>
+<tr><td><a style="margin-left: 2em;"></a> <a href="#strict-request-checks">3.1 Strict request checks</a></td></tr>
+<tr><td><a style="margin-left: 2em;"></a> <a href="#file-structure">3.2 File structure</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#limiting">4 Limiting</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#testing">5 Testing</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#few-lines-of-code">6 Few lines of code</a></td></tr>
+</tbody></table>
+<h1 id="cors"><a href="/cors.">CORS</a></h1>
+<p>Kvarn allows for easy configuration of CORS settings, reducing the risk of a vulnerable API,
+in the case of a third party website suffering from XSS.</p>
+<h1 id="rust">Rust</h1>
+<p>Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.
+This removes the risk of buffer overflows, dangling pointers, and other undefined behaviour.</p>
+<p>Not only the library, but also extensions (the code you write) are protected against this.</p>
+<h1 id="internal-api">Internal API</h1>
+<p>To reduce risks of faulty code, Kvarn abstracts several concepts of unsecure things.
+This eliminates the risk of exposing data.</p>
+<p>The response cache is stored in memory and never on disk.</p>
+<h2 id="strict-request-checks">Strict request checks</h2>
+<p>When a request is parsed, certain components are analyzed to be legal.
+This guarantees only files from the webroot are available (as long as your extensions don’t read any other).</p>
+<h2 id="file-structure">File structure</h2>
+<p>The public files, certificates, error messages, and templates are in separate folders, independent from each other.</p>
+<h1 id="limiting"><a href="/limiting.">Limiting</a></h1>
+<p>To prevent malicious actors from taking your site down, two layers of defense are implemented by default.
+If a IP overrides a configured threshold of requests, it’ll receive a error message until the timer is reset.</p>
+<h1 id="testing">Testing</h1>
+<p>Everybody makes mistakes.
+A solid testing library and solid tests for a library can prevent pushing faulty code to prod.</p>
+<p>Kvarn provides an easy-to-use testing library for integration testing your Kvarn extensions and your API.
+It’s also covered by tests validating logic, speed, and stability of Kvarn’s code.</p>
+<h1 id="few-lines-of-code">Few lines of code</h1>
+<p>If we assume the act of programming is to introduce bugs, less code should mean less bugs.</p>
+<p>The entirety of Kvarn, including the optional extensions, and it’s reference implementation is less than 10K SLOC;
+the whole codebase can be audited in a day.</p>
+</md></main>
+[footer]
