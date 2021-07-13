@@ -141,6 +141,21 @@ async fn main() {
     </blockquote>
 
     <h1 id="applications">Applications</h1>
+    <p>
+        Kvarn can be used for anything ranging from large-scale websites in need of throughput and availability, to
+        personal websites with the ability to host unlimited domains from one IP, to IOT devices, like the Raspberry Pi.
+    </p>
+    <p>
+        All features are configurable; if you want the latest HTTP and Web features, you can enable those features at
+        compile-time. Of you on the other hand run Kvarn as a web interface for a local device and don't need security
+        or the latest features, but require compile-time and only have spare resources, you can disable those features,
+        not compiling in HTTPS or HTTP/2 support.
+    </p>
+    <p>
+        The extension system allows for easy creation of APIs and can interact with the host machine asynchronously. It
+        can access databases, change the GPIO pins, or anything else a program can do. When disabling features, no APIs
+        change. You always get the same developer experience.
+    </p>
 
     <h1 id="license">License</h1>
     <p>
