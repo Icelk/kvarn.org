@@ -30,7 +30,7 @@ body {
     background: linear-gradient(to right, var(--bg-dark), var(--bg-darker));
     /* So the scrollbar track gets the right color */
     background-color: var(--bg-darker);
-    --bg-head: linear-gradient(to right, var(--bg-lighter), var(--bg-dark));
+    --bg-head: linear-gradient(to right, var(--bg-lighter), var(--bg-light));
 
     overflow-x: hidden;
 }
@@ -60,7 +60,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+md table {
     font-family: "Kurale", serif;
     font-weight: 400;
     line-height: 1em;
@@ -280,4 +281,24 @@ button.solid {
 .solid-button.input:focus-within,
 .solid-button:hover {
     filter: brightness(1.4);
+}
+
+md table {
+    font-size: 0.8em;
+
+    border: 0.1em solid var(--text-color);
+    background: var(--bg-head);
+
+    margin-top: 1rem;
+    padding: 0.4rem;
+}
+
+md table a {
+    text-decoration: none;
+}
+md table a:hover {
+    text-decoration: underline;
+}
+md table tr {
+    line-height: 1.2rem;
 }
