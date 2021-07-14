@@ -1,35 +1,32 @@
 const initTopBar = () => {
-    const projects = document.getElementById("top-bar").children
-    for (let child = 0; child < projects.length; child++) {
-        const listItem = projects[child]
-        const listItemChildren = listItem.children
-        let link = listItem.getAttribute("href") !== null ? listItem : null
-        if (link === null) {
-            for (let liChild = 0; liChild < listItemChildren.length; liChild++) {
-                const element = listItemChildren[liChild]
+    const iterateChildren = (parent) => {
+        const children = parent.children
 
-                if (element.getAttribute("href") !== null) {
-                    link = element
-                    break
-                }
+        for (let childIndex = 0; childIndex < children.length; childIndex++) {
+            const child = children[childIndex]
+            let link = child.getAttribute("href")
+            if (link === null) {
+                continue
+            }
+
+            if (link === window.location.pathname) {
+                child.classList.add("visiting")
+                child.addEventListener("click", (e) => {
+                    if (e.metaKey || e.ctrlKey) {
+                        return
+                    }
+                    document.documentElement.scrollTo({ top: 0, behavior: "smooth" })
+                    e.preventDefault()
+                })
+                return
             }
         }
-        if (link === null) {
-            continue
-        }
-
-        if (link.getAttribute("href") === window.location.pathname) {
-            listItem.classList.add("visiting")
-            link.addEventListener("click", (e) => {
-                if (e.metaKey || e.ctrlKey) {
-                    return
-                }
-                document.documentElement.scrollTo({ top: 0, behavior: "smooth" })
-                e.preventDefault()
-            })
-            break
+        for (let child = 0; child < children.length; child++) {
+            iterateChildren(children[child])
         }
     }
+    const topBar = document.getElementById("top-bar")
+    iterateChildren(topBar)
 }
 const initSmoothScrolling = () => {
     document.querySelectorAll('a[href^="#"]').forEach((anchor_link) => {
