@@ -1,6 +1,7 @@
 !> tmpl standard.html markdown.html
 [head]
     <title>Extensions</title>
+    [highlight]
 [dependencies][md-imports][close-head][navigation]
 <main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>.
 They provide options for attaching to all parts of the request pipeline,
@@ -13,6 +14,7 @@ with little overhead compared to cloning Kvarn and integrating with the internal
 <tr><td><a style="margin-left: 2em;"></a> <a href="#present">2.3 Present</a></td></tr>
 <tr><td><a style="margin-left: 2em;"></a> <a href="#package">2.4 Package</a></td></tr>
 <tr><td><a style="margin-left: 2em;"></a> <a href="#post">2.5 Post</a></td></tr>
+<tr><td><a style="margin-left: 0em;"></a> <a href="#example">3 Example</a></td></tr>
 </tbody></table>
 <h1 id="building-an-api">Building an API</h1>
 <p>In Kvarn, you can attach to single URLs
@@ -32,7 +34,7 @@ resulting in large <code>if else</code> statements
 <h1 id="the-five-ps">The five <em>P</em>s</h1>
 <p>Kvarn is very extensible. Therefore, several pluggable interfaces (called extensions) exist to make integration fast and seamless.</p>
 <p>Here are the five <em>P</em>s chronologically ordered from the request’s perspective.</p>
-<h2 id="prime">Prime</h2>
+<h2 id="prime"><a href="https://doc.kvarn.org/kvarn/macro.prime.html">Prime</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
@@ -43,7 +45,7 @@ you can check for the <code>authentication</code> HTTP header
 and from there decide to intercept the request.</p>
 <p>It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to 
 a special page where a 307 redirect is responded with.</p>
-<h2 id="prepare">Prepare</h2>
+<h2 id="prepare"><a href="https://doc.kvarn.org/kvarn/macro.prepare.html">Prepare</a></h2>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>
 Optional. If the response contains a future (WebSockets), it’ll never cache.</li>
@@ -53,7 +55,7 @@ Will still get all other extensions applied.</p>
 <p>You have to handle all HTTP methods, as Kvarn passes all, except for <code>HEAD</code>, which it handles by simply omitting the body.</p>
 <p>It’s very useful for APIs (both REST and GraphQL!)</p>
 <p>Here, you could, for example, implement reading from the file system, like Kvarn does by default.</p>
-<h2 id="present">Present</h2>
+<h2 id="present"><a href="https://doc.kvarn.org/kvarn/macro.present.html">Present</a></h2>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>
 Cached</li>
@@ -61,7 +63,7 @@ Cached</li>
 <p>Here, files can opt in to extensions to manipulate data, such as the template system and <code>hide</code> extension.</p>
 <p>This type can modify most data in response and will be executed in series.</p>
 <p>Extensions can also attach to filetypes.</p>
-<h2 id="package">Package</h2>
+<h2 id="package"><a href="https://doc.kvarn.org/kvarn/macro.package.html">Package</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
@@ -69,12 +71,146 @@ Not cached</li>
 <p>Here, you can define headers to add to the final response.
 These headers are not cached, but applied every time. You can therefore compare things like other headers and the version of the request.</p>
 <p>Cookies can be defined here, since they won’t be cached.</p>
-<h2 id="post">Post</h2>
+<h2 id="post"><a href="https://doc.kvarn.org/kvarn/macro.post.html">Post</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
 </ul>
 <p>These extensions are called after all data are written to the user. This will almost exclusively be used for HTTP/2 push.</p>
 <p>Maybe, it can be used to sync data to a database after the request is written to not block it?</p>
+<h1 id="example">Example</h1>
+<p>Let’s build one of each extension to see how they fit together.</p>
+<p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
+<p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>. This does a lot under the hood.</p>
+<pre><code class="language-rust">use kvarn::prelude::*;
+
+#\[tokio::main]
+async fn main() {
+    env_logger::init();
+
+    let mut extensions = Extensions::empty();
+
+    extensions.add_cors(
+        Cors::new()
+            .allow(
+                &quot;/api*&quot;,
+                CorsAllowList::new().add_origin(&quot;https://icelk.dev&quot;),
+            )
+            .build(),
+    );
+
+    extensions.add_prime(prime!(request, _host, _addr {
+        if request.uri().path() == &quot;/&quot; {
+            // This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
+            // `.and_then(Result::ok)` makes Option&lt;&amp;str&gt;, returning `Some` if the value is both `Ok` and `Some`.
+            // Could also be written as
+            // `.get(&quot;user-agent&quot;).and_then(|header| header.to_str().ok())`.
+            if let Some(ua) = request.headers().get(&quot;user-agent&quot;).map(HeaderValue::to_str).and_then(Result::ok) {
+                if ua.contains(&quot;curl&quot;) {
+                    Some(Uri::from_static(&quot;/ip&quot;))
+                } else {
+                    Some(Uri::from_static(&quot;/index.html&quot;))
+                }
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }), extensions::Id::new(16, &quot;Redirect `/`&quot;));
+
+    extensions.add_prepare_single(
+        &quot;/ip&quot;.to_string(),
+        prepare!(_request, _host, _path, addr {
+            let ip = addr.ip().to_string();
+            let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
+            FatResponse::no_cache(response)
+        }),
+    );
+    extensions.add_prepare_single(
+        &quot;/index.html&quot;.to_string(),
+        prepare!(_request, _host, _path, addr {
+            let content = format!(
+                &quot;!&gt; simple-head Your IP address\n\
+                &lt;h2&gt;Your IP address is {}&lt;/h2&gt;&quot;,
+                addr.ip()
+            );
+            let response = Response::new(Bytes::copy_from_slice(content.as_bytes()));
+            FatResponse::new(response, ServerCachePreference::None)
+        }),
+    );
+
+    extensions.add_present_internal(
+        &quot;simple-head&quot;.to_string(),
+        present!(present_data {
+            let content = present_data.response().body();
+
+            let start = r#&quot;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&quot;#;
+            let middle = r#&quot;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;&quot;#;
+            let end = r#&quot;
+&lt;/body&gt;
+&lt;/html&gt;
+&quot;#;
+            let title = present_data.args().iter().fold(String::new(), |mut acc, arg| {
+                acc.push_str(arg);
+                acc.push(' ');
+                acc
+            });
+
+            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), &amp;content, end.as_bytes());
+            *present_data.response_mut().body_mut() = bytes;
+        }),
+    );
+    extensions.add_package(
+        package!(response, _request, _host {
+            response.headers_mut().insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
+            replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
+        }),
+        extensions::Id::new(-1024, &quot;add headers&quot;),
+    );
+    extensions.add_post(
+        post!(_request, host, _response_pipe, body, addr {
+            if let Ok(mut body) = str::from_utf8(&amp;body) {
+                body = body.get(0..512).unwrap_or(body);
+                println!(&quot;Sent {:?} to {} from {}&quot;, body, addr, host.name);
+            }
+        }),
+        extensions::Id::new(0, &quot;Print sent data&quot;),
+    );
+
+    // Let's see which extensions are attached:
+    println!(&quot;Our extensions: {:#?}&quot;, extensions);
+
+    println!(&quot;Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.&quot;);
+
+    let host = Host::non_secure(&quot;localhost&quot;, &quot;non-existent&quot;, extensions, host::Options::default());
+    let data = Data::builder(host).build();
+    let port = PortDescriptor::non_secure(8080, data);
+    let server = run(vec!\[port]).await;
+
+    println!(&quot;Started server at http://localhost:8080/&quot;);
+    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version.&quot;);
+    println!(&quot;Test going to the page in a browser and the curling it, you'll get different results.&quot;);
+    println!(&quot;Shutting down in 10 seconds.&quot;);
+
+    let sendable_server_handle = Arc::clone(&amp;server);
+
+    tokio::spawn(async move {
+        tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+        println!(&quot;Starting graceful shutdown&quot;);
+        sendable_server_handle.shutdown();
+    });
+
+    server.wait().await;
+
+    println!(&quot;Graceful shutdown complete.&quot;);
+}
+</code></pre>
 </md></main>
 [footer]
