@@ -5,10 +5,7 @@
 <style>
     #top-bar .middle {
         width: 18rem;
-    }
-
-    #top-bar .middle a {
-        display: none;
+        visibility: hidden;
     }
 
     #main-logo-container {
@@ -22,11 +19,13 @@
         height: calc(var(--height) - 2rem);
         background: var(--bg-head);
         clip-path: polygon(100% -100%, 100% 40%, 90% 60%, 75% 72%, 63% 100%, 40% 100%, 20% 57%, 0 35%, 0 -100%);
+
+        position: relative;
     }
 
     #main-logo {
         position: absolute;
-        top: 1rem;
+        bottom: 0;
 
         width: var(--height);
 

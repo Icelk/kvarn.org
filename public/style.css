@@ -79,29 +79,25 @@ a:visited {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    text-align: center;
-
-    width: 100%;
-    margin: 0;
-    padding: 0;
 
     font-family: "Kurale", serif;
     font-size: 1.3rem;
     letter-spacing: 0.05rem;
 
+    background: var(--bg-head);
+
     /* So we can make it fixed if we want to */
     position: relative;
 }
-#top-bar-bg {
-    position: absolute;
-
-    height: var(--bar-height);
-
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    background: var(--bg-head);
+#top-bar > .container {
+    display: flex;
+    flex-wrap: wrap;
+}
+#top-bar > .container.l {
+    justify-content: flex-end;
+}
+#top-bar > .container.r {
+    justify-content: flex-start;
 }
 /* All links in top bar */
 #top-bar .item {
@@ -134,15 +130,12 @@ a:visited {
     background-color: var(--bg-lighter);
     filter: brightness(1.1);
 }
-#top-bar .middle {
-    display: flex;
-}
 #top-bar .middle img {
     height: var(--bar-height);
     transition: height calc(var(--transition-speed) * 0.75) cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
         /* cubic-bezier(0.18, 0.89, 0.32, 1.28) */;
 }
-#top-bar .middle img:hover {
+#top-bar .middle:hover img {
     height: calc(var(--bar-height) * 2);
 }
 
