@@ -8,7 +8,7 @@ This document will contain all information about how incoming requests are handl
 
 This is here to make development easier; to have a clear plan of what to do, where to implement it, and the branching of functions.
 
-# Layer 1 / Transport Layer
+# Layer 1 / Transport
 
 This is the layer managing the transport layer of the connections. Currently, it's not implemented, but that should be easy (said that before, haven't you?).
 
