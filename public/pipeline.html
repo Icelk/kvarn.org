@@ -26,7 +26,8 @@ Headers are parsed.</p>
 <p>Caching has two options:</p>
 <ul>
 <li><a href="https://doc.kvarn.org/kvarn/comprash/enum.ClientCachePreference.html">Client cache</a>,
-<code>None</code> (<code>no-store</code>), <code>Changing</code> (2 minutes), <code>Full</code> (2 years)</li>
+<code>None</code> (<code>no-store</code>), <code>Changing</code> (2 minutes), <code>Full</code> (1 week), or
+<code>MaxAge(u32)</code> (same as <code>Full</code>, but with <code>max-age</code> set to the integer.)</li>
 <li><a href="https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html">Server cache</a>,
 <code>None</code>, <code>QueryMatters</code> (requested path has to match query) or <code>Full</code> (query of path is ignored, to prevent DDOS attacks circumventing the <em>fast</em> cache)</li>
 </ul>

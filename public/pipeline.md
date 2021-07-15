@@ -44,7 +44,8 @@ Compression can be `None` or `Full` to regulate automatic caching.
 
 Caching has two options:
 - [Client cache](https://doc.kvarn.org/kvarn/comprash/enum.ClientCachePreference.html),
-  `None` (`no-store`), `Changing` (2 minutes), `Full` (2 years)
+  `None` (`no-store`), `Changing` (2 minutes), `Full` (1 week), or
+  `MaxAge(u32)` (same as `Full`, but with `max-age` set to the integer.)
 - [Server cache](https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html),
   `None`, `QueryMatters` (requested path has to match query) or `Full` (query of path is ignored, to prevent DDOS attacks circumventing the *fast* cache)
 
