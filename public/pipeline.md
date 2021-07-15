@@ -1,6 +1,7 @@
 !> hide
 <head>
     <title>Request pipeline</title>
+    <meta name="permalinks" content="enabled">
 </head>
 
 This document will contain all information about how incoming requests are handled in Kvarn.
@@ -35,7 +36,7 @@ Headers are parsed.
 
 # Layer 4 / Caching and compression
 
-All outgoing data from this layer is cached based on the output of Layer 5.
+All outgoing data from this layer is cached based on the output of [layer 5](#layer-5--pathing).
 
 Rules can be created to get hits from other pages (the Prime extensions) when accessing a page; server-side redirecting, above the caching level.
 
@@ -47,7 +48,7 @@ Caching has two options:
 - [Server cache](https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html),
   `None`, `QueryMatters` (requested path has to match query) or `Full` (query of path is ignored, to prevent DDOS attacks circumventing the *fast* cache)
 
-After the response is created by Layer 5, Present extensions are run here.
+After the response is created by [layer 5](#layer-5--pathing), Present extensions are run here.
 
 Then, each time the response is sent, Package extensions are run.
 
@@ -62,7 +63,7 @@ This whole layer can be customised, to for example implement a proxy. You have c
 
 ## Layer 6 / Lib API
 
-Only meant to be used from Layer 5.1.
+Only meant to be used from [layer 5](#layer-5--pathing).
 
 This translates header values to more helpful structs, such as `accept*` and `authentication`
 Can be found using Kvarns public API, through the module `utils`.
