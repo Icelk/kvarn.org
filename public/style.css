@@ -190,6 +190,8 @@ code {
     font-size: 85%;
     background-color: var(--bg-lighter);
     border-radius: 6px;
+
+    color: var(--text-color);
 }
 
 /* Enable pointers on all elements with href class */
