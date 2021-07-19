@@ -58,7 +58,7 @@ If you want maximum security, you can of course simply not listen on port `80`, 
 
 Documentation and examples are key to a good library.
 
-You can always find Kvarn's documentation online [here](https://doc.kvarn.org).
+You can always read [Kvarn's documentation online](https://doc.kvarn.org).
 Under `Crates` to the left, you can explore all other crates part of [the ecosystem](/ecosystem/).
 
 The full coverage is enforced by the compiler. All examples are enforced to run correctly by Rust's builtin testing.
