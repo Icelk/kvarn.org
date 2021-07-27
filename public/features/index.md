@@ -32,6 +32,8 @@ If something doesn't work, it's the user agent not conforming.
 
 ## [HTTP/2 Push](/push.)
 
+> Part of `kvarn_extensions` under the feature `push` (part of `default`)
+
 HTTP/2 introduced a features where the server can push other resources before the client requests them.
 This has not been widely used because of the problem with pushing to the client when it's already got
 the resource in a cache.
@@ -178,7 +180,7 @@ Kvarn is written in [Rust](https://rust-lang.org).
 
 This greatly improves security (resilience against buffer overflows) and reliability,
 as Rust guarantees pointers to be valid through it's strict borrowing rules.
-This, together with phenomenal error handling and strong tooling makes for a maintainable and predictable code.
+This, together with phenomenal error handling and strong tooling makes for maintainable and predictable code.
 
 The borrow rules ensure memory safety without runtime overhead, while being as fast as C
 (assuming the code is optimal, which is easier to accomplish with Rust).

@@ -41,6 +41,9 @@ This means you get all the pros of the latest protocols without any code.</p>
 <p>Kvarn passes the <a href="https://github.com/summerwind/h2spec">h2spec test</a>.
 If something doesn’t work, it’s the user agent not conforming.</p>
 <h2 id="http2-push"><a href="/push.">HTTP/2 Push</a></h2>
+<blockquote>
+<p>Part of <code>kvarn_extensions</code> under the feature <code>push</code> (part of <code>default</code>)</p>
+</blockquote>
 <p>HTTP/2 introduced a features where the server can push other resources before the client requests them.
 This has not been widely used because of the problem with pushing to the client when it’s already got
 the resource in a cache.</p>
@@ -152,7 +155,7 @@ HTTP/2, caching, and easy upgrades.</p>
 <p>Kvarn is written in <a href="https://rust-lang.org">Rust</a>.</p>
 <p>This greatly improves security (resilience against buffer overflows) and reliability,
 as Rust guarantees pointers to be valid through it’s strict borrowing rules.
-This, together with phenomenal error handling and strong tooling makes for a maintainable and predictable code.</p>
+This, together with phenomenal error handling and strong tooling makes for maintainable and predictable code.</p>
 <p>The borrow rules ensure memory safety without runtime overhead, while being as fast as C
 (assuming the code is optimal, which is easier to accomplish with Rust).</p>
 <p>The compiler catches <em>nearly all</em> errors. The quote, “if it compiles, it runs” is indeed true.
