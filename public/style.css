@@ -113,10 +113,10 @@ a:visited {
     text-decoration: none;
     transition: filter ease-out var(--transition-speed);
 
-    display: block;
+    display: flex;
     margin: 0 2px;
     line-height: var(--bar-height);
-    max-height: var(--bar-height);
+    align-items: center;
 }
 
 /* Dim item while hovering */
