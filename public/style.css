@@ -104,9 +104,6 @@ a:visited {
     /* width: 6rem; */
     padding: 0 0.8em;
 }
-#top-bar .middle {
-    padding: 0 0.4em;
-}
 #top-bar .item,
 #top-bar .middle {
     color: inherit !important;
@@ -117,6 +114,10 @@ a:visited {
     margin: 0 2px;
     line-height: var(--bar-height);
     align-items: center;
+}
+#top-bar .middle {
+    padding: 0 0.4em;
+    align-items: start;
 }
 
 /* Dim item while hovering */
