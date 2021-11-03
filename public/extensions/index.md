@@ -53,6 +53,9 @@ a special page where a 307 redirect is responded with.
 You provide either a URI or a function of when to activate your code.
 Will still get all other extensions applied.
 
+> The `path` variable you get here will be `None` if the `fs` feature of a `Host` isn't enabled or percent decoding failed.
+> Be sure to handle percent encoding when taking the `request.uri().path()`. Using the `path` handles this for you.
+
 You have to handle all HTTP methods, as Kvarn passes all, except for `HEAD`, which it handles by simply omitting the body.
 
 It's very useful for APIs (both REST and GraphQL!)
