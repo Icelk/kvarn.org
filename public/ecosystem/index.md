@@ -1,6 +1,6 @@
 !> hide
 <head>
-    <title>The Kvarn Ecosystem</title>
+    <title>Ecosystem | Kvarn</title>
     <meta name="permalinks" content="enabled">
 </head>
 

@@ -1,6 +1,6 @@
 !> hide
 <head>
-    <title>Extensions</title>
+    <title>Extensions | Kvarn</title>
     [highlight]
 </head>
 

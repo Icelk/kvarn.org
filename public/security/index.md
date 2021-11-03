@@ -1,6 +1,6 @@
 !> hide
 <head>
-    <title>Security</title>
+    <title>Security | Kvarn</title>
 </head>
 
 A web-server needs good security practises to

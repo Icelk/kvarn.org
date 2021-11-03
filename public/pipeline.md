@@ -1,6 +1,6 @@
 !> hide
 <head>
-    <title>Request pipeline</title>
+    <title>Request pipeline | Kvarn</title>
     <meta name="permalinks" content="enabled">
 </head>
 
