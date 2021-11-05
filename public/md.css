@@ -100,7 +100,7 @@ md blockquote {
     opacity: 0.8;
 }
 md blockquote > p {
-    margin: 0;
+    margin: 0.5rem 0;
 }
 
 md table {
