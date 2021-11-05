@@ -109,9 +109,9 @@ If you need the maintenance advantage of a modular system, look no further than 
 Kvarn can interpret `.php` files and send them back, with all of Kvarn's other features.
 Server caching can be set with the [`kvarn-cache-control`](/cache.#kvarn-cache-control) header.
 
-# [MarkDown](/chute.)
+# [MarkDown](/chute/)
 
-> Part of [Chute](/chute.)
+> Part of [Chute](/chute/)
 
 Sometimes you need to write a consistent website easily, with minimal effort.
 That's where *Kvarn Chute* comes in. You write MarkDown, Chute translates it to HTML, using
