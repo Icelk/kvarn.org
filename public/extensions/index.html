@@ -94,13 +94,13 @@ async fn main() {
 
     let mut extensions = Extensions::empty();
 
-    extensions.add_cors(
+    extensions.with_cors(
         Cors::new()
-            .allow(
+            .add(
                 &quot;/api*&quot;,
-                CorsAllowList::new().add_origin(&quot;https://icelk.dev&quot;),
+                CorsAllowList::default().add_origin(&quot;https://icelk.dev&quot;),
             )
-            .build(),
+            .arc(),
     );
 
     extensions.add_prime(prime!(request, _host, _addr {
@@ -167,14 +167,14 @@ async fn main() {
                 acc
             });
 
-            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), &amp;content, end.as_bytes());
+            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), content, end.as_bytes());
             *present_data.response_mut().body_mut() = bytes;
         }),
     );
     extensions.add_package(
         package!(response, _request, _host {
             response.headers_mut().insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
-            replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
+            utils::replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
         }),
         extensions::Id::new(-1024, &quot;add headers&quot;),
     );
@@ -193,10 +193,10 @@ async fn main() {
 
     println!(&quot;Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.&quot;);
 
-    let host = Host::non_secure(&quot;localhost&quot;, &quot;non-existent&quot;, extensions, host::Options::default());
-    let data = Data::builder(host).build();
-    let port = PortDescriptor::non_secure(8080, data);
-    let server = run(vec!\[port]).await;
+    let host = Host::unsecure(&quot;localhost&quot;, &quot;non-existent&quot;, extensions, host::Options::default());
+    let data = Data::builder().insert(host).build();
+    let port = PortDescriptor::unsecure(8080, data);
+    let server = RunConfig::new().bind(port).execute().await;
 
     println!(&quot;Started server at http://localhost:8080/&quot;);
     println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version.&quot;);

@@ -106,13 +106,13 @@ async fn main() {
 
     let mut extensions = Extensions::empty();
 
-    extensions.add_cors(
+    extensions.with_cors(
         Cors::new()
-            .allow(
+            .add(
                 "/api*",
-                CorsAllowList::new().add_origin("https://icelk.dev"),
+                CorsAllowList::default().add_origin("https://icelk.dev"),
             )
-            .build(),
+            .arc(),
     );
 
     extensions.add_prime(prime!(request, _host, _addr {
@@ -179,14 +179,14 @@ async fn main() {
                 acc
             });
 
-            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), &content, end.as_bytes());
+            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), content, end.as_bytes());
             *present_data.response_mut().body_mut() = bytes;
         }),
     );
     extensions.add_package(
         package!(response, _request, _host {
             response.headers_mut().insert("fun-header", HeaderValue::from_static("why not?"));
-            replace_header_static(response.headers_mut(), "content-security-policy", "default-src 'self'; style-src 'unsafe-inline' 'self'");
+            utils::replace_header_static(response.headers_mut(), "content-security-policy", "default-src 'self'; style-src 'unsafe-inline' 'self'");
         }),
         extensions::Id::new(-1024, "add headers"),
     );
@@ -205,10 +205,10 @@ async fn main() {
 
     println!("Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.");
 
-    let host = Host::non_secure("localhost", "non-existent", extensions, host::Options::default());
-    let data = Data::builder(host).build();
-    let port = PortDescriptor::non_secure(8080, data);
-    let server = run(vec!\[port]).await;
+    let host = Host::unsecure("localhost", "non-existent", extensions, host::Options::default());
+    let data = Data::builder().insert(host).build();
+    let port = PortDescriptor::unsecure(8080, data);
+    let server = RunConfig::new().bind(port).execute().await;
 
     println!("Started server at http://localhost:8080/");
     println!("Try http://127.0.0.1:8080/ for the IPv4 version.");
