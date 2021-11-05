@@ -100,17 +100,12 @@
         Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>. You'll need to
         <a href="https://www.rust-lang.org/tools/install">download it</a> before using the Kvarn web server.
     </p>
-    <p>Then, go to a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
-    <pre><code class="language-shell">$ cargo init --bin</code></pre>
-    <p>
-        The best way to use Kvarn (for now, when the structure of the code is about to change) is to add it as a git
-        submodule.
-    </p>
-    <pre><code class="language-shell">$ git submodule add https://github.com/Icelk/kvarn</code></pre>
+    <p>Then, enter a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
+    <pre><code class="language-shell">$ cargo init</code></pre>
     <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
-    <pre><code class="language-ini">kvarn = { path = "kvarn" }
-tokio = { version = "^1", features = \["macros", "rt-multi-thread"] }
-env_logger = "^0.8"</code></pre>
+    <pre><code class="language-ini">kvarn = "^0.3"
+tokio = { version = "^1.13", features = \["macros", "rt-multi-thread"] }
+env_logger = "^0.9"</code></pre>
     <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
     <pre><code class="language–rust">use kvarn::prelude::*;
 
@@ -119,14 +114,14 @@ async fn main() {
     // Initiate the logger. Set the environment variable `RUST_LOG` to `info` to get finer logging.
     env_logger::init();
     // Create a host with hostname "localhost", serving files from directory "./web/public/", with the default extensions and the default options.
-    let host = Host::non_secure("localhost", PathBuf::from("web"), Extensions::default(), host::Options::default());
+    let host = Host::unsecure("localhost", PathBuf::from("web"), Extensions::default(), host::Options::default());
     // Create a set of virtual hosts (`Data`) with `host` as the default.
-    let data = Data::builder(host).build();
+    let data = Data::builder().insert(host).build();
     // Bind port 8080 with `data`.
-    let port_descriptor = PortDescriptor::new(8080, data);
+    let port_descriptor = PortDescriptor::unsecure(8080, data);
 
     // Run with the configured ports.
-    let shutdown_manager = run(vec!\[port_descriptor]).await;
+    let shutdown_manager = RunConfig::new().bind(port_descriptor).execute().await;
     // Waits for shutdown.
     shutdown_manager.wait().await;
 }</code></pre>
