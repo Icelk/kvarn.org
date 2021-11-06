@@ -121,10 +121,10 @@ async fn main() {
         } else {
             None
         }
-    }), extensions::Id::new(16, &quot;Redirect `/`&quot;));
+    }), Id::new(16, &quot;Redirect `/`&quot;));
 
     extensions.add_prepare_single(
-        &quot;/ip&quot;.to_string(),
+        &quot;/ip&quot;,
         prepare!(_request, _host, _path, addr {
             let ip = addr.ip().to_string();
             let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
@@ -132,15 +132,16 @@ async fn main() {
         }),
     );
     extensions.add_prepare_single(
-        &quot;/index.html&quot;.to_string(),
+        &quot;/index.html&quot;,
         prepare!(_request, _host, _path, addr {
+            // This uses the present extension `simple-head` declared just below this extension.
             let content = format!(
                 &quot;!&gt; simple-head Your IP address\n\
                 &lt;h2&gt;Your IP address is {}&lt;/h2&gt;&quot;,
                 addr.ip()
             );
             let response = Response::new(Bytes::copy_from_slice(content.as_bytes()));
-            FatResponse::new(response, ServerCachePreference::None)
+            FatResponse::new(response, comprash::ServerCachePreference::None)
         }),
     );
 
@@ -176,16 +177,16 @@ async fn main() {
             response.headers_mut().insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
             utils::replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
         }),
-        extensions::Id::new(-1024, &quot;add headers&quot;),
+        Id::new(-1024, &quot;add headers&quot;),
     );
     extensions.add_post(
-        post!(_request, host, _response_pipe, body, addr {
-            if let Ok(mut body) = str::from_utf8(&amp;body) {
+        post!(_request, host, _response_pipe, identity_body, addr {
+            if let Ok(mut body) = str::from_utf8(&amp;identity_body) {
                 body = body.get(0..512).unwrap_or(body);
                 println!(&quot;Sent {:?} to {} from {}&quot;, body, addr, host.name);
             }
         }),
-        extensions::Id::new(0, &quot;Print sent data&quot;),
+        Id::new(0, &quot;Print sent data&quot;),
     );
 
     // Let's see which extensions are attached:
@@ -193,25 +194,34 @@ async fn main() {
 
     println!(&quot;Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.&quot;);
 
-    let host = Host::unsecure(&quot;localhost&quot;, &quot;non-existent&quot;, extensions, host::Options::default());
-    let data = Data::builder().insert(host).build();
+    let host = Host::unsecure(
+        &quot;localhost&quot;,
+        &quot;non-existent&quot;,
+        extensions,
+        host::Options::default(),
+    );
+    // Consider using `.insert` here instead of `.default`.
+    // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
+    let data = Data::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
-    let server = RunConfig::new().bind(port).execute().await;
+    let handle = RunConfig::new().bind(port).execute().await;
 
     println!(&quot;Started server at http://localhost:8080/&quot;);
-    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version.&quot;);
-    println!(&quot;Test going to the page in a browser and the curling it, you'll get different results.&quot;);
+    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version and http://\[::1]:8080/ for IPv6.&quot;);
+    println!(
+        &quot;Test going to the page in a browser and the curling it, you'll get different results.&quot;
+    );
     println!(&quot;Shutting down in 10 seconds.&quot;);
 
-    let sendable_server_handle = Arc::clone(&amp;server);
+    let sendable_server_handle = Arc::clone(&amp;handle);
 
     tokio::spawn(async move {
-        tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+        tokio::time::sleep(time::Duration::from_secs(10)).await;
         println!(&quot;Starting graceful shutdown&quot;);
         sendable_server_handle.shutdown();
     });
 
-    server.wait().await;
+    handle.wait().await;
 
     println!(&quot;Graceful shutdown complete.&quot;);
 }

@@ -133,10 +133,10 @@ async fn main() {
         } else {
             None
         }
-    }), extensions::Id::new(16, "Redirect `/`"));
+    }), Id::new(16, "Redirect `/`"));
 
     extensions.add_prepare_single(
-        "/ip".to_string(),
+        "/ip",
         prepare!(_request, _host, _path, addr {
             let ip = addr.ip().to_string();
             let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
@@ -144,15 +144,16 @@ async fn main() {
         }),
     );
     extensions.add_prepare_single(
-        "/index.html".to_string(),
+        "/index.html",
         prepare!(_request, _host, _path, addr {
+            // This uses the present extension `simple-head` declared just below this extension.
             let content = format!(
                 "!> simple-head Your IP address\n\
                 <h2>Your IP address is {}</h2>",
                 addr.ip()
             );
             let response = Response::new(Bytes::copy_from_slice(content.as_bytes()));
-            FatResponse::new(response, ServerCachePreference::None)
+            FatResponse::new(response, comprash::ServerCachePreference::None)
         }),
     );
 
@@ -188,16 +189,16 @@ async fn main() {
             response.headers_mut().insert("fun-header", HeaderValue::from_static("why not?"));
             utils::replace_header_static(response.headers_mut(), "content-security-policy", "default-src 'self'; style-src 'unsafe-inline' 'self'");
         }),
-        extensions::Id::new(-1024, "add headers"),
+        Id::new(-1024, "add headers"),
     );
     extensions.add_post(
-        post!(_request, host, _response_pipe, body, addr {
-            if let Ok(mut body) = str::from_utf8(&body) {
+        post!(_request, host, _response_pipe, identity_body, addr {
+            if let Ok(mut body) = str::from_utf8(&identity_body) {
                 body = body.get(0..512).unwrap_or(body);
                 println!("Sent {:?} to {} from {}", body, addr, host.name);
             }
         }),
-        extensions::Id::new(0, "Print sent data"),
+        Id::new(0, "Print sent data"),
     );
 
     // Let's see which extensions are attached:
@@ -205,25 +206,34 @@ async fn main() {
 
     println!("Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.");
 
-    let host = Host::unsecure("localhost", "non-existent", extensions, host::Options::default());
-    let data = Data::builder().insert(host).build();
+    let host = Host::unsecure(
+        "localhost",
+        "non-existent",
+        extensions,
+        host::Options::default(),
+    );
+    // Consider using `.insert` here instead of `.default`.
+    // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
+    let data = Data::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
-    let server = RunConfig::new().bind(port).execute().await;
+    let handle = RunConfig::new().bind(port).execute().await;
 
     println!("Started server at http://localhost:8080/");
-    println!("Try http://127.0.0.1:8080/ for the IPv4 version.");
-    println!("Test going to the page in a browser and the curling it, you'll get different results.");
+    println!("Try http://127.0.0.1:8080/ for the IPv4 version and http://\[::1]:8080/ for IPv6.");
+    println!(
+        "Test going to the page in a browser and the curling it, you'll get different results."
+    );
     println!("Shutting down in 10 seconds.");
 
-    let sendable_server_handle = Arc::clone(&server);
+    let sendable_server_handle = Arc::clone(&handle);
 
     tokio::spawn(async move {
-        tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+        tokio::time::sleep(time::Duration::from_secs(10)).await;
         println!("Starting graceful shutdown");
         sendable_server_handle.shutdown();
     });
 
-    server.wait().await;
+    handle.wait().await;
 
     println!("Graceful shutdown complete.");
 }
