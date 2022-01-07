@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Request pipeline | Kvarn</title>
     <meta name="permalinks" content="enabled">
@@ -34,6 +35,8 @@ Body still stream
 (at least kinda, see [`application.rs#Body`](https://doc.kvarn.org/kvarn/application/enum.Body.html) for more info).
 Headers are parsed.
 
+After the response has been sent, Post extensions are resolved.
+
 # Layer 4 / Caching and compression
 
 All outgoing data from this layer is cached based on the output of [layer 5](#layer-5--pathing).
@@ -43,23 +46,22 @@ Rules can be created to get hits from other pages (the Prime extensions) when ac
 Compression can be `None` or `Full` to regulate automatic caching.
 
 Caching has two options:
-- [Client cache](https://doc.kvarn.org/kvarn/comprash/enum.ClientCachePreference.html),
-  `None` (`no-store`), `Changing` (2 minutes), `Full` (1 week), or
-  `MaxAge(u32)` (same as `Full`, but with `max-age` set to the integer.)
-- [Server cache](https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html),
-  `None`, `QueryMatters` (requested path has to match query) or `Full` (query of path is ignored, to prevent DDOS attacks circumventing the *fast* cache)
+
+-   [Client cache](https://doc.kvarn.org/kvarn/comprash/enum.ClientCachePreference.html),
+    `None` (`no-store`), `Changing` (2 minutes), `Full` (1 week), or
+    `MaxAge(u32)` (same as `Full`, but with `max-age` set to the integer.)
+-   [Server cache](https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html),
+    `None`, `QueryMatters` (requested path has to match query) or `Full` (query of path is ignored, to prevent DDOS attacks circumventing the _fast_ cache)
 
 After the response is created by [layer 5](#layer-5--pathing), Present extensions are run here.
 
 Then, each time the response is sent, Package extensions are run.
 
-After the response has been sent, Post extensions are resolved.
-
 # Layer 5 / Pathing
 
-This is where the data of `::http::Request` is interpreted to either read a file, run a Prepare extension, call PHP, or any *path*.
+This is where the data of `::http::Request` is interpreted to either read a file, run a Prepare extension, call PHP, or any _path_.
 
-This whole layer can be customised, to for example implement a proxy. You have complete control over the outgoing data 
+This whole layer can be customised, to for example implement a proxy. You have complete control over the outgoing data
 (except for the first response; this is a HTTP server!), cache method, and suggested compression.
 
 ## Layer 6 / Lib API

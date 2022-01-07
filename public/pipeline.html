@@ -19,6 +19,7 @@
 <p>Body still stream
 (at least kinda, see <a href="https://doc.kvarn.org/kvarn/application/enum.Body.html"><code>application.rs#Body</code></a> for more info).
 Headers are parsed.</p>
+<p>After the response has been sent, Post extensions are resolved.</p>
 <h1 id="layer-4--caching-and-compression">Layer 4 / Caching and compression</h1>
 <p>All outgoing data from this layer is cached based on the output of <a href="#layer-5--pathing">layer 5</a>.</p>
 <p>Rules can be created to get hits from other pages (the Prime extensions) when accessing a page; server-side redirecting, above the caching level.</p>
@@ -33,10 +34,9 @@ Headers are parsed.</p>
 </ul>
 <p>After the response is created by <a href="#layer-5--pathing">layer 5</a>, Present extensions are run here.</p>
 <p>Then, each time the response is sent, Package extensions are run.</p>
-<p>After the response has been sent, Post extensions are resolved.</p>
 <h1 id="layer-5--pathing">Layer 5 / Pathing</h1>
 <p>This is where the data of <code>::http::Request</code> is interpreted to either read a file, run a Prepare extension, call PHP, or any <em>path</em>.</p>
-<p>This whole layer can be customised, to for example implement a proxy. You have complete control over the outgoing data 
+<p>This whole layer can be customised, to for example implement a proxy. You have complete control over the outgoing data
 (except for the first response; this is a HTTP server!), cache method, and suggested compression.</p>
 <h2 id="layer-6--lib-api">Layer 6 / Lib API</h2>
 <p>Only meant to be used from <a href="#layer-5--pathing">layer 5</a>.</p>
