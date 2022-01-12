@@ -140,6 +140,8 @@ The nav-bar on this page is powered by the templates.
 HTML documents are about 15 lines for a title, heading, and a paragraph,
 and of course the nav-bar.
 
+See [this directory in the source code of this website](https://github.com/Icelk/kvarn.org/tree/main/templates/) for an example of the format of templates.
+
 # [CORS](/cors.)
 
 As the web has expanded and complexity increased, cross-site requests have become essential.
