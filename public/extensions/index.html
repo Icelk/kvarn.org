@@ -56,7 +56,8 @@ Will still get all other extensions applied.</p>
 <p>The <code>path</code> variable you get here will be <code>None</code> if the <code>fs</code> feature of a <code>Host</code> isn’t enabled or percent decoding failed.
 Be sure to handle percent encoding when taking the <code>request.uri().path()</code>. Using the <code>path</code> handles this for you.</p>
 </blockquote>
-<p>You have to handle all HTTP methods, as Kvarn passes all, except for <code>HEAD</code>, which it handles by simply omitting the body.</p>
+<p><strong>You have to handle all HTTP methods</strong>, as Kvarn passes all, except for <code>HEAD</code>, which it handles by simply omitting the body.
+<strong>If your <code>response-type</code> is something other than HTML, you must set the header.</strong></p>
 <p>It’s very useful for APIs (both REST and GraphQL!)</p>
 <p>Here, you could, for example, implement reading from the file system, like Kvarn does by default.</p>
 <h2 id="present"><a href="https://doc.kvarn.org/kvarn/macro.present.html">Present</a></h2>
