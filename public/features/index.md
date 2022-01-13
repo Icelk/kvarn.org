@@ -143,6 +143,16 @@ and of course the nav-bar.
 
 See [this directory in the source code of this website](https://github.com/Icelk/kvarn.org/tree/main/templates/) for an example of the format of templates.
 
+# [Full text search engine](/search.)
+
+A search engine with typo tolerance, no index set-up, and fast (1-4ms) responses.
+
+Boasts an API for accessing the search hits.
+This means you can implement your own frontend,
+or use mine at [icelk.dev](https://icelk.dev). All the code for that is summarized at [the example](/search.#frontend).
+
+See the link for more information.
+
 # [CORS](/cors.)
 
 As the web has expanded and complexity increased, cross-site requests have become essential.

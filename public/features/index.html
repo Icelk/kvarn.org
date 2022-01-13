@@ -23,12 +23,13 @@ This will be explicitly noted.</p>
 <tr><td><a href="#php">8 PHP</a></td></tr>
 <tr><td><a href="#markdown">9 MarkDown</a></td></tr>
 <tr><td><a href="#templates">10 Templates</a></td></tr>
-<tr><td><a href="#cors">11 CORS</a></td></tr>
-<tr><td><a href="#graceful-shutdown--handover">12 Graceful shutdown &amp; handover</a></td></tr>
-<tr><td><a href="#reverse-proxy">13 Reverse proxy</a></td></tr>
-<tr><td><a href="#guaranteed-memorysafety">14 Guaranteed memory-safety</a></td></tr>
-<tr><td><a href="#other-fundamental-features--systems">15 Other fundamental features &amp; systems</a></td></tr>
-<tr><td><a href="#back-to-the-basics">16 Back to the basics</a></td></tr>
+<tr><td><a href="#full-text-search-engine">11 Full text search engine</a></td></tr>
+<tr><td><a href="#cors">12 CORS</a></td></tr>
+<tr><td><a href="#graceful-shutdown--handover">13 Graceful shutdown &amp; handover</a></td></tr>
+<tr><td><a href="#reverse-proxy">14 Reverse proxy</a></td></tr>
+<tr><td><a href="#guaranteed-memorysafety">15 Guaranteed memory-safety</a></td></tr>
+<tr><td><a href="#other-fundamental-features--systems">16 Other fundamental features &amp; systems</a></td></tr>
+<tr><td><a href="#back-to-the-basics">17 Back to the basics</a></td></tr>
 </tbody></table>
 <h1 id="sane-defaults">Sane defaults</h1>
 <p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security, speed, and help mitigate DOS attacks.</p>
@@ -123,6 +124,12 @@ handle conditional inclusion or loops. Only simple inclusion.</p>
 HTML documents are about 15 lines for a title, heading, and a paragraph,
 and of course the nav-bar.</p>
 <p>See <a href="https://github.com/Icelk/kvarn.org/tree/main/templates/">this directory in the source code of this website</a> for an example of the format of templates.</p>
+<h1 id="full-text-search-engine"><a href="/search.">Full text search engine</a></h1>
+<p>A search engine with typo tolerance, no index set-up, and fast (1-4ms) responses.</p>
+<p>Boasts an API for accessing the search hits.
+This means you can implement your own frontend,
+or use mine at <a href="https://icelk.dev">icelk.dev</a>. All the code for that is summarized at <a href="/search.#frontend">the example</a>.</p>
+<p>See the link for more information.</p>
 <h1 id="cors"><a href="/cors.">CORS</a></h1>
 <p>As the web has expanded and complexity increased, cross-site requests have become essential.</p>
 <blockquote>
