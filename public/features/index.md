@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Features of Kvarn</title>
 </head>
@@ -38,7 +39,7 @@ HTTP/2 introduced a features where the server can push other resources before th
 This has not been widely used because of the problem with pushing to the client when it's already got
 the resource in a cache.
 
-Kvarn aims to solve this by making it simple to integrate, *not requiring any configuration*
+Kvarn aims to solve this by making it simple to integrate, _not requiring any configuration_
 and not sending the same resource twice to a client.
 
 # [HTTPS](/https.)
@@ -69,7 +70,7 @@ The full coverage is enforced by the compiler. All examples are enforced to run 
 
 Kvarn in it's default acts as a file-server. That in itself isn't useful for building a backend.
 To build a API, implement authentication, add dynamic language support, or [CORS](https://en.wikipedia.org/wiki/CORS),
-*extensions* provides the data and tools you need.
+_extensions_ provides the data and tools you need.
 
 As there are few and small performance benefits of implementing features directly into Kvarn, but great flexibility advantages.
 Therefore, as many features as possible are built as extensions.
@@ -78,7 +79,7 @@ When writing an API, Kvarn handles all HTTP boilerplate. It'll cache, compress, 
 the response, with minimal info from the implementation.
 
 There exists several types of extensions, all of which have a separate function for complete control over the response pipeline.
-A *present* extension can be called from within a file.
+A _present_ extension can be called from within a file.
 If it start with `!>` you can specify present extensions like this `!> my-extension arg1 arg2 &> another-extension argument...`.
 These are evaluated in order, first to last.
 
@@ -87,7 +88,7 @@ The flexibility of Kvarn is advantageous; if you have frequent changes, content 
 it'll cache the results as a complete response, ready to be sent.
 Kvarn tries to generalize requests, reducing cache misses.
 This also acts as a primitive anti-DOS strategy; if no new content is calculated (or read from disk),
-the requests are *very* cheap.
+the requests are _very_ cheap.
 
 # [Cache](/cache.)
 
@@ -114,10 +115,10 @@ Server caching can be set with the [`kvarn-cache-control`](/cache.#kvarn-cache-c
 > Part of [Chute](/chute/)
 
 Sometimes you need to write a consistent website easily, with minimal effort.
-That's where *Kvarn Chute* comes in. You write MarkDown, Chute translates it to HTML, using
+That's where _Kvarn Chute_ comes in. You write MarkDown, Chute translates it to HTML, using
 [Kvarn's templating system](/templates.).
 
-This page is written using this features, reducing boilerplate *even more* and speeding up documentation.
+This page is written using this features, reducing boilerplate _even more_ and speeding up documentation.
 
 You can add tags to the head of the HTML by starting the MD document (after the extensions declaration) with a `<head>` tag.
 You'll of course have to close it when all the metadata is written.
@@ -160,10 +161,11 @@ To enable upgrade of the server, you need to shut it down and then start it up, 
 The way Kvarn solves this is through graceful shutdown and handover.
 
 When you restart the Kvarn server,
-- first, the new binary is started. Multiple Kvarn instances can bind to the same port, ensuring 0 downtime.
-- Then, The old binary closes it's listeners and instructs all open connections to end if a transaction is not in progress.
-- Any transactions (primarily WebSockets) in progress are waited on, while the new binary accepts new requests.
-- When all transactions are closed, the old binary silently exits.
+
+-   first, the new binary is started. Multiple Kvarn instances can bind to the same port, ensuring 0 downtime.
+-   Then, The old binary closes it's listeners and instructs all open connections to end if a transaction is not in progress.
+-   Any transactions (primarily WebSockets) in progress are waited on, while the new binary accepts new requests.
+-   When all transactions are closed, the old binary silently exits.
 
 The communication between binaries are via Unix sockets (which isn't a problem as binding to the same port isn't supported on Windows).
 
@@ -187,31 +189,31 @@ This, together with phenomenal error handling and strong tooling makes for maint
 The borrow rules ensure memory safety without runtime overhead, while being as fast as C
 (assuming the code is optimal, which is easier to accomplish with Rust).
 
-The compiler catches *nearly all* errors. The quote, "if it compiles, it runs" is indeed true.
+The compiler catches _nearly all_ errors. The quote, "if it compiles, it runs" is indeed true.
 Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to go offline.
 
 # Other fundamental features & systems
 
-- Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime powering [Deno](https://deno.land).
-- [Limiting](/limiting.) of requests to provide availability to all users. This is a *primitive* defence against small DOS attacks.
-- [Error handling](/http-errors.) for customizing HTTP errors, with support for all extensions, including templates.
-  If you visit [a page which doesn't exist on kvarn.org](/404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
-- [Optional features](/cargo-features.) offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
-  results in a larger binary and slower compile-times,
-  but disabling those features makes Kvarn [viable to compile on a Raspberry Pi](https://github.com/Icelk/httPWM/#state-of-project).
-- [Virtual hosts](/host.) allow multiple domains and sub-domains to be hosted on the same system.
-  All configuration is defined per host.
-- IPv6 support.
-- [Utilities](/utils.) for extracting data from HTTP requests. This will include a basic authentication system soon.
-- [Testing](/testing.) with a public frontend to test your APIs before production.
-  To run a Kvarn server and send a request takes 2 lines of code.
+-   Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime powering [Deno](https://deno.land).
+-   [Limiting](/limiting.) of requests to provide availability to all users. This is a _primitive_ defence against small DOS attacks.
+-   [Error handling](/http-errors.) for customizing HTTP errors, with support for all extensions, including templates.
+    If you visit [a page which doesn't exist on kvarn.org](/404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
+-   [Optional features](/cargo-features.) offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
+    results in a larger binary and slower compile-times,
+    but disabling those features makes Kvarn [viable to compile on a Raspberry Pi](https://github.com/Icelk/httPWM/#state-of-project).
+-   [Virtual hosts](/host.) allow multiple domains and sub-domains to be hosted on the same system.
+    All configuration is defined per host.
+-   IPv6 support.
+-   [Utilities](/utils.) for extracting data from HTTP requests. This will include a basic authentication system soon.
+-   [Testing](/testing.) with a public frontend to test your APIs before production.
+    To run a Kvarn server and send a request takes 2 lines of code.
 
 # Back to the basics
 
-> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ\_ಠ
+> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ_ಠ
 
-- Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
-- If-Modified-Since for more effective caching. This is directly integrated with `lifetime`s in the Kvarn cache.
-- [URL handling](/rerouting.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
-- Logging using Rust's standard logger, enabling you to chose a log implementation which works for you.
-- Idiomatic Rust, guaranteed by [Clippy](https://github.com/rust-lang/rust-clippy).
+-   Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
+-   If-Modified-Since for more effective caching. This is directly integrated with `lifetime`s in the Kvarn cache.
+-   [URL handling](/rerouting.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
+-   Logging using Rust's standard logger, enabling you to chose a log implementation which works for you.
+-   Idiomatic Rust, guaranteed by [Clippy](https://github.com/rust-lang/rust-clippy).
