@@ -19,6 +19,6 @@ See [these two lines](https://github.com/Icelk/kvarn-reference/blob/main/src/hos
 
 ## Frontend
 
-[This function](https://github.com/Icelk/icelk.dev/blob/main/public/script.js#L237-L385) handles the searching in JS.\
-[This HTML](https://github.com/Icelk/icelk.dev/blob/main/templates/standard.html#L105-L127) is the search bar.\
-[And this](https://github.com/Icelk/icelk.dev/blob/main/public/style.css#L347-L431) is the styling.
+[This function](https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/script.js#L237-L395) handles the searching in JS.\
+[This HTML](https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/templates/standard.html#L105-L127) is the search bar.\
+[And this](https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/style.css#L350-L434) is the styling.
