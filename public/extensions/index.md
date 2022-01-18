@@ -10,6 +10,15 @@ with little overhead compared to cloning Kvarn and integrating with the internal
 
 ${toc}
 
+# Details
+
+The following pages are details on implementation useful to read if you're working with Kvarn, even just as the web server to host your files.
+
+- [Redirects](redirects.)
+- APIs at `/./*` are not accessible from the outside, as Kvarn forbids this.\
+    A common pattern is to make [Prime](https://doc.kvarn.org/kvarn/extensions/type.Prime.html) extensions which redirect to APIs located here.
+    Then, you can conditionally change the path of a request.
+
 # Building an API
 
 In Kvarn, you can attach to single URLs

@@ -7,15 +7,24 @@
 They provide options for attaching to all parts of the request pipeline,
 with little overhead compared to cloning Kvarn and integrating with the internal code.</p>
 <table><thead><tr><th>Contents</th></tr></thead><tbody>
-<tr><td><a href="#building-an-api">1 Building an API</a></td></tr>
-<tr><td><a href="#the-five-ps">2 The five <em>P</em>s</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#prime">2.1 Prime</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#prepare">2.2 Prepare</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#present">2.3 Present</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#package">2.4 Package</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#post">2.5 Post</a></td></tr>
-<tr><td><a href="#example">3 Example</a></td></tr>
+<tr><td><a href="#details">1 Details</a></td></tr>
+<tr><td><a href="#building-an-api">2 Building an API</a></td></tr>
+<tr><td><a href="#the-five-ps">3 The five <em>P</em>s</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#prime">3.1 Prime</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#prepare">3.2 Prepare</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#present">3.3 Present</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#package">3.4 Package</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#post">3.5 Post</a></td></tr>
+<tr><td><a href="#example">4 Example</a></td></tr>
 </tbody></table>
+<h1 id="details">Details</h1>
+<p>The following pages are details on implementation useful to read if you’re working with Kvarn, even just as the web server to host your files.</p>
+<ul>
+<li><a href="redirects.">Redirects</a></li>
+<li>APIs at <code>/./*</code> are not accessible from the outside, as Kvarn forbids this.<br />
+A common pattern is to make <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">Prime</a> extensions which redirect to APIs located here.
+Then, you can conditionally change the path of a request.</li>
+</ul>
 <h1 id="building-an-api">Building an API</h1>
 <p>In Kvarn, you can attach to single URLs
 or provide a function which takes the request and
