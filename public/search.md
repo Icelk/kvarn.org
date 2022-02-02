@@ -17,6 +17,12 @@ you can add a search engine to Kvarn and customize it.
 
 See [these two lines](https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221) from the reference implementation for an example on how to set it up.
 
+## Integrations
+
+This will index all the pages of the site (except those provided by [PrepareFn](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.add_prepare_fn)).
+
+Check out [the WordPress integration here](php.#wordpress).
+
 ## Frontend
 
 [This function](https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/script.js#L237-L395) handles the searching in JS.\

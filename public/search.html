@@ -11,6 +11,9 @@ You can read my <a href="https://icelk.dev/articles/search-engine.html">article<
 <p>Using the [<code>kvarn-search</code>] crate (for now, not on <a href="https://crates.io">crates.io</a> as it requires new Kvarn APIs),
 you can add a search engine to Kvarn and customize it.</p>
 <p>See <a href="https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221">these two lines</a> from the reference implementation for an example on how to set it up.</p>
+<h2 id="integrations">Integrations</h2>
+<p>This will index all the pages of the site (except those provided by <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.add_prepare_fn">PrepareFn</a>).</p>
+<p>Check out <a href="php.#wordpress">the WordPress integration here</a>.</p>
 <h2 id="frontend">Frontend</h2>
 <p><a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/script.js#L237-L395">This function</a> handles the searching in JS.<br />
 <a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/templates/standard.html#L105-L127">This HTML</a> is the search bar.<br />
