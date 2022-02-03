@@ -32,7 +32,7 @@ This will be explicitly noted.</p>
 <tr><td><a href="#back-to-the-basics">17 Back to the basics</a></td></tr>
 </tbody></table>
 <h1 id="sane-defaults">Sane defaults</h1>
-<p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security, speed, and help mitigate DOS attacks.</p>
+<p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
 <h1 id="http2"><a href="/http2.">HTTP/2</a></h1>
 <blockquote>
 <p>Requires the feature <code>http2</code> (part of <code>default</code> and <code>full</code>)</p>
@@ -72,7 +72,7 @@ To build a API, implement authentication, add dynamic language support, or <a hr
 <em>extensions</em> provides the data and tools you need.</p>
 <p>As there are few and small performance benefits of implementing features directly into Kvarn, but great flexibility advantages.
 Therefore, as many features as possible are built as extensions.</p>
-<p>When writing an API, Kvarn handles all HTTP boilerplate. It’ll cache, compress, encrypt, set <code>content-length</code>, and <a href="/security.">secure</a>
+<p>When writing an API, Kvarn handles all HTTP boilerplate. It’ll cache, compress, encrypt, set <code>content-length</code>, and <a href="/security/">secure</a>
 the response, with minimal info from the implementation.</p>
 <p>There exists several types of extensions, all of which have a separate function for complete control over the response pipeline.
 A <em>present</em> extension can be called from within a file.
@@ -170,7 +170,7 @@ This, together with phenomenal error handling and strong tooling makes for maint
 Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to go offline.</p>
 <h1 id="other-fundamental-features--systems">Other fundamental features &amp; systems</h1>
 <ul>
-<li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>, the runtime powering <a href="https://deno.land">Deno</a>.</li>
+<li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>, the runtime used by <a href="https://deno.land">Deno</a>.</li>
 <li><a href="/limiting.">Limiting</a> of requests to provide availability to all users. This is a <em>primitive</em> defence against small DOS attacks.</li>
 <li><a href="/http-errors.">Error handling</a> for customizing HTTP errors, with support for all extensions, including templates.
 If you visit <a href="/404">a page which doesn’t exist on kvarn.org</a>, you’ll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>

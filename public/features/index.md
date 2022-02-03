@@ -19,7 +19,7 @@ ${toc}
 
 # Sane defaults
 
-[The example](/#getting-started) of running a Kvarn server provides sane defaults, which optimize security, speed, and help mitigate DOS attacks.
+[The example](/#getting-started) of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.
 
 # [HTTP/2](/http2.)
 
@@ -75,7 +75,7 @@ _extensions_ provides the data and tools you need.
 As there are few and small performance benefits of implementing features directly into Kvarn, but great flexibility advantages.
 Therefore, as many features as possible are built as extensions.
 
-When writing an API, Kvarn handles all HTTP boilerplate. It'll cache, compress, encrypt, set `content-length`, and [secure](/security.)
+When writing an API, Kvarn handles all HTTP boilerplate. It'll cache, compress, encrypt, set `content-length`, and [secure](/security/)
 the response, with minimal info from the implementation.
 
 There exists several types of extensions, all of which have a separate function for complete control over the response pipeline.
@@ -204,7 +204,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 
 # Other fundamental features & systems
 
--   Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime powering [Deno](https://deno.land).
+-   Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime used by [Deno](https://deno.land).
 -   [Limiting](/limiting.) of requests to provide availability to all users. This is a _primitive_ defence against small DOS attacks.
 -   [Error handling](/http-errors.) for customizing HTTP errors, with support for all extensions, including templates.
     If you visit [a page which doesn't exist on kvarn.org](/404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
