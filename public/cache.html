@@ -1,0 +1,28 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Built-in cache | Kvarn</title>
+    <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Kvarn contains a performant standards complying cache.">
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>Kvarn offers a built in cache with cache invalidation based on <code>cache-control</code>; <code>kvarn-cache-control</code> headers; and an <a href="https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html">enum</a>.</p>
+<p>When creating a <a href="https://doc.kvarn.org/kvarn/struct.FatResponse.html">response</a>, you choose how the server caches it.</p>
+<h1 id="query-behaviour">Query behaviour</h1>
+<p>The cache only caches responses with differing queries if the implementation demands.</p>
+<p>This is due to performance reasons - if the query was to be cache, an attacker could send multiple queries and saturate the cache.
+We’re actively investigating how to improve on this.</p>
+<h1 id="cache-invalidation">Cache invalidation</h1>
+<p>The invalidation is <em>lazy</em> - it removes items only when trying to fetch them and they’re old.
+We might change this in the future, to an active system, where a Tokio timer would be triggered for each new cache item, removing it after the timeout.
+That would be more memory-efficient. I however prefer the lazy approach, as that’s similar to how the standard library handles collections - it never removes items.</p>
+<h1 id="limits">Limits</h1>
+<p>The cache is limited by both size and count of responses.</p>
+<h1 id="file-system-cache">File system cache</h1>
+<p>As noted by the functions in <a href="https://doc.kvarn.org/kvarn/read/"><code>kvarn::read</code></a>, files are typically cached.</p>
+<p>You should use the caching function if:</p>
+<ul>
+<li>the resource is hot, the response isn’t cached, but data on the filesystem doesn’t change often.</li>
+<li>you’re using the same files on the FS in an API (while not caching responses).</li>
+</ul>
+<p>In all other cases, don’t use the FS cache, as responses are cached.</p>
+</md></main>
+[footer]
