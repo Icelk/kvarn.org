@@ -10,17 +10,23 @@ or go offline due to a DOS attacks.</p>
 <p>Kvarn is built on top of these principles to provide security out of the box.</p>
 <table><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#cors">1 CORS</a></td></tr>
-<tr><td><a href="#rust">2 Rust</a></td></tr>
-<tr><td><a href="#internal-api">3 Internal API</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#strict-request-checks">3.1 Strict request checks</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#file-structure">3.2 File structure</a></td></tr>
-<tr><td><a href="#limiting">4 Limiting</a></td></tr>
-<tr><td><a href="#testing">5 Testing</a></td></tr>
-<tr><td><a href="#few-lines-of-code">6 Few lines of code</a></td></tr>
+<tr><td><a href="#default-csp">2 Default CSP</a></td></tr>
+<tr><td><a href="#rust">3 Rust</a></td></tr>
+<tr><td><a href="#internal-api">4 Internal API</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#strict-request-checks">4.1 Strict request checks</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#file-structure">4.2 File structure</a></td></tr>
+<tr><td><a href="#limiting">5 Limiting</a></td></tr>
+<tr><td><a href="#testing">6 Testing</a></td></tr>
+<tr><td><a href="#few-lines-of-code">7 Few lines of code</a></td></tr>
 </tbody></table>
 <h1 id="cors"><a href="/cors.">CORS</a></h1>
 <p>Kvarn allows for easy configuration of CORS settings, reducing the risk of a vulnerable API,
 in the case of a third party website suffering from XSS.</p>
+<h1 id="default-csp">Default CSP</h1>
+<p>To prevent XSS, Kvarn ships with a default <a href="../csp.">content security policy</a>.
+The default is <code>default-src 'self'; style-src 'self' 'unsafe-inline'</code>, which allows content from the current website and inline styling.</p>
+<p>You can of course <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_csp">change the policy</a>, <a href="https://doc.kvarn.org/kvarn/csp/type.Csp.html">programmatically</a>,
+with policies specific to locations on the site.</p>
 <h1 id="rust">Rust</h1>
 <p>Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.
 This removes the risk of buffer overflows, dangling pointers, and other undefined behaviour.</p>
@@ -44,7 +50,7 @@ A solid testing library and solid tests for a library can prevent pushing faulty
 It’s also covered by tests validating logic, speed, and stability of Kvarn’s code.</p>
 <h1 id="few-lines-of-code">Few lines of code</h1>
 <p>If we assume the act of programming is to introduce bugs, less code should mean less bugs.</p>
-<p>The entirety of Kvarn, including the optional extensions, and it’s reference implementation is less than 10K SLOC;
+<p>The entirety of Kvarn, including the optional extensions, and it’s reference implementation is less than 15K SLOC;
 the whole codebase can be audited in a day.</p>
 </md></main>
 [footer]

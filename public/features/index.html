@@ -137,7 +137,7 @@ or use mine at <a href="https://icelk.dev">icelk.dev</a>. All the code for that 
 is irrelevant when using HTTP/2, as it resolves these issues.</p>
 </blockquote>
 <p>Kvarn features a CORS handling (using extensions), backed by testing, which blocks unauthorized CORS requests
-before they get to your API. This ensures all CORS requests, even from faulty user agents don’t change server state.</p>
+before they get to your API. This ensures all CORS requests, even from faulty user agents, don’t change server state.</p>
 <h1 id="graceful-shutdown--handover">Graceful shutdown &amp; handover</h1>
 <blockquote>
 <p>Requires the feature <code>graceful-shutdown</code> (part of <code>default</code> and <code>full</code>)</p>
@@ -190,6 +190,7 @@ To run a Kvarn server and send a request takes 2 lines of code.</li>
 </blockquote>
 <ul>
 <li>Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.</li>
+<li><a href="../csp.">CSP</a> support.</li>
 <li>If-Modified-Since for more effective caching. This is directly integrated with <code>lifetime</code>s in the Kvarn cache.</li>
 <li><a href="/rerouting.">URL handling</a> of requests ending in <code>/</code> (becomes <code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
 <li>Logging using Rust’s standard logger, enabling you to chose a log implementation which works for you.</li>

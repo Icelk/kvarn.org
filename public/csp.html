@@ -1,0 +1,31 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Content security policy | Kvarn</title>
+    <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Details on content security policy (CSP) in Kvarn.">
+    [highlight]
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>CSP tells the browser where it’s OK to load resources from.</p>
+<p>Like <a href="cors.">CORS</a>, CSP is handled through a ruleset. This allows parts of a site to use different policies.</p>
+<p>Note that previous versions of Kvarn (before v0.4.0), the <code>new</code> method meant <code>empty</code>.
+You should probably always use <code>default</code>.
+See the example below.</p>
+<p>In situations where you want a clean slate, use the <code>empty</code> method. Then, I’d recommend setting a catch-all method (using path <code>*</code>).</p>
+<h1 id="reverse-proxy-csp-getting-overridden">Reverse proxy CSP getting overridden</h1>
+<p>This is intended behaviour to reduce risks of XSS.</p>
+<p>You can disable CSP by adding a empty ruleset:</p>
+<pre><code class="language-rust">extensions.with_csp(Csp::empty().arc());
+</code></pre>
+<h1 id="examples">Examples</h1>
+<pre><code class="language-rust">let mut extensions = Extensions::new();
+extensions.with_csp(
+    Csp::default()
+        .add(
+            &quot;*&quot;,
+            CspRule::default().img_src(CspValueSet::default().uri(&quot;https://kvarn.org&quot;)),
+        )
+        .arc(),
+);
+</code></pre>
+</md></main>
+[footer]

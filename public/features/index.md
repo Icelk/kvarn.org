@@ -161,7 +161,7 @@ As the web has expanded and complexity increased, cross-site requests have becom
 > is irrelevant when using HTTP/2, as it resolves these issues.
 
 Kvarn features a CORS handling (using extensions), backed by testing, which blocks unauthorized CORS requests
-before they get to your API. This ensures all CORS requests, even from faulty user agents don't change server state.
+before they get to your API. This ensures all CORS requests, even from faulty user agents, don't change server state.
 
 # Graceful shutdown & handover
 
@@ -223,6 +223,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 > Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ_ಠ
 
 -   Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
+-   [CSP](../csp.) support.
 -   If-Modified-Since for more effective caching. This is directly integrated with `lifetime`s in the Kvarn cache.
 -   [URL handling](/rerouting.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
 -   Logging using Rust's standard logger, enabling you to chose a log implementation which works for you.

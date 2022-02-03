@@ -18,6 +18,14 @@ ${toc}
 Kvarn allows for easy configuration of CORS settings, reducing the risk of a vulnerable API,
 in the case of a third party website suffering from XSS.
 
+# Default CSP
+
+To prevent XSS, Kvarn ships with a default [content security policy](../csp.).
+The default is `default-src 'self'; style-src 'self' 'unsafe-inline'`, which allows content from the current website and inline styling.
+
+You can of course [change the policy](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_csp), [programmatically](https://doc.kvarn.org/kvarn/csp/type.Csp.html),
+with policies specific to locations on the site.
+
 # Rust
 
 Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.
@@ -58,5 +66,5 @@ It's also covered by tests validating logic, speed, and stability of Kvarn's cod
 
 If we assume the act of programming is to introduce bugs, less code should mean less bugs.
 
-The entirety of Kvarn, including the optional extensions, and it's reference implementation is less than 10K SLOC;
+The entirety of Kvarn, including the optional extensions, and it's reference implementation is less than 15K SLOC;
 the whole codebase can be audited in a day.
