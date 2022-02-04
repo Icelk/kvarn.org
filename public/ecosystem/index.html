@@ -2,16 +2,32 @@
 [head]
     <title>Ecosystem | Kvarn</title>
     <meta name="permalinks" content="enabled">
+    <meta name="description" content="The Kvarn ecosystem. A guide to all it's components and features.">
 [dependencies][md-imports][close-head][navigation]
 <main><md><h1 id="the-kvarn-ecosystem">The Kvarn Ecosystem</h1>
 <p>To make Kvarn competetive with the major players, several pre-built extensions are encouraged to be used.
 Kvarn has a <a href="/extensions/">extensive extension API</a> which allows you, the user of Kvarn, to do whatever you
 want with Kvarn, with performance like it was built in.</p>
 <h2 id="extensions">Extensions</h2>
-<p>ToDo!</p>
+<p>Kvarn strives to be as modular as possible.</p>
+<p>There exists five points you can attach to modify request, responses, and other metadata, both before and after the request is sent (e.g. to log, HTTP/2 push).
+Common patterns are documented at <a href="../extensions/#details">the extensions page</a>.
+Details on the functionality of extensions are also <a href="http://localhost:8080/extensions/#the-five-ps">available</a>.</p>
+<hr />
+<p>More extensions are available using the <a href="https://doc.kvarn.org/kvarn_extensions/"><code>kvarn_extensions</code></a>.
+There, you get PHP support, a reverse proxy, templates, HTTP/2 push, and several present extensions.
+Everything is naturally <a href="../cargo-features.#extensions">optional</a>.</p>
 <h2 id="docs">Docs</h2>
-<p>ToDo!</p>
+<p><a href="https://doc.kvarn.org">Online documentation</a> is available for the git branch.
+Refer to <a href="https://docs.rs/kvarn">docs.rs</a> for docs for stable releases.</p>
+<h2 id="markdown">Markdown</h2>
+<p>Using <a href="../chute.">Kvarn chute</a> you can convert CommonMark documents to HTML pages, making use of <a href="../features/#templates">Kvarn’s templates</a>.
+In fact, I’m writing this document in CommonMark and having chute export it every time I save.</p>
+<p>This enables fast prototyping and writing with quality results, fitting in with the rest of the website.</p>
+<p>It’s smart, so if you declare any <a href="../extensions/#present">present extensions</a>, they are transferred. The <code>hide</code> extension is removed, so MD documents can be hidden (this is).</p>
+<p>It also supports adding to the HTML header by simply declaring a <code>&lt;head&gt;</code> element the first thing in the document.</p>
 <h2 id="example-implementation">Example implementation</h2>
-<p>ToDo!</p>
+<p>In addition to the tools above, an example implementation (the one which is currently serving you content) is <a href="https://github.com/Icelk/kvarn-reference/">available</a>. In the future, that’ll use a <a href="../config.">config</a>.</p>
+<p>Due to the modularity of Kvarn, and it marely being a library for listening to ports, a binary implementation is needed. If this is the reference implementation or your program embedding Kvarn, doesn’t matter.</p>
 </md></main>
 [footer]
