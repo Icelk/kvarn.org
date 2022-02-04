@@ -3,7 +3,44 @@
     <title>Outfacing errors | Kvarn</title>
 [dependencies][md-imports][close-head][navigation]
 <main><md><p>These are ordered from first to last in accordance to the request’s <a href="/pipeline.">pipeline</a>.</p>
+<p>Both HTTP errors and logged warnings/error are listed here.</p>
 <table><thead><tr><th>Contents</th></tr></thead><tbody>
+<tr><td><a href="#debugging">1 Debugging</a></td></tr>
+<tr><td><a href="#overriding-http-errors">2 Overriding HTTP errors</a></td></tr>
+<tr><td><a href="#io-errors">3 IO errors</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#connecting">3.1 Connecting</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#reverse-proxy">3.2 Reverse proxy</a></td></tr>
+<tr><td><a href="#not-acceptable">4 Not acceptable</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#byte-range">4.1 Byte range</a></td></tr>
+<tr><td><a href="#not-found">5 Not Found</a></td></tr>
+<tr><td><a href="#illegal-paths">6 Illegal paths</a></td></tr>
 </tbody></table>
+<h1 id="debugging">Debugging</h1>
+<p>The logged errors are useful. See the <a href="https://docs.rs/log/latest/log/#in-executables">log crate</a> for more info.</p>
+<p>All HTTP errors originating from Kvarn contain a <code>reason</code> header which contains more info about the issue.
+If the error response isn’t <a href="#overriding-http-errors">overridden</a>, it’s also contained in the body.</p>
+<h1 id="overriding-http-errors">Overriding HTTP errors</h1>
+<p>Put the HTML file in <code>errors/xxx.html</code> to return that in case of an error.
+You can use Present extensions here, as with any other file.</p>
+<blockquote>
+<p>In the future, you should be able to control this through other extensions (e.g. prepare extensions).</p>
+</blockquote>
+<h1 id="io-errors">IO errors</h1>
+<p>Any errors writing to the stream will result in a log error and an aborted connection.</p>
+<p>Errors in reading the body is however handled the user.</p>
+<h2 id="connecting">Connecting</h2>
+<p>Errors on initial connection and reading errors will also abort the connection and log.</p>
+<h2 id="reverse-proxy">Reverse proxy</h2>
+<p>Erroneous responses and timeouts will result in <code>502</code> and <code>504</code> errors, respectively.</p>
+<h1 id="not-acceptable">Not acceptable</h1>
+<p>If the request contains accept requirements which could not be fulfilled, a <code>406</code> is returned.</p>
+<h2 id="byte-range">Byte range</h2>
+<p>The same goes for the built in byte ranges - if they’re out of bounds, a HTTP error is send back.</p>
+<h1 id="not-found">404 Not Found</h1>
+<p>If no file was found (or the <a href="https://doc.kvarn.org/kvarn/host/struct.Options.html#structfield.disable_fs">FS option</a> is disabled), and no prepare extension was found, a <code>404</code> is generated. This can in turn be modified by a package extension. That is however almost never the correct thing.</p>
+<h1 id="illegal-paths">Illegal paths</h1>
+<p>Some paths are disallowed by Kvarn due to <a href="http://localhost:8080/security/#strict-request-checks">security reasons</a>.
+These include (though are not exclusive) <code>./</code> and <code>//</code>.
+This will return a <code>400</code>.</p>
 </md></main>
 [footer]

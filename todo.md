@@ -1,6 +1,6 @@
 - [x] /cache.
-- [ ] /ecosystem/ (crates at doc.kvarn.org)
-- [ ] /config.
+- [x] /ecosystem/ (crates at doc.kvarn.org)
+- [x] /config.
 - [ ] /errors.
 - [ ] /http2.
 - [ ] /push.
