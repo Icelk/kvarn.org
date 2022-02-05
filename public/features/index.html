@@ -105,6 +105,8 @@ Server caching can be set with the <a href="/cache.#kvarn-cache-control"><code>k
 <p>Sometimes you need to write a consistent website easily, with minimal effort.
 That’s where <em>Kvarn Chute</em> comes in. You write MarkDown, Chute translates it to HTML, using
 <a href="/templates.">Kvarn’s templating system</a>.</p>
+<p>Long pages are hard to navigate. Therefore, Chute offers a <strong>table of contents</strong> generator.
+Just insert <code>|Contents| |---| | [1 Features &amp; why to use Kvarn](#features--why-to-use-kvarn)| | [2 Sane defaults](#sane-defaults)| | [3 HTTP/2](#http2)| |&lt;span style=&quot;margin-left: 2em&quot;&gt;&lt;/span&gt; [3.1 HTTP/2 Push](#http2-push)| | [4 HTTPS](#https)| | [5 Full documentation coverage](#full-documentation-coverage)| | [6 Extensions](#extensions)| | [7 Cache](#cache)| | [8 PHP](#php)| | [9 MarkDown](#markdown)| | [10 Templates](#templates)| | [11 Full text search engine](#full-text-search-engine)| | [12 CORS](#cors)| | [13 Graceful shutdown &amp; handover](#graceful-shutdown--handover)| | [14 Reverse proxy](#reverse-proxy)| | [15 Guaranteed memory-safety](#guaranteed-memorysafety)| | [16 Other fundamental features &amp; systems](#other-fundamental-features--systems)| | [17 Back to the basics](#back-to-the-basics)| </code> in your document, run <code>chute -y &lt;doc&gt;</code>. You now have a high-quality HTML-only TOC.</p>
 <p>This page is written using this features, reducing boilerplate <em>even more</em> and speeding up documentation.</p>
 <p>You can add tags to the head of the HTML by starting the MD document (after the extensions declaration) with a <code>&lt;head&gt;</code> tag.
 You’ll of course have to close it when all the metadata is written.</p>

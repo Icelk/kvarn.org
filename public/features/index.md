@@ -118,6 +118,9 @@ Sometimes you need to write a consistent website easily, with minimal effort.
 That's where _Kvarn Chute_ comes in. You write MarkDown, Chute translates it to HTML, using
 [Kvarn's templating system](/templates.).
 
+Long pages are hard to navigate. Therefore, Chute offers a **table of contents** generator.
+Just insert `${toc}` in your document, run `chute -y <doc>`. You now have a high-quality HTML-only TOC.
+
 This page is written using this features, reducing boilerplate _even more_ and speeding up documentation.
 
 You can add tags to the head of the HTML by starting the MD document (after the extensions declaration) with a `<head>` tag.
