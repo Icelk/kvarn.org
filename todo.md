@@ -2,7 +2,7 @@
 - [x] /ecosystem/ (crates at doc.kvarn.org)
 - [x] /config.
 - [x] /errors.
-- [ ] /http2.
+- [x] /http2.
 - [ ] /push.
 - [ ] /https.
 - [ ] /chute/
