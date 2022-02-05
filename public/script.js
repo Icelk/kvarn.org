@@ -83,6 +83,7 @@ initTopBar()
 initSmoothScrolling()
 initCopyHeading()
 
+// Search bar in index.
 let search = document.getElementById("searchInput")
 if (search !== null) {
     search.addEventListener("keydown", (e) => {
