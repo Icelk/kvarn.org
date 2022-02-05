@@ -172,7 +172,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 <ul>
 <li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>, the runtime used by <a href="https://deno.land">Deno</a>.</li>
 <li><a href="/limiting.">Limiting</a> of requests to provide availability to all users. This is a <em>primitive</em> defence against small DOS attacks.</li>
-<li><a href="/http-errors.">Error handling</a> for customizing HTTP errors, with support for all extensions, including templates.
+<li><a href="/errors.#overriding-http-errors">Error handling</a> for customizing HTTP errors, with support for all extensions, including templates.
 If you visit <a href="/404">a page which doesn’t exist on kvarn.org</a>, you’ll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>
 <li><a href="/cargo-features.">Optional features</a> offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
 results in a larger binary and slower compile-times,
@@ -192,7 +192,7 @@ To run a Kvarn server and send a request takes 2 lines of code.</li>
 <li>Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.</li>
 <li><a href="../csp.">CSP</a> support.</li>
 <li>If-Modified-Since for more effective caching. This is directly integrated with <code>lifetime</code>s in the Kvarn cache.</li>
-<li><a href="/rerouting.">URL handling</a> of requests ending in <code>/</code> (becomes <code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
+<li><a href="/extensions/redirects.">URL handling</a> of requests ending in <code>/</code> (becomes <code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
 <li>Logging using Rust’s standard logger, enabling you to chose a log implementation which works for you.</li>
 <li>Idiomatic Rust, guaranteed by <a href="https://github.com/rust-lang/rust-clippy">Clippy</a>.</li>
 </ul>

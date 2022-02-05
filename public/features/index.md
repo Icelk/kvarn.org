@@ -206,7 +206,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 
 -   Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime used by [Deno](https://deno.land).
 -   [Limiting](/limiting.) of requests to provide availability to all users. This is a _primitive_ defence against small DOS attacks.
--   [Error handling](/http-errors.) for customizing HTTP errors, with support for all extensions, including templates.
+-   [Error handling](/errors.#overriding-http-errors) for customizing HTTP errors, with support for all extensions, including templates.
     If you visit [a page which doesn't exist on kvarn.org](/404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
 -   [Optional features](/cargo-features.) offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
     results in a larger binary and slower compile-times,
@@ -220,11 +220,11 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 
 # Back to the basics
 
-> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ_ಠ
+> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ\_ಠ
 
 -   Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
 -   [CSP](../csp.) support.
 -   If-Modified-Since for more effective caching. This is directly integrated with `lifetime`s in the Kvarn cache.
--   [URL handling](/rerouting.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
+-   [URL handling](/extensions/redirects.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
 -   Logging using Rust's standard logger, enabling you to chose a log implementation which works for you.
 -   Idiomatic Rust, guaranteed by [Clippy](https://github.com/rust-lang/rust-clippy).

@@ -1,7 +1,7 @@
 - [x] /cache.
 - [x] /ecosystem/ (crates at doc.kvarn.org)
 - [x] /config.
-- [ ] /errors.
+- [x] /errors.
 - [ ] /http2.
 - [ ] /push.
 - [ ] /https.
@@ -11,11 +11,11 @@
 - [x] /csp. (and update security)
 - [ ] /async.
 - [ ] /limiting.
-- [ ] /http-errors.
+- [x] /http-errors.
 - [ ] /cargo-features.
 - [ ] /host.
 - [ ] /utils.
 - [ ] /testing.
-- [ ] /rerouting.
+- [x] /rerouting.
 
 - [ ] Update `/#docs`
