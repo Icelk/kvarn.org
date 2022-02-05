@@ -32,7 +32,7 @@ Refer to [docs.rs](https://docs.rs/kvarn) for docs for stable releases.
 
 ## Markdown
 
-Using [Kvarn chute](../chute.) you can convert CommonMark documents to HTML pages, making use of [Kvarn's templates](../features/#templates).
+Using [Kvarn chute](/chute/) you can convert CommonMark documents to HTML pages, making use of [Kvarn's templates](/features/#templates).
 In fact, I'm writing this document in CommonMark and having chute export it every time I save.
 
 This enables fast prototyping and writing with quality results, fitting in with the rest of the website.
