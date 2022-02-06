@@ -179,6 +179,7 @@ When you restart the Kvarn server,
 -   Then, The old binary closes it's listeners and instructs all open connections to end if a transaction is not in progress.
 -   Any transactions (primarily WebSockets) in progress are waited on, while the new binary accepts new requests.
 -   When all transactions are closed, the old binary silently exits.
+    This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.
 
 The communication between binaries are via Unix sockets (which isn't a problem as binding to the same port isn't supported on Windows).
 
