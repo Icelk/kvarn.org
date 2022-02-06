@@ -1,0 +1,33 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>HTTP/2 push | Kvarn</title>
+    <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Details on HTTP/2 push as featured in Kvarn.">
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>One of the features of <a href="http2.">HTTP/2</a> is the ability to push content to user agents before they request them.</p>
+<table><thead><tr><th>Contents</th></tr></thead><tbody>
+<tr><td><a href="#example">1 Example</a></td></tr>
+<tr><td><a href="#issues-with-firefox">2 Issues with Firefox</a></td></tr>
+<tr><td><a href="#specifying-resources-to-be-pushed">3 Specifying resources to be pushed</a></td></tr>
+</tbody></table>
+<h1 id="example">Example</h1>
+<p>Say someone visits <a href="https://icelk.dev/">icelk.dev</a>. When Kvarn gets the request to <code>/</code>, it knows the user agent (web browser) will request <code>/icelk-logo.png</code>, <code>/script.js</code>, <code>/style.css</code>.
+Right after sending the response, Kvarn looks for links on the responded web page. If it finds any, it pushes them to the user agent. It generates requests and responses which are sent using the HTTP/2 protocol.</p>
+<p>It would be wasteful to push resources on every page load, so the <a href="https://doc.kvarn.org/kvarn_extensions/push/fn.mount.html">default</a> implementation has a limit of pushing only every two minutes.
+You can however force Kvarn to <a href="https://doc.kvarn.org/kvarn_extensions/push/fn.always.html">always push</a> content.</p>
+<h1 id="issues-with-firefox">Issues with Firefox</h1>
+<p>Pushing content to Firefox-based user agents doesn’t work through Kvarn.
+The reason is unknown.
+Kvarn checks for the <code>user-agent</code> header and ignores Firefox browsers when pushing content.</p>
+<p>This is odd, considering other push implementations work just fine, but Kvarn passes more checks in the <a href="https://github.com/summerwind/h2spec"><code>h2spec</code></a> testing tool.
+In fact, Kvarn passes <strong>all</strong> tests.
+It also works flawlessly with all Chromium-based browsers, Safari browsers, and the <code>nghttp2</code> tool. Running <code>nghttp https://localhost:8443 -nv</code> gives all the push promises correctly.</p>
+<h1 id="specifying-resources-to-be-pushed">Specifying resources to be pushed</h1>
+<p>Internally, the <a href="https://doc.kvarn.org/url_crawl/index.html"><code>url_crawl</code></a> crate is used for getting URLs.</p>
+<p>You can specify several <code>push</code> HTML elements (they are not in any spec and therefore don’t have any semantic meaning) in the <code>&lt;head&gt;</code> of the document, with the format as follows:</p>
+<pre><code class="language-html">&lt;!-- snip --&gt;
+    &lt;push src=&quot;my-dataset.csv&quot; /&gt;
+&lt;!-- snip --&gt;
+</code></pre>
+</md></main>
+[footer]

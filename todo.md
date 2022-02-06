@@ -3,7 +3,7 @@
 - [x] /config.
 - [x] /errors.
 - [x] /http2.
-- [ ] /push.
+- [x] /push.
 - [ ] /https.
 - [ ] /chute/
 - [ ] /templates.
