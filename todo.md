@@ -4,18 +4,18 @@
 - [x] /errors.
 - [x] /http2.
 - [x] /push.
-- [ ] /https.
+- [x] /https.
 - [ ] /chute/
 - [ ] /templates.
 - [ ] /cors.
 - [x] /csp. (and update security)
 - [ ] /async.
 - [ ] /limiting.
-- [x] /http-errors.
+- [x] /http-errors. -> /errors.#overriding-http-errors
 - [ ] /cargo-features.
 - [ ] /host.
 - [ ] /utils.
 - [ ] /testing.
-- [x] /rerouting.
+- [x] /rerouting. -> /features/redirects.
 
 - [ ] Update `/#docs`
