@@ -1,0 +1,38 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Chute - Markdown support | Kvarn</title>
+    <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="The Chute tool utilizing Kvarn templates to give comprehensive Markdown support.">
+    [highlight]
+[dependencies][md-imports][close-head][navigation]
+<main><md><h1 id="chute">Chute</h1>
+<p>To easen writing for the web, Kvarn offers a tool called Chute. It consumes Markdown documents and produces HTML documents.</p>
+<p>Chute is a CLI tool. It can be built from the <a href="https://github.com/Icelk/kvarn/tree/main/chute">source</a>. Linux downloads are available on <a href="https://github.com/Icelk/kvarn/actions/workflows/chute.yml">GitHub actions</a>.</p>
+<h2 id="present-extensions">Present extensions</h2>
+<p>Using <a href="/extensions/#present">Present extensions</a> gives you power to control the content of the document.
+Chute is smart and merges the present extensions in the MD file and the hard-coded template HTML document.
+This allows you to specify any present extensions, just as you would in HTML.</p>
+<h3 id="hide-exception">Hide exception</h3>
+<p>If you define the <code>hide</code> extension in your Markdown document (e.g. <code>!&gt; hide\n...</code>) the Markdown document is hidden from the website.</p>
+<p>Chute removes this extension when merging.</p>
+<p>To also hide the HTML, you can specify it twice (e.g. <code>!&gt; hide &amp;&gt; hide</code>).</p>
+<h2 id="table-of-contents">Table of contents</h2>
+<p>Chute supports several special tags. They have the format <code>${tag}</code>.</p>
+<p>If you use <code>${toc}</code>, Chute outputs a table of contents from the headings in your document.</p>
+<p>As you may have noticed, I was able to write <code>${toc}</code> in the document.
+That’s because you can escape tags by inserting a backslash (<code>\</code>) before the tag.</p>
+<h2 id="head">&lt;head&gt;</h2>
+<p>If you need to insert items into the &lt;head&gt; of your document, simply define it at the top:</p>
+<blockquote>
+<p>The present extensions are not required for this to work.</p>
+</blockquote>
+<pre><code class="language-markdown">!&gt; hide &amp;&gt; my-present-extension
+
+&lt;head&gt;
+    &lt;title&gt;Fun article&lt;/title&gt;
+&lt;/head&gt;
+
+Text...
+</code></pre>
+</md></main>
+[footer]

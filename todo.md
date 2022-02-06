@@ -5,7 +5,7 @@
 - [x] /http2.
 - [x] /push.
 - [x] /https.
-- [ ] /chute/
+- [x] /chute/
 - [ ] /templates.
 - [ ] /cors.
 - [x] /csp. (and update security)
