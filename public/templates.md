@@ -20,7 +20,11 @@ In your document, include templates by writing their name in brackets the same w
 
 > The template definitions and usages can be indented. This allows for formatting tools to be ran.
 
+## Escaping
+
+If you don't want a template, but only brackets `[]`, you can escape. Just insert a backslash `\` before.
+
 ## Limitations
 
-You can't start a line with `[` (or just have whitespace before) in a template.
+You can't start a line with `[` (or just have whitespace before) (even when using escaping) in a template.
 This is due to how data is copied from templates.
