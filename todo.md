@@ -6,7 +6,7 @@
 - [x] /push.
 - [x] /https.
 - [x] /chute/
-- [ ] /templates.
+- [x] /templates.
 - [ ] /cors.
 - [x] /csp. (and update security)
 - [ ] /async.
