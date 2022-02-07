@@ -19,3 +19,8 @@ You can define templates (in e.g. `templates/standard.html`) using names inside 
 In your document, include templates by writing their name in brackets the same was as described above. The text will be "copy and pasted" to override the template.
 
 > The template definitions and usages can be indented. This allows for formatting tools to be ran.
+
+## Limitations
+
+You can't start a line with `[` (or just have whitespace before) in a template.
+This is due to how data is copied from templates.
