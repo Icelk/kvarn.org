@@ -20,9 +20,12 @@ In your document, include templates by writing their name in brackets the same w
 
 > The template definitions and usages can be indented. This allows for formatting tools to be ran.
 
-## Escaping
+# Escaping
 
 If you don't want a template, but only brackets `[]`, you can escape. Just insert a backslash `\` before.
+
+If you see an unwanted `\` in the HTML, consider removing the escape. It shouldn't be needed.
+See the section below for some exceptions.
 
 ## Limitations
 
