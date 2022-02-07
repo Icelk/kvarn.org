@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Content security policy | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
@@ -7,6 +8,8 @@
 </head>
 
 CSP tells the browser where it's OK to load resources from.
+
+This can help prevent certain attacks, such as [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting). CSP disables the ability to load malicious scripts and styles.
 
 Like [CORS](cors.), CSP is handled through a ruleset. This allows parts of a site to use different policies.
 
