@@ -23,6 +23,9 @@ If the error response isn’t <a href="#overriding-http-errors">overridden</a>, 
 <p>Put the HTML file in <code>errors/xxx.html</code> to return that in case of an error.
 You can use Present extensions here, as with any other file.</p>
 <blockquote>
+<p>The <code>errors/</code> part of the path mentioned above is customizable using the <a href="https://doc.kvarn.org/kvarn/host/struct.Options.html#method.set_public_data_dir"><code>host::Options</code></a>.</p>
+</blockquote>
+<blockquote>
 <p>In the future, you should be able to control this through other extensions (e.g. prepare extensions).</p>
 </blockquote>
 <h1 id="io-errors">IO errors</h1>

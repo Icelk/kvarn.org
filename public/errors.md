@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Outfacing errors | Kvarn</title>
 </head>
@@ -21,6 +22,8 @@ If the error response isn't [overridden](#overriding-http-errors), it's also con
 Put the HTML file in `errors/xxx.html` to return that in case of an error.
 You can use Present extensions here, as with any other file.
 
+> The `errors/` part of the path mentioned above is customizable using the [`host::Options`](https://doc.kvarn.org/kvarn/host/struct.Options.html#method.set_public_data_dir).
+
 > In the future, you should be able to control this through other extensions (e.g. prepare extensions).
 
 # IO errors
@@ -41,7 +44,7 @@ Erroneous responses and timeouts will result in `502` and `504` errors, respecti
 
 If the request contains accept requirements which could not be fulfilled, a `406` is returned.
 
-## Byte range 
+## Byte range
 
 The same goes for the built in byte ranges - if they're out of bounds, a HTTP error is send back.
 
