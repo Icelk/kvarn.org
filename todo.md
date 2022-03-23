@@ -7,9 +7,9 @@
 - [x] /https.
 - [x] /chute/
 - [x] /templates.
-- [ ] /cors.
+- [x] /cors.
 - [x] /csp. (and update security)
-- [ ] /async.
+- [x] /async.
 - [ ] /limiting.
 - [x] /http-errors. -> /errors.#overriding-http-errors
 - [ ] /cargo-features.

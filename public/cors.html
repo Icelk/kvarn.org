@@ -5,14 +5,24 @@
     <meta name="description" content="What is CORS? When and how to use it. We'll also cover it's itegration with Kvarn.">
 [dependencies][md-imports][close-head][navigation]
 <main><md><p>The infamous technology every backend developer fights. Well, not when using Kvarn (shameless self-promotion).</p>
+<blockquote>
+<p>This is enabled by default in Kvarn. See <a href="#drawbacks">below</a> for more context.</p>
+</blockquote>
 <table><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#about">1 About</a></td></tr>
+<tr><td><a href="#drawbacks">2 Drawbacks</a></td></tr>
 </tbody></table>
 <h1 id="about">About</h1>
 <p>CORS stands for <em>cross-origin resource sharing</em>. As the name implies, it allows websites to use resources from other websites.</p>
 <blockquote>
 <p>This is heavily used by larger websites to serve static content (e.g. images, video) from <em>content delivery networks</em>.</p>
 </blockquote>
-<p>The protections CORS enforces are critical. Let’s say a malicious actor, Ted, wants to get money from you. In a world without CORS, Ted could issue a request on your browser to your bank and transfer money.</p>
+<p>The protections CORS enforces are critical. Let’s say a malicious actor, Ted, wants to get money from you. In a world without CORS, Ted could issue a request on your browser to your bank and transfer money. CORS protects against this by telling the browser “if anyone tries to send you to any website but these listed, refuse”. This mainly helps against XSS attacks, when a hacker injects code into your front-end.</p>
+<h1 id="drawbacks">Drawbacks</h1>
+<p>When you have a legitimate reason to interact with other websites, you have to
+<a href="https://doc.kvarn.org/kvarn/extensions/struct.RuleSet.html#method.add">add it</a>
+to the <a href="https://doc.kvarn.org/kvarn/cors/type.Cors.html">list of accepted sites</a>.
+Here, you can specify which <a href="https://doc.kvarn.org/kvarn/cors/struct.AllowList.html">methods and headers</a>
+are valid for sending to the third party.</p>
 </md></main>
 [footer]
