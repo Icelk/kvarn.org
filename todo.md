@@ -10,12 +10,13 @@
 - [x] /cors.
 - [x] /csp. (and update security)
 - [x] /async.
-- [ ] /limiting.
+- [x] /limiting.
 - [x] /http-errors. -> /errors.#overriding-http-errors
 - [ ] /cargo-features.
 - [ ] /host.
 - [ ] /utils.
 - [ ] /testing.
+- [ ] /vary.
 - [x] /rerouting. -> /features/redirects.
 
 - [ ] Update `/#docs`
