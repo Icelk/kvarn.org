@@ -14,6 +14,9 @@ We’re actively investigating how to improve on this.</p>
 <p>The invalidation is <em>lazy</em> - it removes items only when trying to fetch them and they’re old.
 We might change this in the future, to an active system, where a Tokio timer would be triggered for each new cache item, removing it after the timeout.
 That would be more memory-efficient. I however prefer the lazy approach, as that’s similar to how the standard library handles collections - it never removes items.</p>
+<h1 id="relation-to-http-status-codes">Relation to HTTP status codes</h1>
+<p>Certain status codes are <a href="https://doc.kvarn.org/kvarn/host/fn.default_status_code_cache_filter.html">not cached</a>.
+This is due to the nature of responses - if the server rejects a client due to an invalid request, that shouldn’t be returned to everybody.</p>
 <h1 id="limits">Limits</h1>
 <p>The cache is limited by both size and count of responses.</p>
 <h1 id="file-system-cache">File system cache</h1>

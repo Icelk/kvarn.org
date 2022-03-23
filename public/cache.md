@@ -22,6 +22,11 @@ The invalidation is *lazy* - it removes items only when trying to fetch them and
 We might change this in the future, to an active system, where a Tokio timer would be triggered for each new cache item, removing it after the timeout.
 That would be more memory-efficient. I however prefer the lazy approach, as that's similar to how the standard library handles collections - it never removes items.
 
+# Relation to HTTP status codes
+
+Certain status codes are [not cached](https://doc.kvarn.org/kvarn/host/fn.default_status_code_cache_filter.html).
+This is due to the nature of responses - if the server rejects a client due to an invalid request, that shouldn't be returned to everybody.
+
 # Limits
 
 The cache is limited by both size and count of responses.
