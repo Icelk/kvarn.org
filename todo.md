@@ -14,9 +14,10 @@
 - [x] /http-errors. -> /errors.#overriding-http-errors
 - [ ] /cargo-features.
 - [ ] /host.
-- [ ] /utils.
-- [ ] /testing.
+- [x] /utils.
+- [x] /testing.
 - [ ] /vary.
+- [ ] /shutdown-handover.
 - [x] /rerouting. -> /features/redirects.
 
 - [ ] Update `/#docs`
