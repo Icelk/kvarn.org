@@ -12,5 +12,9 @@ for more info.</p>
 If you need any library for IO (networking, file system, database connections), there probably exist an async version at <a href="https://crates.io">crates.io</a>.</p>
 <p>You can of course also use synchronous APIs, but that blocks other requests, and is therefore strongly discouraged.
 Consider using <a href="https://docs.rs/tokio/latest/tokio/task/fn.spawn_blocking.html"><code>spawn_blocking</code></a> instead.</p>
+<h1 id="crate">Crate</h1>
+<p>To support these efforts, a <a href="https://crates.io/crates/kvarn_async/"><code>kvarn_async</code></a> is available.
+It also allows you to read from an async source to <a href="https://docs.rs/bytes/"><code>Bytes</code></a>, without an intermediate <code>Vec</code>.</p>
+<p>You can view it’s documentation <a href="https://doc.kvarn.org/kvarn_async/">online</a>.</p>
 </md></main>
 [footer]

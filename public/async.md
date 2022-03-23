@@ -16,3 +16,10 @@ If you need any library for IO (networking, file system, database connections), 
 
 You can of course also use synchronous APIs, but that blocks other requests, and is therefore strongly discouraged.
 Consider using [`spawn_blocking`](https://docs.rs/tokio/latest/tokio/task/fn.spawn_blocking.html) instead.
+
+# Crate
+
+To support these efforts, a [`kvarn_async`](https://crates.io/crates/kvarn_async/) is available.
+It also allows you to read from an async source to [`Bytes`](https://docs.rs/bytes/), without an intermediate `Vec`.
+
+You can view it's documentation [online](https://doc.kvarn.org/kvarn_async/).
