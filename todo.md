@@ -12,8 +12,8 @@
 - [x] /async.
 - [x] /limiting.
 - [x] /http-errors. -> /errors.#overriding-http-errors
-- [ ] /cargo-features.
-- [ ] /host.
+- [x] /cargo-features.
+- [x] /host.
 - [x] /utils.
 - [x] /testing.
 - [ ] /vary.

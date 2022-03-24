@@ -1,0 +1,41 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Compilation features | Kvarn</title>
+    <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Features of Kvarn which can be choosen when compiling">
+    [highlight]
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>Certain features, such as HTTP/2, HTTPS, or compression might not be needed.
+When Kvarn is deployed to an IOT device controlled from within the network, these features aren’t needed.
+Disabling them cuts down on compilation time, memory requirements, and space requirements.</p>
+<blockquote>
+<p>To view the dependencies used by each feature, see the <a href="https://github.com/Icelk/kvarn/blob/main/Cargo.toml">Cargo.toml file</a>.</p>
+</blockquote>
+<p>These can be enabled in your <code>Cargo.toml</code>:</p>
+<pre><code class="language-ini">\[dependencies]
+kvarn = { version = &quot;0.3&quot;, default-features = false, features = [&quot;https&quot;, &quot;http2&quot;, &quot;all-encryption&quot;] }
+</code></pre>
+<p>See the <a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a> on the matter.</p>
+<hr />
+<p>Which Cargo features are required for certain items are also shown in the <a href="https://doc.kvarn.org/">docs</a>
+(e.g. the <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new"><code>Host::new</code></a> function).</p>
+<ul>
+<li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>, the secure HTTP protocol.
+This is strongly recommended if you’re doing anything that’s not resource constrained and local.</li>
+<li><a href="/http2."><code>http2</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a>.
+This is strongly recommended as it’s considerably faster and less resource intensive than HTTP/1.1, which is always supported.
+This also reduces latency due to implementation details.</li>
+<li><code>br</code>: <a href="https://en.wikipedia.org/wiki/Brotli">Brotli compression</a></li>
+<li><code>gzip</code>: <a href="https://en.wikipedia.org/wiki/Gzip#File_format">Gzip compression</a></li>
+<li><a href="/shutdown-handover."><code>graceful-shutdown</code></a>: Enables <a href="https://doc.kvarn.org/kvarn/shutdown/">graceful shutdown</a> and handover.
+This means you can upgrade the Kvarn server without ANY downtime - using UNIX socket magic we bind the new server on the same sockets,
+then tell the old instance to shut down. All pending and current requests are waited for.</li>
+</ul>
+<p>There are additionally several <em>feature sets</em>:</p>
+<ul>
+<li><code>full</code>: enables all the features above.</li>
+<li><code>all-http</code>: enables all HTTP standards and versions available - <code>https</code> &amp; <code>http2</code></li>
+<li><code>all-compression</code>: enables all compression features - <code>br</code> &amp; <code>gzip</code></li>
+</ul>
+</md></main>
+[footer]
