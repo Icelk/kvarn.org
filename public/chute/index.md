@@ -51,3 +51,8 @@ If you need to insert items into the \<head\> of your document, simply define it
 
 Text...
 ```
+
+## Issues with square brackets \\[]
+
+When using square brackets (often found in Rust code and `Cargo.toml` files), the [Kvarn templating engine] tries to find a template. The text will therefore disappear and issues arise.
+You can escape this using two backslashes in Markdown source: `\\\[]` or one backslash in code segments.

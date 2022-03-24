@@ -34,5 +34,8 @@ That’s because you can escape tags by inserting a backslash (<code>\</code>) b
 
 Text...
 </code></pre>
+<h2 id="issues-with-square-brackets-">Issues with square brackets \[]</h2>
+<p>When using square brackets (often found in Rust code and <code>Cargo.toml</code> files), the [Kvarn templating engine] tries to find a template. The text will therefore disappear and issues arise.
+You can escape this using two backslashes in Markdown source: <code>\\\[]</code> or one backslash in code segments.</p>
 </md></main>
 [footer]
