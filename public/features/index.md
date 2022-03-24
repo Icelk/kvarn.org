@@ -11,7 +11,7 @@ Optional extensions are available in [the extensions crate](https://github.com/I
 
 Here is a incomplete list of Kvarn's features, most of which have guides in their respective pages.
 
-> Some require certain [Cargo "features"](https://doc.rust-lang.org/cargo/reference/features.html) to be compiled in,
+> Some require certain [Cargo "features"](/cargo-features.) to be compiled in,
 > and some require `kvarn_extensions`.
 > This will be explicitly noted.
 

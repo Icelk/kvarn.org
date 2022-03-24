@@ -10,6 +10,8 @@
 Testing is integral to smooth deployment. Kvarn is covered by many unit and integration tests.
 Using [GitHub Actions](https://github.com/Icelk/kvarn/actions), the whole codebase is linted and tested for every change.
 
+It is available at [crates.io](https://crates.io/crates/kvarn_testing/).
+
 # Application testing
 
 If you're an author of an application powered by Kvarn and want to test it, you've come to the right place.
