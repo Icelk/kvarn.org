@@ -13,6 +13,8 @@ To easen writing for the web, Kvarn offers a tool called Chute. It consumes Mark
 
 Chute is a CLI tool. It can be built from the [source](https://github.com/Icelk/kvarn/tree/main/chute). Linux downloads are available on [GitHub actions](https://github.com/Icelk/kvarn/actions/workflows/chute.yml).
 
+${toc}
+
 ## Present extensions
 
 Using [Present extensions](/extensions/#present) gives you power to control the content of the document.

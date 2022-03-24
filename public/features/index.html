@@ -140,21 +140,12 @@ is irrelevant when using HTTP/2, as it resolves these issues.</p>
 </blockquote>
 <p>Kvarn features a CORS handling (using extensions), backed by testing, which blocks unauthorized CORS requests
 before they get to your API. This ensures all CORS requests, even from faulty user agents, don’t change server state.</p>
-<h1 id="graceful-shutdown--handover">Graceful shutdown &amp; handover</h1>
+<h1 id="graceful-shutdown--handover"><a href="/shutdown-handover.">Graceful shutdown &amp; handover</a></h1>
 <blockquote>
 <p>Requires the feature <code>graceful-shutdown</code> (part of <code>default</code> and <code>full</code>)</p>
 </blockquote>
 <p>To enable upgrade of the server, you need to shut it down and then start it up, with no offline overlay.
 The way Kvarn solves this is through graceful shutdown and handover.</p>
-<p>When you restart the Kvarn server,</p>
-<ul>
-<li>first, the new binary is started. Multiple Kvarn instances can bind to the same port, ensuring 0 downtime.</li>
-<li>Then, The old binary closes it’s listeners and instructs all open connections to end if a transaction is not in progress.</li>
-<li>Any transactions (primarily WebSockets) in progress are waited on, while the new binary accepts new requests.</li>
-<li>When all transactions are closed, the old binary silently exits.
-This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.</li>
-</ul>
-<p>The communication between binaries are via Unix sockets (which isn’t a problem as binding to the same port isn’t supported on Windows).</p>
 <h1 id="reverse-proxy"><a href="/reverse-proxy.">Reverse proxy</a></h1>
 <blockquote>
 <p>Part of <code>kvarn_extensions</code> under the feature <code>reverse-proxy</code> (part of <code>default</code>)</p>
@@ -176,7 +167,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 <li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>, the runtime used by <a href="https://deno.land">Deno</a>.</li>
 <li><a href="/limiting.">Limiting</a> of requests to provide availability to all users. This is a <em>primitive</em> defence against small DOS attacks.</li>
 <li><a href="/errors.#overriding-http-errors">Error handling</a> for customizing HTTP errors, with support for all extensions, including templates.
-If you visit <a href="/404">a page which doesn’t exist on kvarn.org</a>, you’ll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>
+If you visit <a href="/intentional-404">a page which doesn’t exist on kvarn.org</a>, you’ll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>
 <li><a href="/cargo-features.">Optional features</a> offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
 results in a larger binary and slower compile-times,
 but disabling those features makes Kvarn <a href="https://github.com/Icelk/httPWM/#state-of-project">viable to compile on a Raspberry Pi</a>.</li>

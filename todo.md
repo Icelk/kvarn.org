@@ -20,4 +20,4 @@
 - [x] /shutdown-handover.
 - [x] /rerouting. -> /features/redirects.
 
-- [ ] Update `/#docs`
+- [x] Update `/#docs`

@@ -201,7 +201,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 -   Completely [asynchronous](/async.), powered by [Tokio](https://tokio.rs), the runtime used by [Deno](https://deno.land).
 -   [Limiting](/limiting.) of requests to provide availability to all users. This is a _primitive_ defence against small DOS attacks.
 -   [Error handling](/errors.#overriding-http-errors) for customizing HTTP errors, with support for all extensions, including templates.
-    If you visit [a page which doesn't exist on kvarn.org](/404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
+    If you visit [a page which doesn't exist on kvarn.org](/intentional-404), you'll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.
 -   [Optional features](/cargo-features.) offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
     results in a larger binary and slower compile-times,
     but disabling those features makes Kvarn [viable to compile on a Raspberry Pi](https://github.com/Icelk/httPWM/#state-of-project).
