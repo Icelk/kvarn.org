@@ -166,22 +166,12 @@ As the web has expanded and complexity increased, cross-site requests have becom
 Kvarn features a CORS handling (using extensions), backed by testing, which blocks unauthorized CORS requests
 before they get to your API. This ensures all CORS requests, even from faulty user agents, don't change server state.
 
-# Graceful shutdown & handover
+# [Graceful shutdown & handover](/shutdown-handover.)
 
 > Requires the feature `graceful-shutdown` (part of `default` and `full`)
 
 To enable upgrade of the server, you need to shut it down and then start it up, with no offline overlay.
 The way Kvarn solves this is through graceful shutdown and handover.
-
-When you restart the Kvarn server,
-
--   first, the new binary is started. Multiple Kvarn instances can bind to the same port, ensuring 0 downtime.
--   Then, The old binary closes it's listeners and instructs all open connections to end if a transaction is not in progress.
--   Any transactions (primarily WebSockets) in progress are waited on, while the new binary accepts new requests.
--   When all transactions are closed, the old binary silently exits.
-    This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.
-
-The communication between binaries are via Unix sockets (which isn't a problem as binding to the same port isn't supported on Windows).
 
 # [Reverse proxy](/reverse-proxy.)
 

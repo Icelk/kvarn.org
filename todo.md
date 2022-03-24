@@ -16,8 +16,8 @@
 - [x] /host.
 - [x] /utils.
 - [x] /testing.
-- [ ] /vary.
-- [ ] /shutdown-handover.
+- [x] /vary.
+- [x] /shutdown-handover.
 - [x] /rerouting. -> /features/redirects.
 
 - [ ] Update `/#docs`

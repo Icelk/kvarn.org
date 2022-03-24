@@ -1,0 +1,15 @@
+!> tmpl standard.html markdown.html
+[head]
+    <title>Vary cache | Kvarn</title>
+    <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Kvarn's implementation of the Vary HTTP header and cache method">
+[dependencies][md-imports][close-head][navigation]
+<main><md><p>Using the Vary header, the web server can cache several variants of the same page (different languages, compression algorithms, etc.).
+Kvarn’s built-in <a href="/cache.">cache</a> <a href="https://doc.kvarn.org/kvarn/vary/">supports this through configuration</a>, similar to how <a href="/cors.">CORS</a> is configured.</p>
+<p>See <a href="https://doc.kvarn.org/kvarn/vary/type.Vary.">the docs</a> for an example.</p>
+<h1 id="implementation">Implementation</h1>
+<p>When an entry (page) is found in the cache, the contents are checked for matches according to the <a href="https://doc.kvarn.org/kvarn/vary/struct.Settings.html">vary rule</a>.
+If no match is found, a new response is created and stored.</p>
+<p>So for each page cache, there might exist several **<em>Vary</em>**ations of the page. These are served according to a user-defined function, which often reads the <code>accept*</code> headers.</p>
+</md></main>
+[footer]
