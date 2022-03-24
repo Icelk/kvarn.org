@@ -119,7 +119,7 @@ That's where _Kvarn Chute_ comes in. You write MarkDown, Chute translates it to 
 [Kvarn's templating system](/templates.).
 
 Long pages are hard to navigate. Therefore, Chute offers a **table of contents** generator.
-Just insert `${toc}` in your document, run `chute -y <doc>`. You now have a high-quality HTML-only TOC.
+Just insert `\${toc}` in your document, run `chute -y <doc>`. You now have a high-quality HTML-only TOC.
 
 This page is written using this features, reducing boilerplate _even more_ and speeding up documentation.
 
@@ -170,7 +170,7 @@ before they get to your API. This ensures all CORS requests, even from faulty us
 
 > Requires the feature `graceful-shutdown` (part of `default` and `full`)
 
-To enable upgrade of the server, you need to shut it down and then start it up, with no offline overlay.
+To enable upgrade of the server, you need to shut it down and then start it up, with *no* downtime.
 The way Kvarn solves this is through graceful shutdown and handover.
 
 # [Reverse proxy](/reverse-proxy.)
