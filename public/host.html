@@ -14,6 +14,7 @@ These can be combined in the <a href="https://doc.kvarn.org/kvarn/struct.RunConf
 <li><a href="https://doc.kvarn.org/kvarn/struct.RunConfig.">Server instance</a>: an instance of a web server.</li>
 </ul>
 <hr />
+<p>When creating a host, it’s name and alternative names can be derived from the certificate, using <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new_name_from_cert">this constructor</a>.</p>
 <p>Combining these means you can meet complex requirements, using minimal resources (all everything is ran on one process).</p>
 <p>Example: You’re running 3 websites, with both HTTP &amp; HTTPS. You also have a mail server using <a href="https://postfixadmin.sourceforge.io/">Postfix Admin</a>, so you need to serve the PHP site.
 You set up 4 hosts, one for each website and 1 for the <a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.">PHP</a> Postfix Admin.

@@ -16,6 +16,8 @@ Kvarn provides a few web server primitives:
 
 ---
 
+When creating a host, it's name and alternative names can be derived from the certificate, using [this constructor](https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new_name_from_cert).
+
 Combining these means you can meet complex requirements, using minimal resources (all everything is ran on one process).
 
 Example: You're running 3 websites, with both HTTP & HTTPS. You also have a mail server using [Postfix Admin](https://postfixadmin.sourceforge.io/), so you need to serve the PHP site.

@@ -37,6 +37,8 @@ Which Cargo features are required for certain items are also shown in the [docs]
 -   [`graceful-shutdown`](/shutdown-handover.): Enables [graceful shutdown](https://doc.kvarn.org/kvarn/shutdown/) and handover.
     This means you can upgrade the Kvarn server without ANY downtime - using UNIX socket magic we bind the new server on the same sockets,
     then tell the old instance to shut down. All pending and current requests are waited for.
+-   `auto-hostname`: Populates the [host name](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.name) and [alternative names](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.alternative_names)
+    automatically. This uses the info stored in the certificate.
 
 There are additionally several _feature sets_:
 
