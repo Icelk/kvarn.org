@@ -18,6 +18,7 @@ or go offline due to a DOS attacks.</p>
 <tr><td><a href="#limiting">5 Limiting</a></td></tr>
 <tr><td><a href="#testing">6 Testing</a></td></tr>
 <tr><td><a href="#few-lines-of-code">7 Few lines of code</a></td></tr>
+<tr><td><a href="#csrf">8 CSRF</a></td></tr>
 </tbody></table>
 <h1 id="cors"><a href="/cors.">CORS</a></h1>
 <p>Kvarn allows for easy configuration of CORS settings, reducing the risk of a vulnerable API,
@@ -50,7 +51,15 @@ A solid testing library and solid tests for a library can prevent pushing faulty
 It’s also covered by tests validating logic, speed, and stability of Kvarn’s code.</p>
 <h1 id="few-lines-of-code">Few lines of code</h1>
 <p>If we assume the act of programming is to introduce bugs, less code should mean less bugs.</p>
-<p>The entirety of Kvarn, including the optional extensions, and it’s reference implementation is less than 15K SLOC;
+<p>The entirety of Kvarn, including the optional extensions, and it’s reference implementation is less than 20K SLOC;
 the whole codebase can be audited in a day.</p>
+<h1 id="csrf">CSRF</h1>
+<p>To prevent <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-site request forgery</a>,
+it’s good to set the <code>Secure</code> and <code>SameOrigin</code> attributes on all cookies.
+It’s bad to use GET requests for any back-end operation which modifies the state.
+POST requests are also more susceptible to CSRF attacks.</p>
+<blockquote>
+<p>If using Kvarn’s <a href="/extensions/#prepare">Prepare</a>, you have to check for the method <strong>manually</strong>.</p>
+</blockquote>
 </md></main>
 [footer]

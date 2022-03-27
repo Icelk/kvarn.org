@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Security | Kvarn</title>
 </head>
@@ -66,5 +67,14 @@ It's also covered by tests validating logic, speed, and stability of Kvarn's cod
 
 If we assume the act of programming is to introduce bugs, less code should mean less bugs.
 
-The entirety of Kvarn, including the optional extensions, and it's reference implementation is less than 15K SLOC;
+The entirety of Kvarn, including the optional extensions, and it's reference implementation is less than 20K SLOC;
 the whole codebase can be audited in a day.
+
+# CSRF
+
+To prevent [Cross-site request forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery),
+it's good to set the `Secure` and `SameOrigin` attributes on all cookies.
+It's bad to use GET requests for any back-end operation which modifies the state.
+POST requests are also more susceptible to CSRF attacks.
+
+> If using Kvarn's [Prepare](/extensions/#prepare), you have to check for the method **manually**.
