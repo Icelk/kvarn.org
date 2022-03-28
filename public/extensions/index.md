@@ -1,7 +1,7 @@
 !> hide
 <head>
     <title>Extensions | Kvarn</title>
-    [highlight]
+    $[highlight]
 </head>
 
 To extend the core functionality of Kvarn, you'll use *extensions*.
@@ -110,7 +110,7 @@ Note how we create extensions by calling [their respective macros](https://doc.k
 ```rust
 use kvarn::prelude::*;
 
-#\[tokio::main]
+#[tokio::main]
 async fn main() {
     env_logger::init();
 
@@ -229,7 +229,7 @@ async fn main() {
     let handle = RunConfig::new().bind(port).execute().await;
 
     println!("Started server at http://localhost:8080/");
-    println!("Try http://127.0.0.1:8080/ for the IPv4 version and http://\[::1]:8080/ for IPv6.");
+    println!("Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.");
     println!(
         "Test going to the page in a browser and the curling it, you'll get different results."
     );

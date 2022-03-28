@@ -1,9 +1,9 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Async | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Asynchronous layout in Kvarn.">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Kvarn uses <a href="https://tokio.rs">Tokio</a> as the asynchronous runtime. It’s the same used in <a href="https://deno.land">deno</a>.
 Every <a href="/extensions/">extension</a> is asynchronous. This enables parallel execution to requests.</p>
 <p>If you need to send a request to your database or read a file, use async APIs. See the <a href="https://docs.rs/tokio/">Tokio docs</a>
@@ -17,4 +17,4 @@ Consider using <a href="https://docs.rs/tokio/latest/tokio/task/fn.spawn_blockin
 It also allows you to read from an async source to <a href="https://docs.rs/bytes/"><code>Bytes</code></a>, without an intermediate <code>Vec</code>.</p>
 <p>You can view it’s documentation <a href="https://doc.kvarn.org/kvarn_async/">online</a>.</p>
 </md></main>
-[footer]
+$[footer]

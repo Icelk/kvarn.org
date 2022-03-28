@@ -4,7 +4,7 @@
     <title>Compilation features | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Features of Kvarn which can be choosen when compiling">
-    [highlight]
+    $[highlight]
 </head>
 
 Certain features, such as HTTP/2, HTTPS, or compression might not be needed.
@@ -16,7 +16,7 @@ Disabling them cuts down on compilation time, memory requirements, and space req
 These can be enabled in your `Cargo.toml`:
 
 ```ini
-\[dependencies]
+[dependencies]
 kvarn = { version = "0.3", default-features = false, features = ["https", "http2", "all-encryption"] }
 ```
 

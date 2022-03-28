@@ -1,9 +1,9 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Reverse proxy | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn reverse proxy details.">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Kvarn’s reverse proxy implementation allows pass through of web servers’ responses.</p>
 <blockquote>
 <p>On the git version of Kvarn, URL rewrite is implemented, and automatically applied.</p>
@@ -15,4 +15,4 @@
 <p>Consider <a href="https://doc.kvarn.org/kvarn_extensions/reverse_proxy/struct.Manager.html#method.new"><code>Manager::new</code></a> for more control.</p>
 <p>Then, mount it to your extensions using <a href="https://doc.kvarn.org/kvarn_extensions/reverse_proxy/struct.Manager.html#method.mount"><code>Manager::mount</code></a>.</p>
 </md></main>
-[footer]
+$[footer]

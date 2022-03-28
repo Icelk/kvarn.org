@@ -1,8 +1,8 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Request pipeline | Kvarn</title>
     <meta name="permalinks" content="enabled">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>This document will contain all information about how incoming requests are handled in Kvarn.</p>
 <p>This is here to make development easier; to have a clear plan of what to do, where to implement it, and the branching of functions.</p>
 <h1 id="layer-1--transport">Layer 1 / Transport</h1>
@@ -44,4 +44,4 @@ Headers are parsed.</p>
 Can be found using Kvarns public API, through the module <code>utils</code>.</p>
 <p>This will get a face-lift in v.0.4.0!</p>
 </md></main>
-[footer]
+$[footer]

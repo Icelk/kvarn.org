@@ -1,9 +1,9 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Virtual hosts | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Host management and virtual hosts for serving multiple domains using the Kvarn web server">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Kvarn provides a few web server primitives:</p>
 <ul>
 <li><a href="https://doc.kvarn.org/kvarn/host/struct.Host.">Host</a>s: can be thought of representing a <em>domain</em>.
@@ -24,4 +24,4 @@ After some port forwarding and a domain name, these will be accessible on the in
 You create a <code>HostCollection</code> with the PHP host and bind that to the port <code>8080</code> using the <a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.unsecure"><code>PortDescriptor::unsecure</code></a>.</p>
 <p>The three public websites operate intependently with their own extensions and Postfix Admin is only accessible to the local network (assuming you didn’t port forward port <code>8080</code>).</p>
 </md></main>
-[footer]
+$[footer]

@@ -1,10 +1,10 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Chute - Markdown support | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="The Chute tool utilizing Kvarn templates to give comprehensive Markdown support.">
-    [highlight]
-[dependencies][md-imports][close-head][navigation]
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="chute">Chute</h1>
 <p>To easen writing for the web, Kvarn offers a tool called Chute. It consumes Markdown documents and produces HTML documents.</p>
 <p>Chute is a CLI tool. It can be built from the <a href="https://github.com/Icelk/kvarn/tree/main/chute">source</a>. Linux downloads are available on <a href="https://github.com/Icelk/kvarn/actions/workflows/chute.yml">GitHub actions</a>.</p>
@@ -12,12 +12,13 @@
 <tr><td><a href="#chute">1 Chute</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#present-extensions">1.1 Present extensions</a></td></tr>
 <tr><td><span style="margin-left: 4em"></span> <a href="#hide-exception">1.1.1 Hide exception</a></td></tr>
+<tr><td><span style="margin-left: 4em"></span> <a href="#templates">1.1.2 Templates</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#anchors">1.2 Anchors</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#tags">1.3 Tags</a></td></tr>
 <tr><td><span style="margin-left: 4em"></span> <a href="#table-of-contents">1.3.1 Table of contents</a></td></tr>
 <tr><td><span style="margin-left: 4em"></span> <a href="#escaping">1.3.2 Escaping</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#head">1.4 head&gt;</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#issues-with-square-brackets-">1.5 Issues with square brackets \[]</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span> <a href="#issues-with-square-brackets-">1.5 Issues with square brackets \$[]</a></td></tr>
 </tbody></table>
 <h2 id="present-extensions">Present extensions</h2>
 <p>Using <a href="/extensions/#present">Present extensions</a> gives you power to control the content of the document.
@@ -27,11 +28,18 @@ This allows you to specify any present extensions, just as you would in HTML.</p
 <p>If you define the <code>hide</code> extension in your Markdown document (e.g. <code>!&gt; hide\n...</code>) the Markdown document is hidden from the website.</p>
 <p>Chute removes this extension when merging.</p>
 <p>To also hide the HTML, you can specify it twice (e.g. <code>!&gt; hide &amp;&gt; hide</code>).</p>
+<h3 id="templates">Templates</h3>
+<p>Using the <a href="/templates.">templating engine</a>, you can easily build a website structure with Chute.</p>
+<p>See the page linked above for more details.</p>
+<p>Chute inserts some templates before and after the content automatically.
+Before dependencies: <code>!&gt; tmpl standard.html markdown.html\n\$[head]</code><br />
+After dependencies: <code>\$[dependencies]\$[md-imports]\$[close-head]\$[navigation]\n&lt;main&gt;&lt;md&gt;</code><br />
+After body: <code>&lt;/md&gt;&lt;/main&gt;\n\$[footer]\</code></p>
 <h2 id="anchors">Anchors</h2>
 <p>Chute sets the id of all headings to their content.
 The heading is converted to lower-case and non-alphanumerical symbols are replaced by hyphens <code>-</code>.</p>
 <p>This means you can <a href="#anchors">link to headings</a> of your document.
-The above link was written as <code>\[link to headings](#anchors)</code> in Markdown source.</p>
+The above link was written as <code>[link to headings](#anchors)</code> in Markdown source.</p>
 <h2 id="tags">Tags</h2>
 <p>Chute supports several special tags. They have the format <code>${tag}</code>.
 If a tag doesn’t exist in the internal list, or is <a href="#escaping">escaped</a>,
@@ -51,7 +59,7 @@ make Chute escape the last backslash, but only leave one. The zero-width space m
 <blockquote>
 <p>The present extensions are not required for this to work.</p>
 </blockquote>
-<pre><code class="language-markdown">!&gt; hide &amp;&gt; my-present-extension
+<pre><code class="language-html">!&gt; hide &amp;&gt; my-present-extension
 
 &lt;head&gt;
     &lt;title&gt;Fun article&lt;/title&gt;
@@ -59,8 +67,9 @@ make Chute escape the last backslash, but only leave one. The zero-width space m
 
 Text...
 </code></pre>
-<h2 id="issues-with-square-brackets-">Issues with square brackets \[]</h2>
-<p>When using square brackets (often found in Rust code and <code>Cargo.toml</code> files), the [Kvarn templating engine] tries to find a template. The text will therefore disappear and issues arise.
-You can escape this using two backslashes in Markdown source: <code>\\\[]</code> or one backslash in code segments.</p>
+<h2 id="issues-with-square-brackets-">Issues with square brackets \$[]</h2>
+<p>When using square brackets (often found in Rust code and <code>Cargo.toml</code> files), the <a href="/templates.">Kvarn templating engine</a>
+tries to find a template. The text will therefore disappear and issues arise.
+You can escape this using two backslashes in Markdown source: <code>\$[]</code> or one backslash in code segments.</p>
 </md></main>
-[footer]
+$[footer]

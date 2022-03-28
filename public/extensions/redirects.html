@@ -1,10 +1,10 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Redirects | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="How redirects work in Kvarn. Both index redirects and HTTP to HTTPS.">
-    [highlight]
-[dependencies][md-imports][close-head][navigation]
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="uri-redirect">URI redirect</h1>
 <p>When you visit <code>kvarn.org</code>, the web server doesn’t fetch the directory that is the root of the files.
 It naturally searches for <code>public/index.html</code>. That’s what most web servers do when a query points to a directory.</p>
@@ -32,4 +32,4 @@ connection: keep-alive
 </code></pre>
 <p>That is a by-product of the URI redirection.</p>
 </md></main>
-[footer]
+$[footer]

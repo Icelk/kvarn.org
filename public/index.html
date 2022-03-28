@@ -1,8 +1,8 @@
 !> tmpl standard.html
 <!-- tmpl-ignore -->
-[head]
+$[head]
 <title>Kvarn web server</title>
-[highlight] [dependencies]
+$[highlight]$[dependencies]
 <style>
     #top-bar .middle {
         width: 18rem;
@@ -55,7 +55,7 @@
         margin-bottom: 5rem;
     }
 </style>
-[close-head] [navigation]
+$[close-head]$[navigation]
 
 <div id="main-logo-container">
     <img id="main-logo" src="/logo.svg" alt="Kvarn logo" />
@@ -104,12 +104,12 @@
     <pre><code class="language-shell">$ cargo init</code></pre>
     <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
     <pre><code class="language-ini">kvarn = "^0.3"
-tokio = { version = "^1.13", features = \["macros", "rt-multi-thread"] }
+tokio = { version = "^1.13", features = ["macros", "rt-multi-thread"] }
 env_logger = "^0.9"</code></pre>
     <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
     <pre><code class="language–rust">use kvarn::prelude::*;
 
-#\[tokio::main]
+#[tokio::main]
 async fn main() {
     // Initiate the logger. Set the environment variable `RUST_LOG` to `info` to get finer logging.
     env_logger::init();
@@ -200,4 +200,4 @@ async fn main() {
     </div>
 </md>
 
-[footer]
+$[footer]

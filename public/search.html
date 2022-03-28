@@ -1,14 +1,15 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Search | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Full text search engine for your site. Returns results as you type. No index setup.">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="kvarn-search">Kvarn search</h1>
 <p>Over Christmas, I made a <a href="https://github.com/Icelk/elipdotter">full text search engine</a>.
 You can read my <a href="https://icelk.dev/articles/search-engine.html">article</a> for more details.</p>
 <p>Now, you can easily set up a API endpoint for search on your website, powered by Kvarn.</p>
-<p>Using the [<code>kvarn-search</code>] crate (for now, not on <a href="https://crates.io">crates.io</a> as it requires new Kvarn APIs),
+<p>Using the <a href="https://github.com/Icelk/kvarn-search"><code>kvarn-search</code></a> crate
+(for now, not on <a href="https://crates.io">crates.io</a> as it requires new Kvarn APIs),
 you can add a search engine to Kvarn and customize it.</p>
 <p>See <a href="https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221">these two lines</a> from the reference implementation for an example on how to set it up.</p>
 <h2 id="integrations">Integrations</h2>
@@ -19,4 +20,4 @@ you can add a search engine to Kvarn and customize it.</p>
 <a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/templates/standard.html#L105-L127">This HTML</a> is the search bar.<br />
 <a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/style.css#L350-L434">And this</a> is the styling.</p>
 </md></main>
-[footer]
+$[footer]

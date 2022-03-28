@@ -1,9 +1,9 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>HTTPS | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="HTTPS implementation in the Kvarn web server. Info regarding Rustls.">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Unsecure HTTP should never be used. It opens up a motherload of fun security volubilities.
 Using <a href="https://letsencrypt.org/">Let’s encrypt</a> and Kvarn, you can easily set up a secure HTTPS server.</p>
 <p>Kvarn uses <a href="https://github.com/briansmith/ring">ring</a> through <a href="https://github.com/rustls/rustls">Rustls</a>. It’s been <a href="https://cure53.de/pentest-report_rustls.pdf">audited</a> with great results - code quality was considered excellent.</p>
@@ -13,4 +13,4 @@ Using <a href="https://letsencrypt.org/">Let’s encrypt</a> and Kvarn, you can 
 <p>When creating a <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new">host</a>, you need to supply a certificate and private key.</p>
 <p>If you have PEM encoded keys, you can use the function <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.try_read_fs"><code>try_read_fs</code></a>.</p>
 </md></main>
-[footer]
+$[footer]

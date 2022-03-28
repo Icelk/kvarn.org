@@ -1,9 +1,9 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Ecosystem | Kvarn</title>
     <meta name="permalinks" content="enabled">
     <meta name="description" content="The Kvarn ecosystem. A guide to all it's components and features.">
-[dependencies][md-imports][close-head][navigation]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="the-kvarn-ecosystem">The Kvarn Ecosystem</h1>
 <p>To make Kvarn competetive with the major players, several pre-built extensions are encouraged to be used.
 Kvarn has a <a href="/extensions/">extensive extension API</a> which allows you, the user of Kvarn, to do whatever you
@@ -30,4 +30,4 @@ In fact, I’m writing this document in CommonMark and having chute export it ev
 <p>In addition to the tools above, an example implementation (the one which is currently serving you content) is <a href="https://github.com/Icelk/kvarn-reference/">available</a>. In the future, that’ll use a <a href="../config.">config</a>.</p>
 <p>Due to the modularity of Kvarn, and it marely being a library for listening to ports, a binary implementation is needed. If this is the reference implementation or your program embedding Kvarn, doesn’t matter.</p>
 </md></main>
-[footer]
+$[footer]

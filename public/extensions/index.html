@@ -1,8 +1,8 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Extensions | Kvarn</title>
-    [highlight]
-[dependencies][md-imports][close-head][navigation]
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>.
 They provide options for attaching to all parts of the request pipeline,
 with little overhead compared to cloning Kvarn and integrating with the internal code.</p>
@@ -98,7 +98,7 @@ Not cached</li>
 <p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>. This does a lot under the hood.</p>
 <pre><code class="language-rust">use kvarn::prelude::*;
 
-#\[tokio::main]
+#[tokio::main]
 async fn main() {
     env_logger::init();
 
@@ -217,7 +217,7 @@ async fn main() {
     let handle = RunConfig::new().bind(port).execute().await;
 
     println!(&quot;Started server at http://localhost:8080/&quot;);
-    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version and http://\[::1]:8080/ for IPv6.&quot;);
+    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.&quot;);
     println!(
         &quot;Test going to the page in a browser and the curling it, you'll get different results.&quot;
     );
@@ -237,4 +237,4 @@ async fn main() {
 }
 </code></pre>
 </md></main>
-[footer]
+$[footer]

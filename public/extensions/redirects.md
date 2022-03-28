@@ -3,7 +3,7 @@
     <title>Redirects | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="How redirects work in Kvarn. Both index redirects and HTTP to HTTPS.">
-    [highlight]
+    $[highlight]
 </head>
 
 # URI redirect

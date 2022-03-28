@@ -1,10 +1,10 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Content security policy | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Details on content security policy (CSP) in Kvarn.">
-    [highlight]
-[dependencies][md-imports][close-head][navigation]
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>CSP tells the browser where it’s OK to load resources from.</p>
 <p>This can help prevent certain attacks, such as <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS</a>. CSP disables the ability to load malicious scripts and styles.</p>
 <p>Like <a href="cors.">CORS</a>, CSP is handled through a ruleset. This allows parts of a site to use different policies.</p>
@@ -29,4 +29,4 @@ extensions.with_csp(
 );
 </code></pre>
 </md></main>
-[footer]
+$[footer]

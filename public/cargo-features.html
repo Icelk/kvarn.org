@@ -1,10 +1,10 @@
 !> tmpl standard.html markdown.html
-[head]
+$[head]
     <title>Compilation features | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Features of Kvarn which can be choosen when compiling">
-    [highlight]
-[dependencies][md-imports][close-head][navigation]
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Certain features, such as HTTP/2, HTTPS, or compression might not be needed.
 When Kvarn is deployed to an IOT device controlled from within the network, these features aren’t needed.
 Disabling them cuts down on compilation time, memory requirements, and space requirements.</p>
@@ -12,7 +12,7 @@ Disabling them cuts down on compilation time, memory requirements, and space req
 <p>To view the dependencies used by each feature, see the <a href="https://github.com/Icelk/kvarn/blob/main/Cargo.toml">Cargo.toml file</a>.</p>
 </blockquote>
 <p>These can be enabled in your <code>Cargo.toml</code>:</p>
-<pre><code class="language-ini">\[dependencies]
+<pre><code class="language-ini">[dependencies]
 kvarn = { version = &quot;0.3&quot;, default-features = false, features = [&quot;https&quot;, &quot;http2&quot;, &quot;all-encryption&quot;] }
 </code></pre>
 <p>See the <a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a> on the matter.</p>
@@ -40,4 +40,4 @@ automatically. This uses the info stored in the certificate.</li>
 <li><code>all-compression</code>: enables all compression features - <code>br</code> &amp; <code>gzip</code></li>
 </ul>
 </md></main>
-[footer]
+$[footer]

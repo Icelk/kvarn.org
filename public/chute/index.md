@@ -4,7 +4,7 @@
     <title>Chute - Markdown support | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="The Chute tool utilizing Kvarn templates to give comprehensive Markdown support.">
-    [highlight]
+    $[highlight]
 </head>
 
 # Chute
@@ -46,7 +46,7 @@ Chute sets the id of all headings to their content.
 The heading is converted to lower-case and non-alphanumerical symbols are replaced by hyphens `-`.
 
 This means you can [link to headings](#anchors) of your document.
-The above link was written as `\[link to headings](#anchors)` in Markdown source.
+The above link was written as `[link to headings](#anchors)` in Markdown source.
 
 ## Tags
 
@@ -85,7 +85,8 @@ If you need to insert items into the \<head\> of your document, simply define it
 Text...
 ```
 
-## Issues with square brackets \\[]
+## Issues with square brackets \\$[]
 
-When using square brackets (often found in Rust code and `Cargo.toml` files), the [Kvarn templating engine] tries to find a template. The text will therefore disappear and issues arise.
-You can escape this using two backslashes in Markdown source: `\\\[]` or one backslash in code segments.
+When using square brackets (often found in Rust code and `Cargo.toml` files), the [Kvarn templating engine](/templates.)
+tries to find a template. The text will therefore disappear and issues arise.
+You can escape this using two backslashes in Markdown source: `\$[]` or one backslash in code segments.

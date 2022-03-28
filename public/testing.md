@@ -4,7 +4,7 @@
     <title>Testing | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Method of testing Kvarn applications and the Kvarn library">
-    [highlight]
+    $[highlight]
 </head>
 
 Testing is integral to smooth deployment. Kvarn is covered by many unit and integration tests.
@@ -22,7 +22,7 @@ Below is an example of a production test. Unit tests are naturally also supporte
 
 ```ini
 # add the following to the bottom (or add to you dev-dependencies if you already have that section)
-\[dev-dependencies]
+[dev-dependencies]
 tokio = { version = "1", features = ["net", "io-util", "macros"] }
 # use the same version as the main Kvarn library
 kvarn_testing = "0.3"
@@ -31,7 +31,7 @@ kvarn_testing = "0.3"
 `tests/byte_ranges.rs`:
 
 ```rust
-#\[tokio::test]
+#[tokio::test]
 async fn out_of_bounds() {
     // Add an extension to the server
     let server = ServerBuilder::default().with_extensions(|ext| {
