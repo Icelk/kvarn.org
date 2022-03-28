@@ -24,11 +24,25 @@ This allows you to specify any present extensions, just as you would in HTML.</p
 <p>If you define the <code>hide</code> extension in your Markdown document (e.g. <code>!&gt; hide\n...</code>) the Markdown document is hidden from the website.</p>
 <p>Chute removes this extension when merging.</p>
 <p>To also hide the HTML, you can specify it twice (e.g. <code>!&gt; hide &amp;&gt; hide</code>).</p>
-<h2 id="table-of-contents">Table of contents</h2>
-<p>Chute supports several special tags. They have the format <code>${tag}</code>.</p>
+<h2 id="anchors">Anchors</h2>
+<p>Chute sets the id of all headings to their content.
+The heading is converted to lower-case and non-alphanumerical symbols are replaced by hyphens <code>-</code>.</p>
+<p>This means you can <a href="#anchors">link to headings</a> of your document.
+The above link was written as <code>\[link to headings](#anchors)</code> in Markdown source.</p>
+<h2 id="tags">Tags</h2>
+<p>Chute supports several special tags. They have the format <code>${tag}</code>.
+If a tag doesn’t exist in the internal list, or is <a href="#escaping">escaped</a>,
+it’s simply left intact.</p>
+<h3 id="table-of-contents">Table of contents</h3>
 <p>If you use <code>${toc}</code>, Chute outputs a table of contents from the headings in your document.</p>
+<h3 id="escaping">Escaping</h3>
 <p>As you may have noticed, I was able to write <code>${toc}</code> in the document.
-That’s because you can escape tags by inserting a backslash (<code>\</code>) before the tag.</p>
+That’s because you can escape tags by inserting a backslash (<code>\</code>) before the tag:  <code>\​${tag}</code>.</p>
+<p>To write <code>\​${tag}</code> in a document, you have to do the following: <code>\&lt;zero-width space&gt;\​${tag}</code>.
+This is caused by Chute parsing the Markdown source and looking for tags and escapes. If two successive backslashes <code>\</code>
+are found, it expands the tag as usual. In normal Markdown, this is converted to a single backslash.
+In code blocks, however, Markdown doesn’t remove the extra backslash. We therefore insert a character in between to
+make Chute escape the last backslash, but only leave one. The zero-width space makes sure it isn’t visible when viewing the document.</p>
 <h2 id="head">&lt;head&gt;</h2>
 <p>If you need to insert items into the &lt;head&gt; of your document, simply define it at the top:</p>
 <blockquote>

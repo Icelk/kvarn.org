@@ -29,14 +29,34 @@ Chute removes this extension when merging.
 
 To also hide the HTML, you can specify it twice (e.g. `!> hide &> hide`).
 
-## Table of contents
+## Anchors
+
+Chute sets the id of all headings to their content.
+The heading is converted to lower-case and non-alphanumerical symbols are replaced by hyphens `-`.
+
+This means you can [link to headings](#anchors) of your document.
+The above link was written as `\[link to headings](#anchors)` in Markdown source.
+
+## Tags
 
 Chute supports several special tags. They have the format `\${tag}`.
+If a tag doesn't exist in the internal list, or is [escaped](#escaping),
+it's simply left intact.
+
+### Table of contents
 
 If you use `\${toc}`, Chute outputs a table of contents from the headings in your document.
 
+### Escaping
+
 As you may have noticed, I was able to write `\${toc}` in the document.
-That's because you can escape tags by inserting a backslash (`\`) before the tag.
+That's because you can escape tags by inserting a backslash (`\`) before the tag:  `\​\${tag}`.
+
+To write `\​\${tag}` in a document, you have to do the following: `\<zero-width space>\​\${tag}`.
+This is caused by Chute parsing the Markdown source and looking for tags and escapes. If two successive backslashes `\`
+are found, it expands the tag as usual. In normal Markdown, this is converted to a single backslash.
+In code blocks, however, Markdown doesn't remove the extra backslash. We therefore insert a character in between to
+make Chute escape the last backslash, but only leave one. The zero-width space makes sure it isn't visible when viewing the document.
 
 ## \<head\>
 
