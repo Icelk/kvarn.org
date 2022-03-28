@@ -29,6 +29,17 @@ Chute removes this extension when merging.
 
 To also hide the HTML, you can specify it twice (e.g. `!> hide &> hide`).
 
+### Templates
+
+Using the [templating engine](/templates.), you can easily build a website structure with Chute.
+
+See the page linked above for more details.
+
+Chute inserts some templates before and after the content automatically.
+Before dependencies: `!> tmpl standard.html markdown.html\n\$[head]`\
+After dependencies: `\$[dependencies]\$[md-imports]\$[close-head]\$[navigation]\n<main><md>`\
+After body: `</md></main>\n\$[footer]\`
+
 ## Anchors
 
 Chute sets the id of all headings to their content.
@@ -64,7 +75,7 @@ If you need to insert items into the \<head\> of your document, simply define it
 
 > The present extensions are not required for this to work.
 
-```markdown
+```html
 !> hide &> my-present-extension
 
 <head>
