@@ -185,6 +185,7 @@ To run a Kvarn server and send a request takes 2 lines of code.</li>
 <ul>
 <li>Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.</li>
 <li><a href="../csp.">CSP</a> support.</li>
+<li>Extremely simple to use <a href="../nonce.">nonce</a> support.</li>
 <li>If-Modified-Since for more effective caching. This is directly integrated with <code>lifetime</code>s in the Kvarn cache.</li>
 <li><a href="/extensions/redirects.">URL handling</a> of requests ending in <code>/</code> (becomes <code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
 <li>Logging using Rust’s standard logger, enabling you to chose a log implementation which works for you.</li>

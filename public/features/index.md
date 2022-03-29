@@ -218,6 +218,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 
 -   Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
 -   [CSP](../csp.) support.
+-   Extremely simple to use [nonce](../nonce.) support.
 -   If-Modified-Since for more effective caching. This is directly integrated with `lifetime`s in the Kvarn cache.
 -   [URL handling](/extensions/redirects.) of requests ending in `/` (becomes `/index.html` by default) and `.` (becomes `.html` by default).
 -   Logging using Rust's standard logger, enabling you to chose a log implementation which works for you.
