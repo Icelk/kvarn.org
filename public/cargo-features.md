@@ -39,6 +39,7 @@ Which Cargo features are required for certain items are also shown in the [docs]
     then tell the old instance to shut down. All pending and current requests are waited for.
 -   `auto-hostname`: Populates the [host name](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.name) and [alternative names](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.alternative_names)
     automatically. This uses the info stored in the certificate.
+-   `nonce`: enables usage of [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) on inline `<script>` and `<style>` elements.
 
 There are additionally several _feature sets_:
 
