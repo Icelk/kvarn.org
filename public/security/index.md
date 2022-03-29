@@ -27,6 +27,8 @@ The default is `default-src 'self'; style-src 'self' 'unsafe-inline'`, which all
 You can of course [change the policy](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_csp), [programmatically](https://doc.kvarn.org/kvarn/csp/type.Csp.html),
 with policies specific to locations on the site.
 
+Kvarn also offers convenient [nonce](/nonce.).
+
 # Rust
 
 Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.

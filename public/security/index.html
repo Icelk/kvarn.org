@@ -28,6 +28,7 @@ in the case of a third party website suffering from XSS.</p>
 The default is <code>default-src 'self'; style-src 'self' 'unsafe-inline'</code>, which allows content from the current website and inline styling.</p>
 <p>You can of course <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_csp">change the policy</a>, <a href="https://doc.kvarn.org/kvarn/csp/type.Csp.html">programmatically</a>,
 with policies specific to locations on the site.</p>
+<p>Kvarn also offers convenient <a href="/nonce.">nonce</a>.</p>
 <h1 id="rust">Rust</h1>
 <p>Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.
 This removes the risk of buffer overflows, dangling pointers, and other undefined behaviour.</p>
