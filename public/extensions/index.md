@@ -72,6 +72,14 @@ It's very useful for APIs (both REST and GraphQL!)
 
 Here, you could, for example, implement reading from the file system, like Kvarn does by default.
 
+### [Single](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_prepare_single)
+
+These bind to a single page.
+
+### [fn](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_prepare_fn)
+
+You provide a predicate which returns whether or not to run this extension.
+
 ## [Present](https://doc.kvarn.org/kvarn/macro.present.html)
 
 - [x] Cached
@@ -81,6 +89,41 @@ Here, files can opt in to extensions to manipulate data, such as the template sy
 This type can modify most data in response and will be executed in series.
 
 Extensions can also attach to filetypes.
+
+### [Internal](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_internal)
+
+These are declared on the first line in a file, acording to the following syntax:
+
+```md
+!> extension arg1 arg2 &> second-extension-name with these four arguments &> and-so-on
+
+My blog...
+```
+
+There can be arbitrarily many extensions. The are separated by [` &> `](https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html).
+
+The first word (space-separated) is the extension name. The others are arguments. Extensions might not look for arguments, or error if any invalid input is given,
+just like applications.
+
+You can naturally also give just one extension:
+```md
+!> nonce
+
+My vlog...
+```
+
+When Kvarn serves the file, this line is removed.
+
+Extensions are processed left to right.
+
+[File](#file) extensions are processed after the internal ones. Keep in mind that some file extensions might read from the file system.
+Changes to the response isn't written, so the changes will be lost.
+
+### [File](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_file)
+
+These are set on a per filename basis. 
+
+`.php` files can be bound to be processed by `fastcgi`, as the [`kvarn-extensions` extension](https://doc.kvarn.org/kvarn_extensions/php/index.) does.
 
 ## [Package](https://doc.kvarn.org/kvarn/macro.package.html)
 
