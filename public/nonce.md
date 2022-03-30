@@ -16,3 +16,7 @@ extension which enables the `nonce` [internal present](/extensions/#internal) ex
 Add that to the top of your file and just insert a nonce attribute to your inline style or script element: `<script|style nonce="">...</script|style>`.
 The content (if any) between the quotes (both `"` and `'` are supported) is replaced by the random nonce value, which is also included in the
 `content-security-policy` header.
+This random value is a 128-bit random number generated from a cryptographically secure source, encoded in Base64. It will therefore always have the length 24 bytes. This is what's recommended by MDN.
+
+> Between the nonce being generated in the Present extension and consumed in the Package extension (which is what adds the CSP header),
+> the nonce value is stored in the response header `csp-nonce`, which is removed by the Package extension.

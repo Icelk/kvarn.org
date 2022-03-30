@@ -13,6 +13,11 @@ are a great idea. They guarantee only your scripts are ran on your website.</p>
 extension which enables the <code>nonce</code> <a href="/extensions/#internal">internal present</a> extension.
 Add that to the top of your file and just insert a nonce attribute to your inline style or script element: <code>&lt;script|style nonce=&quot;&quot;&gt;...&lt;/script|style&gt;</code>.
 The content (if any) between the quotes (both <code>&quot;</code> and <code>'</code> are supported) is replaced by the random nonce value, which is also included in the
-<code>content-security-policy</code> header.</p>
+<code>content-security-policy</code> header.
+This random value is a 128-bit random number generated from a cryptographically secure source, encoded in Base64. It will therefore always have the length 24 bytes. This is what’s recommended by MDN.</p>
+<blockquote>
+<p>Between the nonce being generated in the Present extension and consumed in the Package extension (which is what adds the CSP header),
+the nonce value is stored in the response header <code>csp-nonce</code>, which is removed by the Package extension.</p>
+</blockquote>
 </md></main>
 $[footer]
