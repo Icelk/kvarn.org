@@ -6,8 +6,9 @@ $[head]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Graceful shutdown works by closing the listening socket and completing any connections.</p>
 <p>Handover means the control over a port is handed over from one Kvarn instance to another. This is achieved through multiple processes binding the same port, and the old instance then quitting. When both instances are listening, the incoming request are split between them.</p>
+<h1 id="handover">Handover</h1>
 <p>This is only available on Unix, see the <a href="https://docs.rs/tokio/latest/tokio/net/struct.TcpSocket.html#method.set_reuseport">Tokio docs</a>.</p>
-<h1 id="process">Process</h1>
+<h2 id="process">Process</h2>
 <p>When you restart the Kvarn server,</p>
 <ul>
 <li>first, the new binary is started. Multiple Kvarn instances can bind to the same port, ensuring 0 downtime.</li>
@@ -16,6 +17,24 @@ $[dependencies]$[md-imports]$[close-head]$[navigation]
 <li>When all transactions are closed, the old binary silently exits.
 This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.</li>
 </ul>
-<p>The communication between binaries are via Unix sockets (which isn’t a problem as binding to the same port isn’t supported on Windows).</p>
+<p>The [communication between binaries] are done using Unix sockets
+(which isn’t a problem since binding to the same port isn’t supported on Windows).</p>
+<h1 id="shutdown">Shutdown</h1>
+<p>Graceful shutdown is only enabled when the <a href="/cargo-features.">respective cargo feature</a> is enabled.
+It is supported on all platforms.</p>
+<p>This is an optional feature because it’s performance implications. An atomic integer is accessed a few times for each connection/request.
+This can be avoided when no graceful shutdown is needed.</p>
+<h2 id="process-1">Process</h2>
+<ul>
+<li>When <a href="https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.shutdown"><code>shutdown()</code></a> is called,
+all listeners stop listening.</li>
+<li>Once the count of active connections reach 0, the actual shutdown is initiated.</li>
+<li>First, all clients which have called <a href="https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.wait_for_pre_shutdown"><code>wait_for_pre_shutdown()</code></a>
+are resolved. They are given a sender. When they are done shutting down, they send back a unit type <code>()</code>.</li>
+<li>When all <code>wait_for_pre_shutdown</code> have responded, the tasks awaiting
+<a href="https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.wait"><code>wait()</code></a> are released.</li>
+<li>This usually means the code which created the Kvarn server continues. This means all Kvarn resources are released.</li>
+<li>In the reference implementation, now we’ve reached the end of the main function. The application will quit and tokio shut down.</li>
+</ul>
 </md></main>
 $[footer]

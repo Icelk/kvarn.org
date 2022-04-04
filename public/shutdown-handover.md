@@ -10,9 +10,11 @@ Graceful shutdown works by closing the listening socket and completing any conne
 
 Handover means the control over a port is handed over from one Kvarn instance to another. This is achieved through multiple processes binding the same port, and the old instance then quitting. When both instances are listening, the incoming request are split between them.
 
+# Handover
+
 This is only available on Unix, see the [Tokio docs](https://docs.rs/tokio/latest/tokio/net/struct.TcpSocket.html#method.set_reuseport).
 
-# Process
+## Process
 
 When you restart the Kvarn server,
 
@@ -22,4 +24,25 @@ When you restart the Kvarn server,
 -   When all transactions are closed, the old binary silently exits.
     This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.
 
-The communication between binaries are via Unix sockets (which isn't a problem as binding to the same port isn't supported on Windows).
+The [communication between binaries] are done using Unix sockets
+(which isn't a problem since binding to the same port isn't supported on Windows).
+
+# Shutdown
+
+Graceful shutdown is only enabled when the [respective cargo feature](/cargo-features.) is enabled.
+It is supported on all platforms.
+
+This is an optional feature because it's performance implications. An atomic integer is accessed a few times for each connection/request.
+This can be avoided when no graceful shutdown is needed.
+
+## Process
+
+-   When [`shutdown()`](https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.shutdown) is called,
+    all listeners stop listening.
+-   Once the count of active connections reach 0, the actual shutdown is initiated.
+-   First, all clients which have called [`wait_for_pre_shutdown()`](https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.wait_for_pre_shutdown)
+    are resolved. They are given a sender. When they are done shutting down, they send back a unit type `()`.
+-   When all `wait_for_pre_shutdown` have responded, the tasks awaiting
+    [`wait()`](https://doc.kvarn.org/kvarn/shutdown/struct.Manager.html#method.wait) are released.
+-   This usually means the code which created the Kvarn server continues. This means all Kvarn resources are released.
+-   In the reference implementation, now we've reached the end of the main function. The application will quit and tokio shut down.
