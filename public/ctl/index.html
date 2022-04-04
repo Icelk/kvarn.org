@@ -1,0 +1,25 @@
+!> tmpl standard.html markdown.html
+$[head]
+    <title>kvarnctl</title>
+    <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Communication with Kvarn from the command line.">
+$[dependencies]$[md-imports]$[close-head]$[navigation]
+<main><md><p><code>kvarnctl</code> is a binary available for UNIX systems. It commnicates with your Kvarn instances to execute commands with arguments.</p>
+<h1 id="commands">Commands</h1>
+<p>These correspond to <a href="https://doc.kvarn.org/kvarn/ctl/index.html">plugins</a>.</p>
+<h2 id="shutdown"><code>shutdown</code></h2>
+<p>Shut the Kvarn instance down.</p>
+<p>If the <code>graceful-shutdown</code> <a href="/cargo-features.">cargo feature</a> is enabled, this performs a graceful shutdown (no connections are abruptly terminated).
+You can implement your own shutdown mechanism.</p>
+<h2 id="ping"><code>ping</code></h2>
+<p>Pings Kvarn. The response will be all the arguments joined with spaces</p>
+<h2 id="reload"><code>reload</code></h2>
+<p>Starts a new instance in place and performs a graceful shutdown.
+Requires both the capabilities necessitated by <a href="#shutdown"><code>shutdown</code></a> and that the OS is UNIX &amp; !Solaris &amp; !illumos.
+This is also what <a href="/shutdown-handover.#handover">is required by handover</a>.</p>
+<h1 id="path">Path</h1>
+<p>By default, Kvarn listens on <code>/tmp/kvarn.sock</code>. You can <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path">change this</a>.</p>
+<h2 id="disable">Disable</h2>
+<p>You can also <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.disable_ctl">disable the IPC altogether</a>.</p>
+</md></main>
+$[footer]
