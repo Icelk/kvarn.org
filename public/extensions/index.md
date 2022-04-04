@@ -1,10 +1,11 @@
 !> hide
+
 <head>
     <title>Extensions | Kvarn</title>
     $[highlight]
 </head>
 
-To extend the core functionality of Kvarn, you'll use *extensions*.
+To extend the core functionality of Kvarn, you'll use _extensions_.
 They provide options for attaching to all parts of the request pipeline,
 with little overhead compared to cloning Kvarn and integrating with the internal code.
 
@@ -14,9 +15,10 @@ ${toc}
 
 The following pages are details on implementation useful to read if you're working with Kvarn, even just as the web server to host your files.
 
-- [Redirects](redirects.)
-- APIs at `/./*` are not accessible from the outside, as Kvarn forbids this.\
-    A common pattern is to make [Prime](https://doc.kvarn.org/kvarn/extensions/type.Prime.html) extensions which redirect to [Prepare](https://doc.kvarn.org/kvarn/extensions/type.Prepare.html) APIs located here.
+-   [Redirects](redirects.)
+-   APIs at `/./*` are not accessible from the outside, as Kvarn forbids this.\
+    A common pattern is to make [Prime](https://doc.kvarn.org/kvarn/extensions/type.Prime.html)
+    extensions which redirect to [Prepare](https://doc.kvarn.org/kvarn/extensions/type.Prepare.html) APIs located here.
     Then, you can conditionally change the path of a request.
 
 # Building an API
@@ -45,19 +47,19 @@ Here are the five *P*s chronologically ordered from the request's perspective.
 
 ## [Prime](https://doc.kvarn.org/kvarn/macro.prime.html)
 
-- [ ] Not cached
+-   [ ] Not cached
 
 This is where you can add cache redirects.
 If you for example want to load the login page on all privileged pages (when the user is not logged in),
 you can check for the `authentication` HTTP header
 and from there decide to intercept the request.
 
-It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to 
+It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to
 a special page where a 307 redirect is responded with.
 
 ## [Prepare](https://doc.kvarn.org/kvarn/macro.prepare.html)
 
-- [x] Optional. If the response contains a future (WebSockets), it'll never cache.
+-   [x] Optional. If the response contains a future (WebSockets), it'll never cache.
 
 You provide either a URI or a function of when to activate your code.
 Will still get all other extensions applied.
@@ -82,7 +84,7 @@ You provide a predicate which returns whether or not to run this extension.
 
 ## [Present](https://doc.kvarn.org/kvarn/macro.present.html)
 
-- [x] Cached
+-   [x] Cached
 
 Here, files can opt in to extensions to manipulate data, such as the template system and `hide` extension.
 
@@ -100,12 +102,13 @@ These are declared on the first line in a file, acording to the following syntax
 My blog...
 ```
 
-There can be arbitrarily many extensions. The are separated by [` &> `](https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html).
+There can be arbitrarily many extensions. The are separated by [`&>`](https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html).
 
 The first word (space-separated) is the extension name. The others are arguments. Extensions might not look for arguments, or error if any invalid input is given,
 just like applications.
 
 You can naturally also give just one extension:
+
 ```md
 !> nonce
 
@@ -121,13 +124,13 @@ Changes to the response isn't written, so the changes will be lost.
 
 ### [File](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_file)
 
-These are set on a per filename basis. 
+These are set on a per filename basis.
 
 `.php` files can be bound to be processed by `fastcgi`, as the [`kvarn-extensions` extension](https://doc.kvarn.org/kvarn_extensions/php/index.) does.
 
 ## [Package](https://doc.kvarn.org/kvarn/macro.package.html)
 
-- [ ] Not cached
+-   [ ] Not cached
 
 Here, you can define headers to add to the final response.
 These headers are not cached, but applied every time. You can therefore compare things like other headers and the version of the request.
@@ -136,11 +139,53 @@ Cookies can be defined here, since they won't be cached.
 
 ## [Post](https://doc.kvarn.org/kvarn/macro.post.html)
 
-- [ ] Not cached
+-   [ ] Not cached
 
 These extensions are called after all data are written to the user. This will almost exclusively be used for HTTP/2 push.
 
 Maybe, it can be used to sync data to a database after the request is written to not block it?
+
+# Writing an extension
+
+Using [the macros](https://doc.kvarn.org/kvarn/index.html#macros) is recommended.
+
+You can however writing them manually.
+The adding methods of [`Extensions`](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html)
+expect a boxed struct which implements the [appropriate `*Call` trait](https://doc.kvarn.org/kvarn/extensions/index.html#traits).
+
+```rust
+use kvarn::prelude::*;
+
+struct Ext {
+    name: &'static str,
+    counter: threading::atomic::AtomicUsize,
+}
+impl extensions::PrepareCall for Ext {
+    fn call<'a>(
+        &'a self,
+        request: &'a mut FatRequest,
+        host: &'a Host,
+        path: Option<&'a Path>,
+        addr: SocketAddr,
+    ) -> RetFut<'a, FatResponse> {
+        extensions::ready(FatResponse::no_cache(Response::new(
+            Bytes::try_from(format!(
+                "# {}\n You are nr. {}.",
+                self.name,
+                self.counter.fetch_add(1, threading::Ordering::SeqCst)
+            ))
+            .unwrap(),
+        )))
+    }
+}
+
+let mut extensions = Extensions::new();
+let ext = Ext {
+    name: "My website",
+    counter: threading::atomic::AtomicUsize::new(1),
+};
+extensions.add_prepare_single("/index.html", Box::new(ext));
+```
 
 # Example
 
@@ -160,7 +205,7 @@ async fn main() {
     let mut extensions = Extensions::empty();
 
     extensions.with_cors(
-        Cors::new()
+        Cors::empty()
             .add(
                 "/api*",
                 CorsAllowList::default().add_origin("https://icelk.dev"),
@@ -168,7 +213,7 @@ async fn main() {
             .arc(),
     );
 
-    extensions.add_prime(prime!(request, _host, _addr {
+    extensions.add_prime(prime!(request, _host, _addr, {
         if request.uri().path() == "/" {
             // This maps the Option<HeaderValue> to Option<Result<&str, _>> which the
             // `.and_then(Result::ok)` makes Option<&str>, returning `Some` if the value is both `Ok` and `Some`.
@@ -190,7 +235,7 @@ async fn main() {
 
     extensions.add_prepare_single(
         "/ip",
-        prepare!(_request, _host, _path, addr {
+        prepare!(_request, _host, _path, addr, {
             let ip = addr.ip().to_string();
             let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
             FatResponse::no_cache(response)
@@ -198,7 +243,7 @@ async fn main() {
     );
     extensions.add_prepare_single(
         "/index.html",
-        prepare!(_request, _host, _path, addr {
+        prepare!(_, _host, _, addr, {
             // This uses the present extension `simple-head` declared just below this extension.
             let content = format!(
                 "!> simple-head Your IP address\n\
@@ -211,8 +256,8 @@ async fn main() {
     );
 
     extensions.add_present_internal(
-        "simple-head".to_string(),
-        present!(present_data {
+        "simple-head",
+        present!(present_data, {
             let content = present_data.response().body();
 
             let start = r#"
@@ -238,14 +283,14 @@ async fn main() {
         }),
     );
     extensions.add_package(
-        package!(response, _request, _host {
+        package!(response, _request, _, {
             response.headers_mut().insert("fun-header", HeaderValue::from_static("why not?"));
             utils::replace_header_static(response.headers_mut(), "content-security-policy", "default-src 'self'; style-src 'unsafe-inline' 'self'");
         }),
         Id::new(-1024, "add headers"),
     );
     extensions.add_post(
-        post!(_request, host, _response_pipe, identity_body, addr {
+        post!(_request, host, _response_pipe, identity_body, addr, {
             if let Ok(mut body) = str::from_utf8(&identity_body) {
                 body = body.get(0..512).unwrap_or(body);
                 println!("Sent {:?} to {} from {}", body, addr, host.name);
@@ -267,7 +312,7 @@ async fn main() {
     );
     // Consider using `.insert` here instead of `.default`.
     // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
-    let data = Data::builder().default(host).build();
+    let data = HostCollection::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
     let handle = RunConfig::new().bind(port).execute().await;
 
@@ -281,7 +326,7 @@ async fn main() {
     let sendable_server_handle = Arc::clone(&handle);
 
     tokio::spawn(async move {
-        tokio::time::sleep(time::Duration::from_secs(10)).await;
+        tokio::time::sleep(Duration::from_secs(10)).await;
         println!("Starting graceful shutdown");
         sendable_server_handle.shutdown();
     });

@@ -19,14 +19,16 @@ with little overhead compared to cloning Kvarn and integrating with the internal
 <tr><td><span style="margin-left: 4em"></span> <a href="#file">3.3.2 File</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#package">3.4 Package</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span> <a href="#post">3.5 Post</a></td></tr>
-<tr><td><a href="#example">4 Example</a></td></tr>
+<tr><td><a href="#writing-an-extension">4 Writing an extension</a></td></tr>
+<tr><td><a href="#example">5 Example</a></td></tr>
 </tbody></table>
 <h1 id="details">Details</h1>
 <p>The following pages are details on implementation useful to read if you’re working with Kvarn, even just as the web server to host your files.</p>
 <ul>
 <li><a href="redirects.">Redirects</a></li>
 <li>APIs at <code>/./*</code> are not accessible from the outside, as Kvarn forbids this.<br />
-A common pattern is to make <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">Prime</a> extensions which redirect to <a href="https://doc.kvarn.org/kvarn/extensions/type.Prepare.html">Prepare</a> APIs located here.
+A common pattern is to make <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">Prime</a>
+extensions which redirect to <a href="https://doc.kvarn.org/kvarn/extensions/type.Prepare.html">Prepare</a> APIs located here.
 Then, you can conditionally change the path of a request.</li>
 </ul>
 <h1 id="building-an-api">Building an API</h1>
@@ -56,7 +58,7 @@ Not cached</li>
 If you for example want to load the login page on all privileged pages (when the user is not logged in),
 you can check for the <code>authentication</code> HTTP header
 and from there decide to intercept the request.</p>
-<p>It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to 
+<p>It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to
 a special page where a 307 redirect is responded with.</p>
 <h2 id="prepare"><a href="https://doc.kvarn.org/kvarn/macro.prepare.html">Prepare</a></h2>
 <ul>
@@ -104,7 +106,7 @@ My vlog...
 <p><a href="#file">File</a> extensions are processed after the internal ones. Keep in mind that some file extensions might read from the file system.
 Changes to the response isn’t written, so the changes will be lost.</p>
 <h3 id="file"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_file">File</a></h3>
-<p>These are set on a per filename basis. </p>
+<p>These are set on a per filename basis.</p>
 <p><code>.php</code> files can be bound to be processed by <code>fastcgi</code>, as the <a href="https://doc.kvarn.org/kvarn_extensions/php/index."><code>kvarn-extensions</code> extension</a> does.</p>
 <h2 id="package"><a href="https://doc.kvarn.org/kvarn/macro.package.html">Package</a></h2>
 <ul>
@@ -121,6 +123,43 @@ Not cached</li>
 </ul>
 <p>These extensions are called after all data are written to the user. This will almost exclusively be used for HTTP/2 push.</p>
 <p>Maybe, it can be used to sync data to a database after the request is written to not block it?</p>
+<h1 id="writing-an-extension">Writing an extension</h1>
+<p>Using <a href="https://doc.kvarn.org/kvarn/index.html#macros">the macros</a> is recommended.</p>
+<p>You can however writing them manually.
+The adding methods of <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html"><code>Extensions</code></a>
+expect a boxed struct which implements the <a href="https://doc.kvarn.org/kvarn/extensions/index.html#traits">appropriate <code>*Call</code> trait</a>.</p>
+<pre><code class="language-rust">use kvarn::prelude::*;
+
+struct Ext {
+    name: &amp;'static str,
+    counter: threading::atomic::AtomicUsize,
+}
+impl extensions::PrepareCall for Ext {
+    fn call&lt;'a&gt;(
+        &amp;'a self,
+        request: &amp;'a mut FatRequest,
+        host: &amp;'a Host,
+        path: Option&lt;&amp;'a Path&gt;,
+        addr: SocketAddr,
+    ) -&gt; RetFut&lt;'a, FatResponse&gt; {
+        extensions::ready(FatResponse::no_cache(Response::new(
+            Bytes::try_from(format!(
+                &quot;# {}\n You are nr. {}.&quot;,
+                self.name,
+                self.counter.fetch_add(1, threading::Ordering::SeqCst)
+            ))
+            .unwrap(),
+        )))
+    }
+}
+
+let mut extensions = Extensions::new();
+let ext = Ext {
+    name: &quot;My website&quot;,
+    counter: threading::atomic::AtomicUsize::new(1),
+};
+extensions.add_prepare_single(&quot;/index.html&quot;, Box::new(ext));
+</code></pre>
 <h1 id="example">Example</h1>
 <p>Let’s build one of each extension to see how they fit together.</p>
 <p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
@@ -134,7 +173,7 @@ async fn main() {
     let mut extensions = Extensions::empty();
 
     extensions.with_cors(
-        Cors::new()
+        Cors::empty()
             .add(
                 &quot;/api*&quot;,
                 CorsAllowList::default().add_origin(&quot;https://icelk.dev&quot;),
@@ -142,7 +181,7 @@ async fn main() {
             .arc(),
     );
 
-    extensions.add_prime(prime!(request, _host, _addr {
+    extensions.add_prime(prime!(request, _host, _addr, {
         if request.uri().path() == &quot;/&quot; {
             // This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
             // `.and_then(Result::ok)` makes Option&lt;&amp;str&gt;, returning `Some` if the value is both `Ok` and `Some`.
@@ -164,7 +203,7 @@ async fn main() {
 
     extensions.add_prepare_single(
         &quot;/ip&quot;,
-        prepare!(_request, _host, _path, addr {
+        prepare!(_request, _host, _path, addr, {
             let ip = addr.ip().to_string();
             let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
             FatResponse::no_cache(response)
@@ -172,7 +211,7 @@ async fn main() {
     );
     extensions.add_prepare_single(
         &quot;/index.html&quot;,
-        prepare!(_request, _host, _path, addr {
+        prepare!(_, _host, _, addr, {
             // This uses the present extension `simple-head` declared just below this extension.
             let content = format!(
                 &quot;!&gt; simple-head Your IP address\n\
@@ -185,8 +224,8 @@ async fn main() {
     );
 
     extensions.add_present_internal(
-        &quot;simple-head&quot;.to_string(),
-        present!(present_data {
+        &quot;simple-head&quot;,
+        present!(present_data, {
             let content = present_data.response().body();
 
             let start = r#&quot;
@@ -212,14 +251,14 @@ async fn main() {
         }),
     );
     extensions.add_package(
-        package!(response, _request, _host {
+        package!(response, _request, _, {
             response.headers_mut().insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
             utils::replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
         }),
         Id::new(-1024, &quot;add headers&quot;),
     );
     extensions.add_post(
-        post!(_request, host, _response_pipe, identity_body, addr {
+        post!(_request, host, _response_pipe, identity_body, addr, {
             if let Ok(mut body) = str::from_utf8(&amp;identity_body) {
                 body = body.get(0..512).unwrap_or(body);
                 println!(&quot;Sent {:?} to {} from {}&quot;, body, addr, host.name);
@@ -241,7 +280,7 @@ async fn main() {
     );
     // Consider using `.insert` here instead of `.default`.
     // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
-    let data = Data::builder().default(host).build();
+    let data = HostCollection::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
     let handle = RunConfig::new().bind(port).execute().await;
 
@@ -255,7 +294,7 @@ async fn main() {
     let sendable_server_handle = Arc::clone(&amp;handle);
 
     tokio::spawn(async move {
-        tokio::time::sleep(time::Duration::from_secs(10)).await;
+        tokio::time::sleep(Duration::from_secs(10)).await;
         println!(&quot;Starting graceful shutdown&quot;);
         sendable_server_handle.shutdown();
     });
