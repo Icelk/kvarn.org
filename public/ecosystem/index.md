@@ -1,4 +1,5 @@
 !> hide
+
 <head>
     <title>Ecosystem | Kvarn</title>
     <meta name="permalinks" content="enabled">
@@ -29,6 +30,11 @@ Everything is naturally [optional](../cargo-features.#extensions).
 
 [Online documentation](https://doc.kvarn.org) is available for the git branch.
 Refer to [docs.rs](https://docs.rs/kvarn) for docs for stable releases.
+
+## Management
+
+Management of the Kvarn server is done through IPC, using UNIX sockets.
+[`kvarnctl`](../ctl/) is a feature-complete command dispatcher.
 
 ## Markdown
 
