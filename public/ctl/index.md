@@ -35,6 +35,12 @@ If handover isn't available, there will be a small gap where no listener are onl
 
 Waits for the Kvarn instance to shut down.
 
+## `clear`
+
+Format: `kvarnctl clear <method> (<host> <file/URI>)`
+
+Clears caches. Methods available are `all`, `files`, `responses`, and two which clear a specific resource, `file` and `response`.
+
 # Waiting for Kvarn to turn off
 
 If you want to wait for when Kvarn turns off, use the `--wait` flag. The advantage of using the flag instead of the command
