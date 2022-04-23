@@ -2,11 +2,11 @@
 
 cd public
 
-for file in (fd -g "*.html")
+for file in (fd -g "*.html" -E local.html -E remote.html)
     set file (echo $file | tail -c +3)
     echo "Comparing $file:"
     curl http://localhost:8080/$file >local.html
-    curl https://kvarn.org/$file >remote.html
+    curl https://icelk.dev/$file >remote.html
 
     diff local.html remote.html
 end
