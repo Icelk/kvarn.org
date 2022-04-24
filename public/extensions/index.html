@@ -141,7 +141,7 @@ impl extensions::PrepareCall for Ext {
         host: &amp;'a Host,
         path: Option&lt;&amp;'a Path&gt;,
         addr: SocketAddr,
-    ) -&gt; RetFut&lt;'a, FatResponse&gt; {
+    ) -&gt; extensions::RetFut&lt;'a, FatResponse&gt; {
         extensions::ready(FatResponse::no_cache(Response::new(
             Bytes::try_from(format!(
                 &quot;# {}\n You are nr. {}.&quot;,
@@ -164,6 +164,20 @@ extensions.add_prepare_single(&quot;/index.html&quot;, Box::new(ext));
 <p>Let’s build one of each extension to see how they fit together.</p>
 <p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
 <p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>. This does a lot under the hood.</p>
+<p><code>Cargo.toml</code>:</p>
+<pre><code class="language-ini">[package]
+name = &quot;unicorn-backend&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+kvarn = &quot;0.4&quot;
+tokio = { version = &quot;1.17&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
+env_logger = &quot;0.9&quot;
+</code></pre>
+<p><code>src/main.rs</code>:</p>
 <pre><code class="language-rust">use kvarn::prelude::*;
 
 #[tokio::main]
@@ -279,7 +293,7 @@ async fn main() {
         host::Options::default(),
     );
     // Consider using `.insert` here instead of `.default`.
-    // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
+    // The reason I had to use `.default` is a small issue in v0.4.0, patched in the next version.
     let data = HostCollection::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
     let handle = RunConfig::new().bind(port).execute().await;

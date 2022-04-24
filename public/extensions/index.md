@@ -167,7 +167,7 @@ impl extensions::PrepareCall for Ext {
         host: &'a Host,
         path: Option<&'a Path>,
         addr: SocketAddr,
-    ) -> RetFut<'a, FatResponse> {
+    ) -> extensions::RetFut<'a, FatResponse> {
         extensions::ready(FatResponse::no_cache(Response::new(
             Bytes::try_from(format!(
                 "# {}\n You are nr. {}.",
@@ -194,6 +194,24 @@ Let's build one of each extension to see how they fit together.
 This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.
 
 Note how we create extensions by calling [their respective macros](https://doc.kvarn.org/kvarn/#macros). This does a lot under the hood.
+
+`Cargo.toml`:
+
+```ini
+[package]
+name = "unicorn-backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+kvarn = "0.4"
+tokio = { version = "1.17", features = ["rt-multi-thread", "macros"] }
+env_logger = "0.9"
+```
+
+`src/main.rs`:
 
 ```rust
 use kvarn::prelude::*;
@@ -311,7 +329,7 @@ async fn main() {
         host::Options::default(),
     );
     // Consider using `.insert` here instead of `.default`.
-    // The reason I had to use `.default` is a small issue in v0.3.0, patched in future v0.3.1.
+    // The reason I had to use `.default` is a small issue in v0.4.0, patched in the next version.
     let data = HostCollection::builder().default(host).build();
     let port = PortDescriptor::unsecure(8080, data);
     let handle = RunConfig::new().bind(port).execute().await;

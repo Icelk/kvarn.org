@@ -12,9 +12,7 @@ You can read my [article](https://icelk.dev/articles/search-engine.html) for mor
 
 Now, you can easily set up a API endpoint for search on your website, powered by Kvarn.
 
-<!-- blocked on v0.3.0 -->
-Using the [`kvarn-search`](https://github.com/Icelk/kvarn-search) crate
-(for now, not on [crates.io](https://crates.io) as it requires new Kvarn APIs),
+Using the [`kvarn-search`](https://github.com/Icelk/kvarn-search) [crate](https://crates.io/crates/kvarn-search)
 you can add a search engine to Kvarn and customize it.
 
 See [these two lines](https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221) from the reference implementation for an example on how to set it up.

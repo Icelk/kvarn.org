@@ -25,19 +25,23 @@ Below is an example of a production test. Unit tests are naturally also supporte
 [dev-dependencies]
 tokio = { version = "1", features = ["net", "io-util", "macros"] }
 # use the same version as the main Kvarn library
-kvarn_testing = "0.3"
+kvarn_testing = "0.4"
 ```
 
 `tests/byte_ranges.rs`:
 
 ```rust
+use kvarn_testing::prelude::*;
+
+static DATA: &str = "This is test data";
+
 #[tokio::test]
 async fn out_of_bounds() {
     // Add an extension to the server
     let server = ServerBuilder::default().with_extensions(|ext| {
         ext.add_prepare_single(
             "/index.html",
-            prepare!(_request, _host, _path, _addr {
+            prepare!(_request, _host, _path, _addr, {
                 let bytes = Bytes::from_static(DATA.as_bytes());
                 FatResponse::cache(Response::new(bytes))
             }),

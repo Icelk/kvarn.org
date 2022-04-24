@@ -103,26 +103,27 @@ $[close-head]$[navigation]
     <p>Then, enter a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
     <pre><code class="language-shell">$ cargo init</code></pre>
     <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
-    <pre><code class="language-ini">kvarn = "^0.3"
-tokio = { version = "^1.13", features = ["macros", "rt-multi-thread"] }
-env_logger = "^0.9"</code></pre>
+    <pre><code class="language-ini">kvarn = "0.4"
+tokio = { version = "1.17", features = ["rt-multi-thread", "macros"] }
+env_logger = "0.9"</code></pre>
     <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
     <pre><code class="language–rust">use kvarn::prelude::*;
 
 #[tokio::main]
 async fn main() {
-    // Initiate the logger. Set the environment variable `RUST_LOG` to `info` to get finer logging.
+    // Initiate the logger. Set the environment variable `RUST_LOG` to `info` to get more verbose logging.
     env_logger::init();
-    // Create a host with hostname "localhost", serving files from directory "./web/public/", with the default extensions and the default options.
+    // Create a host without HTTPS with hostname "localhost", serving files from directory "./web/public/", with the default extensions and the default options.
     let host = Host::unsecure("localhost", PathBuf::from("web"), Extensions::default(), host::Options::default());
-    // Create a set of virtual hosts (`Data`) with `host` as the default.
-    let data = Data::builder().insert(host).build();
-    // Bind port 8080 with `data`.
-    let port_descriptor = PortDescriptor::unsecure(8080, data);
+    // Create a collection of virtual hosts with `host`.
+    let hosts = HostCollection::builder().insert(host).build();
+    // Serve `hosts` on port 8080 without HTTPS
+    let port_descriptor = PortDescriptor::unsecure(8080, hosts);
 
-    // Run with the configured ports.
+    // Run the server. You can specify multiple PortDescriptors.
     let shutdown_manager = RunConfig::new().bind(port_descriptor).execute().await;
-    // Waits for shutdown.
+    // Wait for shutdown. This will never happen with this setup,
+    // but you can clone `shutdown_manager` and shut the server down from other threads.
     shutdown_manager.wait().await;
 }</code></pre>
     <p>Start it with the following command.</p>
@@ -130,6 +131,9 @@ async fn main() {
     <p>
         Now you have a web server running at <a href="http://localhost:8080/">localhost:8080</a> serving files from
         <code>web/public/</code> relative to the directory.
+    </p>
+    <p>
+        See <a href="/extensions/#writing-an-example">the extensions page</a> for a more holistic example.
     </p>
     <p>
         I recommend using <a href="/chute/">Kvarn Chute</a> for writing documents.
@@ -163,6 +167,14 @@ async fn main() {
             <li>Kvarn's <a href="/nonce.">nonce</a> implementation.</li>
             <li>See <a href="/features/">the features page</a> for more links.</li>
         </ul>
+    </p>
+
+    <h1 id="performance">Performance</h1>
+    <p>
+        Kvarn's performance is within margin of error of <a href="https://github.com/iron/iron#performance">Iron's</a>,
+        while being easier to work with, comes with <a href="/features/">more, integrated features out of the box</a>, and is more agile.
+        <br>
+        Kvarn also features zero-downtime upgrades without any config - just push a new binary to the server and run <code>kvarnctl reload</code>.
     </p>
 
     <h1 id="applications">Applications</h1>

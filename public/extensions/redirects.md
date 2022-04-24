@@ -37,7 +37,7 @@ Notice the **/index.html** below.
 $ curl -i http://icelk.dev
 HTTP/1.1 307 Temporary Redirect
 location: https://icelk.dev/index.html
-server: Kvarn/0.3.0 (Linux)
+server: Kvarn/0.4.0 (Linux)
 connection: keep-alive
 
 ...
