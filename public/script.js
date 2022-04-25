@@ -1,3 +1,57 @@
+/**
+ * @type { {[name: string]: {backlog: Event[], inTimeout: boolean}} }
+ */
+let throttleInstances = {}
+/**
+ * Throttles calling `callback` to every `interval` milliseconds.
+ * If more than one event is supplied in the hang period, only the last is emitted.
+ * If a event is emitted in the hang period, that is given to `callback` after the timeout.
+ *
+ * @param {Event} ev
+ * @param {string} name
+ * @param {number} interval
+ * @param {(ev: Event) => void} callback
+ */
+function throttle(ev, name, interval, callback) {
+    if (throttleInstances[name] === undefined) {
+        throttleInstances[name] = {
+            backlog: [],
+            inTimeout: false,
+        }
+    }
+
+    let instance = throttleInstances[name]
+
+    if (instance.inTimeout) {
+        instance.backlog.push(ev)
+        return
+    }
+
+    callback(ev)
+
+    instance.inTimeout = true
+    setTimeout(() => {
+        instance.inTimeout = false
+        let item = instance.backlog.pop()
+
+        if (item !== undefined) {
+            instance.backlog.length = 0
+            callback(item)
+        }
+    }, interval)
+}
+/**
+ * @param {string} location
+ * @param { boolean } newTab
+ */
+const to = (location, newTab = false) => {
+    if (newTab) {
+        window.open(location, "_blank")
+    } else {
+        window.location.href = location
+    }
+}
+
 const initTopBar = () => {
     const iterateChildren = (parent) => {
         const children = parent.children
@@ -83,25 +137,109 @@ initTopBar()
 initSmoothScrolling()
 initCopyHeading()
 
-// Search bar in index.
-let search = document.getElementById("searchInput")
-if (search !== null) {
-    search.addEventListener("keydown", (e) => {
-        if (e.key !== "Enter") {
-            return
+/**
+ * @param {string | { path: string, context: string, context_start_chars: number }[] } output
+ */
+function setSearchOutput(output) {
+    /**
+     * @param {string} s
+     * @returns {string}
+     */
+    function text(s) {
+        return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+    }
+    /**
+     * @param {string} s
+     * @returns {string}
+     */
+    function removeNewlines(s) {
+        const iter = s.split("\n")
+        let slimmed = iter.reduce((prev, curr, idx) => {
+            if (curr.length === 0) {
+                return prev
+            }
+            if (idx !== 0) {
+                prev += "\n"
+            }
+            return prev + curr
+        }, "")
+
+        if (s.endsWith("\n")) {
+            slimmed += "\n"
         }
-        let newWindow = e.metaKey || e.ctrlKey
 
-        let input = search.value
-        let percentEncoded = encodeURIComponent(input)
-
-        let href = `https://duckduckgo.com/?q=site%3Akvarn.org+${percentEncoded}`
-
-        if (newWindow) {
-            window.open(href, "_blank")
+        return slimmed
+    }
+    if (typeof output == "string") {
+        if (output.length === 0) {
+            searchOutput.innerHTML = ""
         } else {
-            location.href = href
+            searchOutput.innerHTML = `<a>${output}</a>`
         }
+    } else {
+        searchOutput.innerHTML = ""
+        output.forEach((value, index) => {
+            const keyword = text(value.context.substring(value.context_start_chars).split(/\s+/)[0])
+            const pre = value.context.substring(0, value.context_start_chars)
+            const post = value.context.substring(value.context_start_chars + keyword.length)
+            const context = `... ${text(removeNewlines(pre.trimLeft()))}<b>${keyword}</b>${text(
+                removeNewlines(post.trimRight())
+            )} ...`
+            const span = document.createElement("span")
+            span.innerHTML = `<a class="uri">${value.path}</a>${context}`
+            span.tabIndex = -1
+            span.addEventListener("click", (e) => to(value.path, e.metaKey || e.ctrlKey))
+            searchOutput.appendChild(span)
+        })
+    }
+}
+/**
+ * @param {string} query
+ */
+function search(query) {
+    fetch(`/search?q=${encodeURIComponent(query)}`)
+        .then(async (response) => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    setSearchOutput("Server doesn't support search.")
+                    return
+                }
+                let errorMessage = response.headers.get("reason")
+                errorMessage = errorMessage === undefined ? "Server error" : `Query error: ${errorMessage}`
+                setSearchOutput(errorMessage)
+            } else {
+                const json = await response.json()
+                if (json.length === 0) {
+                    setSearchOutput("No search results found.")
+                } else {
+                    json.length = 5
+                    setSearchOutput(json)
+                }
+            }
+        })
+        .catch((_err) => setSearchOutput("Servers offfline."))
+}
+
+// Search bar in index.
+const searchInput = document.getElementById("searchInput")
+const searchBoxContainer = document.getElementById("searchBoxContainer")
+const searchBoxInput = document.getElementById("searchBoxInput")
+const searchOutput = document.getElementById("searchOutput")
+if (searchInput !== null) {
+    searchInput.addEventListener("input", (e) => {
+        searchBoxInput.value = searchInput.value
+        searchBoxInput.focus()
+        searchInput.value = ""
+    })
+    searchBoxInput.addEventListener("input", (e) => {
+        throttle(e, "search", 300, (_) => {
+            const query = searchBoxInput.value
+            if (query.length > 0) {
+                search(query)
+            } else {
+                setSearchOutput("")
+            }
+        })
     })
 }
 

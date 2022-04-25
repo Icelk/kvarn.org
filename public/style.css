@@ -295,3 +295,81 @@ button.solid {
 .share-button:active {
     opacity: 0.6;
 }
+
+#searchBoxContainer {
+    --border-radius: 0.3rem;
+    display: flex;
+    flex-direction: column;
+    transition: opacity ease-out var(--transition-speed);
+    align-items: center;
+    z-index: 100;
+
+    opacity: 0;
+    pointer-events: none;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+}
+#searchBoxContainer:focus-within {
+    opacity: 1;
+    pointer-events: all;
+}
+#searchBox {
+    position: absolute;
+    width: min(90vw, 50rem);
+    z-index: 100;
+    top: 25vh;
+    display: flex;
+    flex-direction: column;
+}
+#searchBoxInput {
+    height: 2.3rem;
+    border: 0.15rem solid var(--bg-light);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-dark);
+    color: var(--text-normal);
+    box-shadow: var(--bg-darker) 0 0 2rem 1.5rem;
+    font-size: 1.8rem;
+    font-family: inherit;
+    padding: 0.5rem;
+    outline: none;
+}
+#searchOutput > span {
+    cursor: pointer;
+    white-space: pre-wrap;
+    display: inline-block;
+    line-height: 1.5em;
+    padding: 0.6rem;
+    transition: filter ease-out var(--transition-speed);
+}
+#searchOutput > span,
+#searchOutput > a {
+    border: 0.15rem solid var(--bg-light);
+    border-top: none;
+    border-radius: 0;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+}
+#searchOutput a.uri {
+    color: var(--text-color);
+    padding: 0 1rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    display: block;
+}
+#searchOutput > a:last-child,
+#searchOutput > span:last-child {
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+#searchOutput {
+    width: 92%;
+    background-color: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: left;
+    align-self: center;
+}

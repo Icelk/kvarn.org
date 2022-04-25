@@ -77,6 +77,13 @@ $[close-head]$[navigation]
     </div>
 </div>
 
+<div id="searchBoxContainer">
+    <div id="searchBox">
+        <input id="searchBoxInput" type="text" placeholder="Search..." />
+        <div id="searchOutput" tabindex="-1"></div>
+    </div>
+</div>
+
 <md>
     <center>
         <blockquote style="display: inline-block; margin: 0 1rem">
@@ -152,7 +159,7 @@ async fn main() {
     </blockquote>
 
     <h1 id="docs">Docs</h1>
-    <p>
+    <span>
         <ul>
             <li>A primer on <a href="/host.">hosts</a>.</li>
             <li><a href="/ctl/">kvarnctl</a>, communication with Kvarn from the command line.</li>
@@ -161,13 +168,15 @@ async fn main() {
             <li><a href="/chute/">A Markdown to HTML generator</a> which nicely integrates with the <a href="/templates.">templating engine</a>.</li>
             <li><a href="/security/">The security precautions</a> Kvarn takes.</li>
             <li>The Kvarn libraries: <a href="/utils."><code>utils</code></a>, <a href="/async."><code>async</code></a>, <a href="/testing."><code>testing</code></a>.</li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">Vary</a> header <a href="/vary.">handling</a>.</li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">Vary</a> header <a href="/vary.">handling</a>.
+            </li>
             <li>The <a href="/cargo-features.">optional features</a> chosen at compile-time.</li>
             <li><a href="/shutdown-handover.">Graceful shutdown and handover.</a></li>
             <li>Kvarn's <a href="/nonce.">nonce</a> implementation.</li>
             <li>See <a href="/features/">the features page</a> for more links.</li>
         </ul>
-    </p>
+    </span>
 
     <h1 id="performance">Performance</h1>
     <p>
