@@ -10,6 +10,8 @@
 Over Christmas, I made a [full text search engine](https://github.com/Icelk/elipdotter).
 You can read my [article](https://icelk.dev/articles/search-engine.html) for more details.
 
+> This is currently used on this website. To try it out, search using the box on the [front page](/).
+
 Now, you can easily set up a API endpoint for search on your website, powered by Kvarn.
 
 Using the [`kvarn-search`](https://github.com/Icelk/kvarn-search) [crate](https://crates.io/crates/kvarn-search)

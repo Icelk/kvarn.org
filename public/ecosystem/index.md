@@ -26,6 +26,10 @@ More extensions are available using the [`kvarn_extensions`](https://doc.kvarn.o
 There, you get PHP support, a reverse proxy, templates, HTTP/2 push, and several present extensions.
 Everything is naturally [optional](../cargo-features.#extensions).
 
+### Search
+
+A [site search engine integration](../search.) with Kvarn is also available.
+
 ## Docs
 
 [Online documentation](https://doc.kvarn.org) is available for the git branch.
