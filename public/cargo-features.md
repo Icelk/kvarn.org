@@ -17,7 +17,7 @@ These can be enabled in your `Cargo.toml`:
 
 ```ini
 [dependencies]
-kvarn = { version = "0.4", default-features = false, features = ["https", "http2", "all-encryption"] }
+kvarn = { version = "0.4", default-features = false, features = ["https", "http2", "all-compression"] }
 ```
 
 See the [official Cargo guide](https://doc.rust-lang.org/cargo/reference/features.html) on the matter.
