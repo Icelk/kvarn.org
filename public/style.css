@@ -136,12 +136,15 @@ a > code {
 }
 #top-bar .middle img {
     height: var(--bar-height);
-    transition: height calc(var(--transition-speed) * 0.75) cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
+    width: var(--bar-height);
+    transition: none calc(var(--transition-speed) * 0.75) cubic-bezier(0.4, 0, 0.2, 1) /* bounce: */
         /* cubic-bezier(0.18, 0.89, 0.32, 1.28) */;
+    transition-property: height, width;
     user-select: none;
 }
 #top-bar .middle:hover img {
     height: calc(var(--bar-height) * 2);
+    width: calc(var(--bar-height) * 2);
 }
 
 /* If dropdown is hovered or has focus, show dropdown! */
