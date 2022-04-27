@@ -31,7 +31,8 @@ a <code>shutdown</code> (or anything else that makes Kvarn shut down).</p>
 <p>This is accomplished by trying to reconnect once the <code>wait</code> command returns.</p>
 </blockquote>
 <h1 id="path">Path</h1>
-<p>By default, Kvarn listens on <code>/tmp/kvarn.sock</code>. You can <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path">change this</a>.</p>
+<p>By default, Kvarn listens on <code>/run/user/&lt;uid&gt;/kvarn.sock</code> for users and <code>/run/kvarn.sock</code> for root users.
+You can <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path">change this</a>.</p>
 <h2 id="disable">Disable</h2>
 <p>You can also <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.disable_ctl">disable the IPC altogether</a>.</p>
 </md></main>

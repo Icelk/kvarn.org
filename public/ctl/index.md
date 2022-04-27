@@ -51,7 +51,8 @@ a `shutdown` (or anything else that makes Kvarn shut down).
 
 # Path
 
-By default, Kvarn listens on `/tmp/kvarn.sock`. You can [change this](https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path).
+By default, Kvarn listens on `/run/user/<uid>/kvarn.sock` for users and `/run/kvarn.sock` for root users.
+You can [change this](https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path).
 
 ## Disable
 
