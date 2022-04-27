@@ -148,28 +148,6 @@ function setSearchOutput(output) {
     function text(s) {
         return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
     }
-    /**
-     * @param {string} s
-     * @returns {string}
-     */
-    function removeNewlines(s) {
-        const iter = s.split("\n")
-        let slimmed = iter.reduce((prev, curr, idx) => {
-            if (curr.length === 0) {
-                return prev
-            }
-            if (idx !== 0) {
-                prev += "\n"
-            }
-            return prev + curr
-        }, "")
-
-        if (s.endsWith("\n")) {
-            slimmed += "\n"
-        }
-
-        return slimmed
-    }
     if (typeof output == "string") {
         if (output.length === 0) {
             searchOutput.innerHTML = ""
@@ -182,9 +160,7 @@ function setSearchOutput(output) {
             const keyword = text(value.context.substring(value.context_start_chars).split(/\s+/)[0])
             const pre = value.context.substring(0, value.context_start_chars)
             const post = value.context.substring(value.context_start_chars + keyword.length)
-            const context = `... ${text(removeNewlines(pre.trimLeft()))}<b>${keyword}</b>${text(
-                removeNewlines(post.trimRight())
-            )} ...`
+            const context = `... ${pre}<b>${keyword}</b>${post} ...`
             const span = document.createElement("span")
             span.innerHTML = `<a class="uri">${value.path}</a>${context}`
             span.tabIndex = -1
