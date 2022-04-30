@@ -206,6 +206,7 @@ if (searchInput !== null) {
     searchInput.addEventListener("input", (e) => {
         searchBoxInput.value = searchInput.value
         searchBoxInput.focus()
+        searchBoxInput.dispatchEvent(new InputEvent("input"))
         searchInput.value = ""
     })
     searchBoxInput.addEventListener("input", (e) => {
