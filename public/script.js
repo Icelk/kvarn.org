@@ -157,7 +157,7 @@ function setSearchOutput(output) {
     } else {
         searchOutput.innerHTML = ""
         output.forEach((value, index) => {
-            const keywordRaw = value.context.substring(value.context_start_chars).split(/[a-zA-Z0-9]*/)[0]
+            const keywordRaw = value.context.substring(value.context_start_chars).match(/[a-zA-Z0-9]*/)[0]
             const keyword = text(keywordRaw)
             const pre = value.context.substring(0, value.context_start_chars)
             const post = value.context.substring(value.context_start_chars + keywordRaw.length)
