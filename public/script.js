@@ -139,7 +139,7 @@ initSmoothScrolling()
 initCopyHeading()
 
 /**
- * @param {string | { path: string, context: string, context_start_chars: number }[] } output
+ * @param {string | { path: string, rating: number, occurrences: { start: number, ctx_byte_idx: number, ctx_char_idx: number, ctx: string }[] }[] } output
  */
 function setSearchOutput(output) {
     /**
@@ -158,10 +158,11 @@ function setSearchOutput(output) {
     } else {
         searchOutput.innerHTML = ""
         output.forEach((value, index) => {
-            const keywordRaw = value.context.substring(value.context_start_chars).match(/[a-zA-Z0-9]*/)[0]
+            const occurrence = value.occurrences[0]
+            const keywordRaw = occurrence.ctx.substring(occurrence.ctx_char_idx).match(/[a-zA-Z0-9]*/)[0]
             const keyword = text(keywordRaw)
-            const pre = value.context.substring(0, value.context_start_chars)
-            const post = value.context.substring(value.context_start_chars + keywordRaw.length)
+            const pre = occurrence.ctx.substring(0, occurrence.ctx_char_idx)
+            const post = occurrence.ctx.substring(occurrence.ctx_char_idx + keywordRaw.length)
             const context = `... ${pre}<b>${keyword}</b>${post} ...`
             const span = document.createElement("span")
             span.innerHTML = `<a class="uri">${value.path}</a>${context}`
