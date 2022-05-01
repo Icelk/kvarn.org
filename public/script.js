@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * @type { {[name: string]: {backlog: Event[], inTimeout: boolean}} }
  */
@@ -198,8 +199,18 @@ function search(query) {
 }
 
 // Search bar in index.
+/**
+ * @type HTMLInputElement
+ */
+// we know it's an input
+// @ts-ignore
 const searchInput = document.getElementById("searchInput")
 const searchBoxContainer = document.getElementById("searchBoxContainer")
+/**
+ * @type HTMLInputElement
+ */
+// we know it's an input
+// @ts-ignore
 const searchBoxInput = document.getElementById("searchBoxInput")
 const searchOutput = document.getElementById("searchOutput")
 if (searchInput !== null) {
@@ -221,6 +232,8 @@ if (searchInput !== null) {
     })
 }
 
+// @ts-ignore
 if (typeof hljs !== "undefined") {
+    // @ts-ignore
     hljs.highlightAll()
 }
