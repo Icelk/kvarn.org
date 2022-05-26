@@ -4,8 +4,9 @@ $[head]
     $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>.
+They are ran in an async context, so you can call async APIs to fetch data.
 They provide options for attaching to all parts of the request pipeline,
-with little overhead compared to cloning Kvarn and integrating with the internal code.</p>
+with virtually no overhead compared to editing Kvarn’s source.</p>
 <table><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#details">1 Details</a></td></tr>
 <tr><td><a href="#building-an-api">2 Building an API</a></td></tr>

@@ -6,8 +6,9 @@
 </head>
 
 To extend the core functionality of Kvarn, you'll use _extensions_.
+They are ran in an async context, so you can call async APIs to fetch data.
 They provide options for attaching to all parts of the request pipeline,
-with little overhead compared to cloning Kvarn and integrating with the internal code.
+with virtually no overhead compared to editing Kvarn's source.
 
 ${toc}
 
