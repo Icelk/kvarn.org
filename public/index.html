@@ -93,10 +93,18 @@ $[close-head]$[navigation]
     </center>
     <h1>About</h1>
     <p>
-        Kvarn is a <a href="https://rust-lang.org">rusty</a>, <a href="https://github.com/Icelk/kvarn/blob/main/LICENSE">open-source</a>, forwards-thinking
-        web server designed with <a href="extensions/">extensibility</a>, out of the box
-        <a href="security/">security</a>, and consistent <a href="features/#other-fundamental-features--systems">performance</a> with it's
-        <a href="cache.">built-in cache.</a>
+        Kvarn is a <a href="https://rust-lang.org">rusty</a>,
+        <a href="https://github.com/Icelk/kvarn/blob/main/LICENSE">open-source</a>, extendable backend library with
+        <a href="https://kvarn.org/extensions/">native async everywhere</a>;
+        <a href="https://kvarn.org/features/#graceful-shutdown--handover">zero downtime</a>; and
+        <a href="https://kvarn.org/features/#sane-defaults">safe &amp; fast defaults</a>.
+    </p>
+    <p>
+        Kvarn is batteries-included (optional defaults) with support for reverse proxying, auto HTTP/2 push, in-memory
+        caching (proper cache invalidation), server communication through
+        <a href="https://github.com/Icelk/kvarn/tree/main/ctl/"><code>kvarnctl</code></a
+        >, and easy website creation through Markdown and
+        <a href="https://github.com/Icelk/kvarn/tree/main/chute/">Chute</a>.
     </p>
     <p>
         You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted. The
@@ -140,23 +148,19 @@ async fn main() {
         Now you have a web server running at <a href="http://localhost:8080/">localhost:8080</a> serving files from
         <code>web/public/</code> relative to the directory.
     </p>
+    <p>See <a href="/extensions/#writing-an-example">the extensions page</a> for a more holistic example.</p>
     <p>
-        See <a href="/extensions/#writing-an-example">the extensions page</a> for a more holistic example.
-    </p>
-    <p>
-        I recommend using <a href="/chute/">Kvarn Chute</a> for writing documents.
-        It allows you to use Markdown on web pages. It utilizes <a href="/templates.">Kvarn templates</a>
+        I recommend using <a href="/chute/">Kvarn Chute</a> for writing documents. It allows you to use Markdown on web
+        pages. It utilizes <a href="/templates.">Kvarn templates</a>
         for integration with headers and footers.
     </p>
     <blockquote>
         <p>
             Soon, the <a href="https://github.com/Icelk/kvarn-reference">reference implementation</a> will use a
-            <a href="/config.">configuration file</a>. Until then, you have to use the Kvarn library from Rust code
-            and therefore compile in all the hosts and extensions.
+            <a href="/config.">configuration file</a>. Until then, you have to use the Kvarn library from Rust code and
+            therefore compile in all the hosts and extensions.
         </p>
-        <p>
-            For a battle-tested implementation, see the link above.
-        </p>
+        <p>For a battle-tested implementation, see the link above.</p>
     </blockquote>
 
     <h1 id="docs">Docs</h1>
@@ -165,12 +169,24 @@ async fn main() {
             <li>A primer on <a href="/host.">hosts</a>.</li>
             <li><a href="/ctl/">kvarnctl</a>, communication with Kvarn from the command line.</li>
             <li>The <a href="pipeline.">pipeline</a> of handling a request.</li>
-            <li>All <a href="errors.">errors in the pipeline</a>. These surface as various error responses with appropriate status codes.</li>
-            <li><a href="/chute/">A Markdown to HTML generator</a> which nicely integrates with the <a href="/templates.">templating engine</a>.</li>
-            <li><a href="/security/">The security precautions</a> Kvarn takes.</li>
-            <li>The Kvarn libraries: <a href="/utils."><code>utils</code></a>, <a href="/async."><code>async</code></a>, <a href="/testing."><code>testing</code></a>.</li>
             <li>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">Vary</a> header <a href="/vary.">handling</a>.
+                All <a href="errors.">errors in the pipeline</a>. These surface as various error responses with
+                appropriate status codes.
+            </li>
+            <li>
+                <a href="/chute/">A Markdown to HTML generator</a> which nicely integrates with the
+                <a href="/templates.">templating engine</a>.
+            </li>
+            <li><a href="/security/">The security precautions</a> Kvarn takes.</li>
+            <li>
+                The Kvarn libraries: <a href="/utils."><code>utils</code></a
+                >, <a href="/async."><code>async</code></a
+                >, <a href="/testing."><code>testing</code></a
+                >.
+            </li>
+            <li>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">Vary</a> header
+                <a href="/vary.">handling</a>.
             </li>
             <li>The <a href="/cargo-features.">optional features</a> chosen at compile-time.</li>
             <li><a href="/shutdown-handover.">Graceful shutdown and handover.</a></li>
@@ -182,9 +198,11 @@ async fn main() {
     <h1 id="performance">Performance</h1>
     <p>
         Kvarn's performance is within margin of error of <a href="https://github.com/iron/iron#performance">Iron's</a>,
-        while being easier to work with, comes with <a href="/features/">more, integrated features out of the box</a>, and is more agile.
-        <br>
-        Kvarn also features zero-downtime upgrades without any config - just push a new binary to the server and run <code>kvarnctl reload</code>.
+        while being easier to work with, comes with <a href="/features/">more, integrated features out of the box</a>,
+        and is more agile.
+        <br />
+        Kvarn also features zero-downtime upgrades without any config - just push a new binary to the server and run
+        <code>kvarnctl reload</code>.
     </p>
 
     <h1 id="applications">Applications</h1>
@@ -210,9 +228,7 @@ async fn main() {
         <a href="text-license.txt">CC-BY-SA-4.0 License</a>. The code examples and JavaScript source code is licensed
         under the <a href="code-license.txt">MIT</a> license.
     </p>
-    <p>
-        The source code is available at <a href="https://github.com/Icelk/kvarn.org">GitHub</a>.
-    </p>
+    <p>The source code is available at <a href="https://github.com/Icelk/kvarn.org">GitHub</a>.</p>
 
     <h1 id="resources">Resources</h1>
     <div class="list">
