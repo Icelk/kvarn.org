@@ -6,6 +6,8 @@
     <meta name="description" content="Kvarn's handling of upgrades to the server and graceful shutdown.">
 </head>
 
+Graceful shutdown & handover provide ways to upgrade the server and it's config with zero downtime or interrupted connections.
+
 Graceful shutdown works by closing the listening socket and completing any connections.
 
 Handover means the control over a port is handed over from one Kvarn instance to another. This is achieved through multiple processes binding the same port, and the old instance then quitting. When both instances are listening, the incoming request are split between them.
@@ -24,7 +26,7 @@ When you restart the Kvarn server,
 -   When all transactions are closed, the old binary silently exits.
     This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.
 
-The [communication between binaries] are done using Unix sockets
+The [communication between binaries](ctl/) are done using Unix sockets
 (which isn't a problem since binding to the same port isn't supported on Windows).
 
 # Shutdown

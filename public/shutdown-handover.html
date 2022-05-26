@@ -4,7 +4,8 @@ $[head]
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn's handling of upgrades to the server and graceful shutdown.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>Graceful shutdown works by closing the listening socket and completing any connections.</p>
+<main><md><p>Graceful shutdown &amp; handover provide ways to upgrade the server and it’s config with zero downtime or interrupted connections.</p>
+<p>Graceful shutdown works by closing the listening socket and completing any connections.</p>
 <p>Handover means the control over a port is handed over from one Kvarn instance to another. This is achieved through multiple processes binding the same port, and the old instance then quitting. When both instances are listening, the incoming request are split between them.</p>
 <h1 id="handover">Handover</h1>
 <p>This is only available on Unix, see the <a href="https://docs.rs/tokio/latest/tokio/net/struct.TcpSocket.html#method.set_reuseport">Tokio docs</a>.</p>
@@ -17,7 +18,7 @@ $[dependencies]$[md-imports]$[close-head]$[navigation]
 <li>When all transactions are closed, the old binary silently exits.
 This means if there are any alive connections, Kvarn waits for them to reconnect to the new server.</li>
 </ul>
-<p>The [communication between binaries] are done using Unix sockets
+<p>The <a href="ctl/">communication between binaries</a> are done using Unix sockets
 (which isn’t a problem since binding to the same port isn’t supported on Windows).</p>
 <h1 id="shutdown">Shutdown</h1>
 <p>Graceful shutdown is only enabled when the <a href="/cargo-features.">respective cargo feature</a> is enabled.
