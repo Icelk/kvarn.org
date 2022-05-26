@@ -17,10 +17,10 @@ ${toc}
 The following pages are details on implementation useful to read if you're working with Kvarn, even just as the web server to host your files.
 
 -   [Redirects](redirects.)
--   APIs at `/./*` are not accessible from the outside, as Kvarn forbids this.\
+-   APIs under the path `/./` are not accessible from the outside, as Kvarn's security guarantees forbid this.\
     A common pattern is to make [Prime](https://doc.kvarn.org/kvarn/extensions/type.Prime.html)
     extensions which redirect to [Prepare](https://doc.kvarn.org/kvarn/extensions/type.Prepare.html) APIs located here.
-    Then, you can conditionally change the path of a request.
+    Then, you can conditionally change the path of a request to internal APIs (e.g. authentication, special admin panels).
 
 # Building an API
 

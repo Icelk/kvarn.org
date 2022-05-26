@@ -27,10 +27,10 @@ with virtually no overhead compared to editing Kvarn’s source.</p>
 <p>The following pages are details on implementation useful to read if you’re working with Kvarn, even just as the web server to host your files.</p>
 <ul>
 <li><a href="redirects.">Redirects</a></li>
-<li>APIs at <code>/./*</code> are not accessible from the outside, as Kvarn forbids this.<br />
+<li>APIs under the path <code>/./</code> are not accessible from the outside, as Kvarn’s security guarantees forbid this.<br />
 A common pattern is to make <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">Prime</a>
 extensions which redirect to <a href="https://doc.kvarn.org/kvarn/extensions/type.Prepare.html">Prepare</a> APIs located here.
-Then, you can conditionally change the path of a request.</li>
+Then, you can conditionally change the path of a request to internal APIs (e.g. authentication, special admin panels).</li>
 </ul>
 <h1 id="building-an-api">Building an API</h1>
 <p>In Kvarn, you can attach to single URLs
