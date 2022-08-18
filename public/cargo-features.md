@@ -40,6 +40,7 @@ Which Cargo features are required for certain items are also shown in the [docs]
 -   `auto-hostname`: Populates the [host name](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.name) and [alternative names](https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.alternative_names)
     automatically. This uses the info stored in the certificate.
 -   [`nonce`](/nonce.): enables usage of [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) on inline `<script>` and `<style>` elements.
+-   [`websocket`](https://doc.kvarn.org/kvarn/websocket/): enables the `websocket` module in Kvarn which allows easy and fast WebSockets from you web application.
 
 There are additionally several _feature sets_:
 
