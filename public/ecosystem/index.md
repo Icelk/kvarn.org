@@ -24,7 +24,7 @@ Details on the functionality of extensions are also [available](http://localhost
 
 More extensions are available using the [`kvarn_extensions`](https://doc.kvarn.org/kvarn_extensions/).
 There, you get PHP support, a reverse proxy, templates, HTTP/2 push, and several present extensions.
-Everything is naturally [optional](../cargo-features.#extensions).
+Everything is naturally [optional](../cargo-features.).
 
 ### Search
 

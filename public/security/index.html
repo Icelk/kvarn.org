@@ -12,13 +12,14 @@ or go offline due to a DOS attacks.</p>
 <tr><td><a href="#cors">1 CORS</a></td></tr>
 <tr><td><a href="#default-csp">2 Default CSP</a></td></tr>
 <tr><td><a href="#rust">3 Rust</a></td></tr>
-<tr><td><a href="#internal-api">4 Internal API</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span><a href="#strict-request-checks">4.1 Strict request checks</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span><a href="#file-structure">4.2 File structure</a></td></tr>
-<tr><td><a href="#limiting">5 Limiting</a></td></tr>
-<tr><td><a href="#testing">6 Testing</a></td></tr>
-<tr><td><a href="#few-lines-of-code">7 Few lines of code</a></td></tr>
-<tr><td><a href="#csrf">8 CSRF</a></td></tr>
+<tr><td><a href="#authentication">4 Authentication</a></td></tr>
+<tr><td><a href="#internal-api">5 Internal API</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#strict-request-checks">5.1 Strict request checks</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#file-structure">5.2 File structure</a></td></tr>
+<tr><td><a href="#limiting">6 Limiting</a></td></tr>
+<tr><td><a href="#testing">7 Testing</a></td></tr>
+<tr><td><a href="#few-lines-of-code">8 Few lines of code</a></td></tr>
+<tr><td><a href="#csrf">9 CSRF</a></td></tr>
 </tbody></table>
 <h1 id="cors"><a href="/cors.">CORS</a></h1>
 <p>Kvarn allows for easy configuration of CORS settings, reducing the risk of a vulnerable API,
@@ -33,6 +34,10 @@ with policies specific to locations on the site.</p>
 <p>Kvarn is entirely written in Rust, a memory-safe language without a noticeable runtime penalty.
 This removes the risk of buffer overflows, dangling pointers, and other undefined behaviour.</p>
 <p>Not only the library, but also extensions (the code you write) are protected against this.</p>
+<h1 id="authentication">Authentication</h1>
+<p>There exists an <a href="https://doc.icelk.dev/kvarn-auth/kvarn_auth/">authentication extension</a> which provides
+a JWT implementation with support for persistent logins and validation servers.</p>
+<p>It functions as the backbone for web authentication, and is already <a href="https://icelk.dev/admin">deployed</a>.</p>
 <h1 id="internal-api">Internal API</h1>
 <p>To reduce risks of faulty code, Kvarn abstracts several concepts of unsecure things.
 This eliminates the risk of exposing data.</p>

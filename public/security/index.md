@@ -36,6 +36,13 @@ This removes the risk of buffer overflows, dangling pointers, and other undefine
 
 Not only the library, but also extensions (the code you write) are protected against this.
 
+# Authentication
+
+There exists an [authentication extension](https://doc.icelk.dev/kvarn-auth/kvarn_auth/) which provides
+a JWT implementation with support for persistent logins and validation servers.
+
+It functions as the backbone for web authentication, and is already [deployed](https://icelk.dev/admin).
+
 # Internal API
 
 To reduce risks of faulty code, Kvarn abstracts several concepts of unsecure things.

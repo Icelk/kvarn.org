@@ -11,26 +11,36 @@ Optional extensions are available in <a href="https://github.com/Icelk/kvarn/tre
 and some require <code>kvarn_extensions</code>.
 This will be explicitly noted.</p>
 </blockquote>
-<table><thead><tr><th>Contents</th></tr></thead><tbody>
-<tr><td><a href="#features--why-to-use-kvarn">1 Features &amp; why to use Kvarn</a></td></tr>
-<tr><td><a href="#sane-defaults">2 Sane defaults</a></td></tr>
-<tr><td><a href="#http2">3 HTTP/2</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#http2-push">3.1 HTTP/2 Push</a></td></tr>
-<tr><td><a href="#https">4 HTTPS</a></td></tr>
-<tr><td><a href="#full-documentation-coverage">5 Full documentation coverage</a></td></tr>
-<tr><td><a href="#extensions">6 Extensions</a></td></tr>
-<tr><td><a href="#cache">7 Cache</a></td></tr>
-<tr><td><a href="#php">8 PHP</a></td></tr>
-<tr><td><a href="#markdown">9 MarkDown</a></td></tr>
-<tr><td><a href="#templates">10 Templates</a></td></tr>
-<tr><td><a href="#full-text-search-engine">11 Full text search engine</a></td></tr>
-<tr><td><a href="#cors">12 CORS</a></td></tr>
-<tr><td><a href="#graceful-shutdown--handover">13 Graceful shutdown &amp; handover</a></td></tr>
-<tr><td><a href="#reverse-proxy">14 Reverse proxy</a></td></tr>
-<tr><td><a href="#guaranteed-memorysafety">15 Guaranteed memory-safety</a></td></tr>
-<tr><td><a href="#other-fundamental-features--systems">16 Other fundamental features &amp; systems</a></td></tr>
-<tr><td><a href="#back-to-the-basics">17 Back to the basics</a></td></tr>
+<table id="toc"><thead><tr><th>Contents</th></tr></thead><tbody>
+<tr><td><a href="#features--why-to-use-kvarn">1 Features & why to use Kvarn</a></td></tr>
+<tr><td><a href="#batteries-included-but-not-required">2 Batteries included, but not required</a></td></tr>
+<tr><td><a href="#sane-defaults">3 Sane defaults</a></td></tr>
+<tr><td><a href="#http2">4 HTTP/2</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#http2-push">4.1 HTTP/2 Push</a></td></tr>
+<tr><td><a href="#https">5 HTTPS</a></td></tr>
+<tr><td><a href="#full-documentation-coverage">6 Full documentation coverage</a></td></tr>
+<tr><td><a href="#extensions">7 Extensions</a></td></tr>
+<tr><td><a href="#cache">8 Cache</a></td></tr>
+<tr><td><a href="#php">9 PHP</a></td></tr>
+<tr><td><a href="#markdown">10 MarkDown</a></td></tr>
+<tr><td><a href="#templates">11 Templates</a></td></tr>
+<tr><td><a href="#full-text-search-engine">12 Full text search engine</a></td></tr>
+<tr><td><a href="#cors">13 CORS</a></td></tr>
+<tr><td><a href="#graceful-shutdown--handover">14 Graceful shutdown & handover</a></td></tr>
+<tr><td><a href="#reverse-proxy">15 Reverse proxy</a></td></tr>
+<tr><td><a href="#guaranteed-memorysafety">16 Guaranteed memory-safety</a></td></tr>
+<tr><td><a href="#other-fundamental-features--systems">17 Other fundamental features & systems</a></td></tr>
+<tr><td><a href="#back-to-the-basics">18 Back to the basics</a></td></tr>
 </tbody></table>
+<h1 id="batteries-included-but-not-required">Batteries included, but not required</h1>
+<p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website features.</p>
+<ul>
+<li><a href="https://doc.icelk.dev/kvarn-auth/kvarn_auth/">Kvarn auth</a>: A fast, simple, and customizable authentication extension.
+It provides a JWT implementation with support for persistent logins and validation servers.</li>
+<li><a href="#full-text-search-engine">Kvarn search</a>: A site search engine. You can try it out on the <a href="/">front page</a>.</li>
+<li>Kvarn extensions: a <a href="https://crates.io/crates/kvarn-extensions">crate</a> with several useful extensions, including
+<a href="#reverse-proxy">a reverse proxy</a>, <a href="#php">PHP support</a>, and <a href="#templates">templates</a>.</li>
+</ul>
 <h1 id="sane-defaults">Sane defaults</h1>
 <p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
 <h1 id="http2"><a href="/http2.">HTTP/2</a></h1>

@@ -17,6 +17,16 @@ Here is a incomplete list of Kvarn's features, most of which have guides in thei
 
 ${toc}
 
+# Batteries included, but not required
+
+The Kvarn [ecosystem](/ecosystem/) has extensions for many common website features.
+
+-   [Kvarn auth](https://doc.icelk.dev/kvarn-auth/kvarn_auth/): A fast, simple, and customizable authentication extension.
+    It provides a JWT implementation with support for persistent logins and validation servers.
+-   [Kvarn search](#full-text-search-engine): A site search engine. You can try it out on the [front page](/).
+-   Kvarn extensions: a [crate](https://crates.io/crates/kvarn-extensions) with several useful extensions, including
+    [a reverse proxy](#reverse-proxy), [PHP support](#php), and [templates](#templates).
+
 # Sane defaults
 
 [The example](/#getting-started) of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.
@@ -170,7 +180,7 @@ before they get to your API. This ensures all CORS requests, even from faulty us
 
 > Requires the feature `graceful-shutdown` (part of `default` and `full`)
 
-To enable upgrade of the server, you need to shut it down and then start it up, with *no* downtime.
+To enable upgrade of the server, you need to shut it down and then start it up, with _no_ downtime.
 The way Kvarn solves this is through graceful shutdown and handover.
 
 # [Reverse proxy](/reverse-proxy.)
@@ -214,7 +224,7 @@ Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to
 
 # Back to the basics
 
-> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ\_ಠ
+> Doesn't mean they're more simple or easier to implement, as development time has shown. ಠ_ಠ
 
 -   Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.
 -   [CSP](../csp.) support.
