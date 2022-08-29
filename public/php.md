@@ -14,11 +14,14 @@ Then, the body is returned if no errors were reported.
 
 # Usage
 
-Simply mount the [PHP extension](https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.html).
+Mount the [PHP extension](https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.).
 Now, all queries ending in `.php` will be redirected to the FastCGI server at `connection`.
 You can add additional predicates for capturing pages to be served by PHP.
 
-> Some of these features may not be available before v0.4.0. Consider using the git version.
+Also consider the [working directory version](https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php_with_working_directory.)
+of the `mount_php` function. It allows for PHP usage on a limited route on your web application.
+
+> Some of these features are not available before v0.4.0.
 
 # WordPress
 

@@ -207,8 +207,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-kvarn = "0.4"
-tokio = { version = "1.17", features = ["rt-multi-thread", "macros"] }
+kvarn = "0.5"
+tokio = { version = "1.20", features = ["rt-multi-thread", "macros"] }
 env_logger = "0.9"
 ```
 
@@ -232,25 +232,33 @@ async fn main() {
             .arc(),
     );
 
-    extensions.add_prime(prime!(request, _host, _addr, {
-        if request.uri().path() == "/" {
-            // This maps the Option<HeaderValue> to Option<Result<&str, _>> which the
-            // `.and_then(Result::ok)` makes Option<&str>, returning `Some` if the value is both `Ok` and `Some`.
-            // Could also be written as
-            // `.get("user-agent").and_then(|header| header.to_str().ok())`.
-            if let Some(ua) = request.headers().get("user-agent").map(HeaderValue::to_str).and_then(Result::ok) {
-                if ua.contains("curl") {
-                    Some(Uri::from_static("/ip"))
+    extensions.add_prime(
+        prime!(request, _host, _addr, {
+            if request.uri().path() == "/" {
+                // This maps the Option<HeaderValue> to Option<Result<&str, _>> which the
+                // `.and_then(Result::ok)` makes Option<&str>, returning `Some` if the value is both `Ok` and `Some`.
+                // Could also be written as
+                // `.get("user-agent").and_then(|header| header.to_str().ok())`.
+                if let Some(ua) = request
+                    .headers()
+                    .get("user-agent")
+                    .map(HeaderValue::to_str)
+                    .and_then(Result::ok)
+                {
+                    if ua.contains("curl") {
+                        Some(Uri::from_static("/ip"))
+                    } else {
+                        Some(Uri::from_static("/index.html"))
+                    }
                 } else {
-                    Some(Uri::from_static("/index.html"))
+                    None
                 }
             } else {
                 None
             }
-        } else {
-            None
-        }
-    }), Id::new(16, "Redirect `/`"));
+        }),
+        Id::new(16, "Redirect `/`"),
+    );
 
     extensions.add_prepare_single(
         "/ip",
@@ -291,20 +299,34 @@ async fn main() {
 </body>
 </html>
 "#;
-            let title = present_data.args().iter().fold(String::new(), |mut acc, arg| {
-                acc.push_str(arg);
-                acc.push(' ');
-                acc
-            });
+            let title = present_data
+                .args()
+                .iter()
+                .fold(String::new(), |mut acc, arg| {
+                    acc.push_str(arg);
+                    acc.push(' ');
+                    acc
+                });
 
-            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), content, end.as_bytes());
+            let bytes = build_bytes!(
+                start.as_bytes(),
+                title.as_bytes(),
+                middle.as_bytes(),
+                content,
+                end.as_bytes()
+            );
             *present_data.response_mut().body_mut() = bytes;
         }),
     );
     extensions.add_package(
         package!(response, _request, _, {
-            response.headers_mut().insert("fun-header", HeaderValue::from_static("why not?"));
-            utils::replace_header_static(response.headers_mut(), "content-security-policy", "default-src 'self'; style-src 'unsafe-inline' 'self'");
+            response
+                .headers_mut()
+                .insert("fun-header", HeaderValue::from_static("why not?"));
+            response.headers_mut().insert(
+                "content-security-policy",
+                HeaderValue::from_static("default-src 'self'; style-src 'unsafe-inline' 'self'"),
+            );
         }),
         Id::new(-1024, "add headers"),
     );

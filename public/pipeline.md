@@ -71,4 +71,5 @@ Only meant to be used from [layer 5](#layer-5--pathing).
 This translates header values to more helpful structs, such as `accept*` and `authentication`
 Can be found using Kvarns public API, through the module `utils`.
 
-This will get a face-lift in v.0.4.0!
+It's also here the [`websocket`](https://doc.kvarn.org/kvarn/websocket/) module operates.
+[Kvarn auth](https://crates.io/crates/kvarn-auth) utilizes this layer too.

@@ -119,8 +119,8 @@ $[close-head]$[navigation]
     <p>Then, enter a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
     <pre><code class="language-shell">$ cargo init</code></pre>
     <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
-    <pre><code class="language-ini">kvarn = "0.4"
-tokio = { version = "1.17", features = ["rt-multi-thread", "macros"] }
+    <pre><code class="language-ini">kvarn = "0.5"
+tokio = { version = "1.20", features = ["rt-multi-thread", "macros"] }
 env_logger = "0.9"</code></pre>
     <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
     <pre><code class="language–rust">use kvarn::prelude::*;

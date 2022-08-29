@@ -7,19 +7,19 @@ $[dependencies]$[md-imports]$[close-head]$[navigation]
 They are ran in an async context, so you can call async APIs to fetch data.
 They provide options for attaching to all parts of the request pipeline,
 with virtually no overhead compared to editing Kvarn’s source.</p>
-<table><thead><tr><th>Contents</th></tr></thead><tbody>
+<table id="toc"><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#details">1 Details</a></td></tr>
 <tr><td><a href="#building-an-api">2 Building an API</a></td></tr>
-<tr><td><a href="#the-five-ps">3 The five <em>P</em>s</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#prime">3.1 Prime</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#prepare">3.2 Prepare</a></td></tr>
-<tr><td><span style="margin-left: 4em"></span> <a href="#single">3.2.1 Single</a></td></tr>
-<tr><td><span style="margin-left: 4em"></span> <a href="#fn">3.2.2 fn</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#present">3.3 Present</a></td></tr>
-<tr><td><span style="margin-left: 4em"></span> <a href="#internal">3.3.1 Internal</a></td></tr>
-<tr><td><span style="margin-left: 4em"></span> <a href="#file">3.3.2 File</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#package">3.4 Package</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span> <a href="#post">3.5 Post</a></td></tr>
+<tr><td><a href="#the-five-ps">3 The five *P*s</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#prime">3.1 Prime</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#prepare">3.2 Prepare</a></td></tr>
+<tr><td><span style="margin-left: 4em"></span><a href="#single">3.2.1 Single</a></td></tr>
+<tr><td><span style="margin-left: 4em"></span><a href="#fn">3.2.2 fn</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#present">3.3 Present</a></td></tr>
+<tr><td><span style="margin-left: 4em"></span><a href="#internal">3.3.1 Internal</a></td></tr>
+<tr><td><span style="margin-left: 4em"></span><a href="#file">3.3.2 File</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#package">3.4 Package</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#post">3.5 Post</a></td></tr>
 <tr><td><a href="#writing-an-extension">4 Writing an extension</a></td></tr>
 <tr><td><a href="#example">5 Example</a></td></tr>
 </tbody></table>
@@ -174,8 +174,8 @@ edition = &quot;2021&quot;
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-kvarn = &quot;0.4&quot;
-tokio = { version = &quot;1.17&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
+kvarn = &quot;0.5&quot;
+tokio = { version = &quot;1.20&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
 env_logger = &quot;0.9&quot;
 </code></pre>
 <p><code>src/main.rs</code>:</p>
@@ -196,25 +196,33 @@ async fn main() {
             .arc(),
     );
 
-    extensions.add_prime(prime!(request, _host, _addr, {
-        if request.uri().path() == &quot;/&quot; {
-            // This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
-            // `.and_then(Result::ok)` makes Option&lt;&amp;str&gt;, returning `Some` if the value is both `Ok` and `Some`.
-            // Could also be written as
-            // `.get(&quot;user-agent&quot;).and_then(|header| header.to_str().ok())`.
-            if let Some(ua) = request.headers().get(&quot;user-agent&quot;).map(HeaderValue::to_str).and_then(Result::ok) {
-                if ua.contains(&quot;curl&quot;) {
-                    Some(Uri::from_static(&quot;/ip&quot;))
+    extensions.add_prime(
+        prime!(request, _host, _addr, {
+            if request.uri().path() == &quot;/&quot; {
+                // This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
+                // `.and_then(Result::ok)` makes Option&lt;&amp;str&gt;, returning `Some` if the value is both `Ok` and `Some`.
+                // Could also be written as
+                // `.get(&quot;user-agent&quot;).and_then(|header| header.to_str().ok())`.
+                if let Some(ua) = request
+                    .headers()
+                    .get(&quot;user-agent&quot;)
+                    .map(HeaderValue::to_str)
+                    .and_then(Result::ok)
+                {
+                    if ua.contains(&quot;curl&quot;) {
+                        Some(Uri::from_static(&quot;/ip&quot;))
+                    } else {
+                        Some(Uri::from_static(&quot;/index.html&quot;))
+                    }
                 } else {
-                    Some(Uri::from_static(&quot;/index.html&quot;))
+                    None
                 }
             } else {
                 None
             }
-        } else {
-            None
-        }
-    }), Id::new(16, &quot;Redirect `/`&quot;));
+        }),
+        Id::new(16, &quot;Redirect `/`&quot;),
+    );
 
     extensions.add_prepare_single(
         &quot;/ip&quot;,
@@ -255,20 +263,34 @@ async fn main() {
 &lt;/body&gt;
 &lt;/html&gt;
 &quot;#;
-            let title = present_data.args().iter().fold(String::new(), |mut acc, arg| {
-                acc.push_str(arg);
-                acc.push(' ');
-                acc
-            });
+            let title = present_data
+                .args()
+                .iter()
+                .fold(String::new(), |mut acc, arg| {
+                    acc.push_str(arg);
+                    acc.push(' ');
+                    acc
+                });
 
-            let bytes = build_bytes!(start.as_bytes(), title.as_bytes(), middle.as_bytes(), content, end.as_bytes());
+            let bytes = build_bytes!(
+                start.as_bytes(),
+                title.as_bytes(),
+                middle.as_bytes(),
+                content,
+                end.as_bytes()
+            );
             *present_data.response_mut().body_mut() = bytes;
         }),
     );
     extensions.add_package(
         package!(response, _request, _, {
-            response.headers_mut().insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
-            utils::replace_header_static(response.headers_mut(), &quot;content-security-policy&quot;, &quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;);
+            response
+                .headers_mut()
+                .insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
+            response.headers_mut().insert(
+                &quot;content-security-policy&quot;,
+                HeaderValue::from_static(&quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;),
+            );
         }),
         Id::new(-1024, &quot;add headers&quot;),
     );
