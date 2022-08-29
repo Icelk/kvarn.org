@@ -21,7 +21,7 @@ ${toc}
 
 The Kvarn [ecosystem](/ecosystem/) has extensions for many common website features.
 
--   [Kvarn auth](https://doc.icelk.dev/kvarn-auth/kvarn_auth/): A fast, simple, and customizable authentication extension.
+-   [Kvarn auth](https://crates.io/crates/kvarn-auth): A fast, simple, and customizable authentication extension.
     It provides a JWT implementation with support for persistent logins and validation servers.
 -   [Kvarn search](#full-text-search-engine): A site search engine. You can try it out on the [front page](/).
 -   Kvarn extensions: a [crate](https://crates.io/crates/kvarn-extensions) with several useful extensions, including

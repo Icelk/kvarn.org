@@ -19,6 +19,11 @@ There, you get PHP support, a reverse proxy, templates, HTTP/2 push, and several
 Everything is naturally <a href="../cargo-features.">optional</a>.</p>
 <h3 id="search">Search</h3>
 <p>A <a href="../search.">site search engine integration</a> with Kvarn is also available.</p>
+<h3 id="auth">Auth</h3>
+<p>A fast, simple, and customizable <a href="https://crates.io/crates/kvarn-auth">authentication extension</a>
+which makes it impossible to shot yourself in your foot!</p>
+<p>Kvarn auth provides an easy-to-use JWT-based authentication helper with support for persistent logins and validation servers.</p>
+<p>You provide an async callback which gives the user a level of authorization. You can return any structured data based on serde. The JWT is automatically renewed, as the server stores a credentials cookie (encrypted using the server’s private key). Everything is configurable.</p>
 <h2 id="docs">Docs</h2>
 <p><a href="https://doc.kvarn.org">Online documentation</a> is available for the git branch.
 Refer to <a href="https://docs.rs/kvarn">docs.rs</a> for docs for stable releases.</p>

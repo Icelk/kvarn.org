@@ -38,7 +38,7 @@ Not only the library, but also extensions (the code you write) are protected aga
 
 # Authentication
 
-There exists an [authentication extension](https://doc.icelk.dev/kvarn-auth/kvarn_auth/) which provides
+There exists an [authentication extension](https://crates.io/crates/kvarn-auth) which provides
 a JWT implementation with support for persistent logins and validation servers.
 
 It functions as the backbone for web authentication, and is already [deployed](https://icelk.dev/admin).

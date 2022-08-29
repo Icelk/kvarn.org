@@ -30,6 +30,15 @@ Everything is naturally [optional](../cargo-features.).
 
 A [site search engine integration](../search.) with Kvarn is also available.
 
+### Auth
+
+A fast, simple, and customizable [authentication extension](https://crates.io/crates/kvarn-auth)
+which makes it impossible to shot yourself in your foot!
+
+Kvarn auth provides an easy-to-use JWT-based authentication helper with support for persistent logins and validation servers.
+
+You provide an async callback which gives the user a level of authorization. You can return any structured data based on serde. The JWT is automatically renewed, as the server stores a credentials cookie (encrypted using the server’s private key). Everything is configurable.
+
 ## Docs
 
 [Online documentation](https://doc.kvarn.org) is available for the git branch.
