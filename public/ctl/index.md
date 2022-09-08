@@ -29,7 +29,10 @@ Starts a new instance in place and performs a graceful shutdown.
 Requires both the capabilities necessitated by [`shutdown`](#shutdown) and that the OS is UNIX & !Solaris & !illumos.
 This is also what [is required by handover](/shutdown-handover.#handover).
 
-If handover isn't available, there will be a small gap where no listener are online.
+If handover isn't available, there will be a small gap where no listener is online -
+if someone requests the webpage during the ~0.4s window, they get a `Server couldn't be reached` error from their browser.
+
+If the argument `wait` is passed (`kvarnctl reload wait`), the command doesn't return until the old instance has been shut down.
 
 ## `wait`
 

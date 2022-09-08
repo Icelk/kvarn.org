@@ -17,7 +17,9 @@ You can implement your own shutdown mechanism.</p>
 <p>Starts a new instance in place and performs a graceful shutdown.
 Requires both the capabilities necessitated by <a href="#shutdown"><code>shutdown</code></a> and that the OS is UNIX &amp; !Solaris &amp; !illumos.
 This is also what <a href="/shutdown-handover.#handover">is required by handover</a>.</p>
-<p>If handover isn’t available, there will be a small gap where no listener are online.</p>
+<p>If handover isn’t available, there will be a small gap where no listener is online -
+if someone requests the webpage during the ~0.4s window, they get a <code>Server couldn't be reached</code> error from their browser.</p>
+<p>If the argument <code>wait</code> is passed (<code>kvarnctl reload wait</code>), the command doesn’t return until the old instance has been shut down.</p>
 <h2 id="wait"><code>wait</code></h2>
 <p>Waits for the Kvarn instance to shut down.</p>
 <h2 id="clear"><code>clear</code></h2>
