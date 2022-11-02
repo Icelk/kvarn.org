@@ -29,11 +29,11 @@ $[highlight]$[dependencies]
         bottom: 0;
 
         width: var(--height);
+        height: var(--height);
 
         margin-left: auto;
         margin-right: auto;
 
-        pointer-events: none;
         user-select: none;
     }
 
@@ -55,11 +55,22 @@ $[highlight]$[dependencies]
     md {
         margin-bottom: 5rem;
     }
+
+    @keyframes kvarn-rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
 </style>
 $[close-head]$[navigation]
 
 <div id="main-logo-container">
-    <img id="main-logo" src="/logo.svg" alt="Kvarn logo" />
+    <!-- this will be replaced by the contents at /logo.svg through JS when the page is loaded,
+        to enable the spinning animation -->
+    <img id="main-logo" src="/logo.svg" alt="Kvarn logo" draggable="false" />
 </div>
 <div id="shortcut-buttons">
     <div>

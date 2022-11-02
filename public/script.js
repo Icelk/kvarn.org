@@ -238,3 +238,27 @@ if (typeof hljs !== "undefined") {
     // @ts-ignore
     hljs.highlightAll()
 }
+
+let logo = document.getElementById("main-logo")
+let changed = false
+if (logo !== null) {
+    logo.addEventListener("mouseover", async () => {
+        // only do this once
+        if (changed) {
+            return
+        }
+        const logo_container = document.getElementById("main-logo-container")
+        // replace logo with SVG data, so we can manipulate it
+        let data = await (await fetch("/logo.svg")).text()
+        logo.outerHTML = data
+        // @ts-ignore
+        logo = logo_container.firstElementChild
+        logo.setAttributeNS(null, "viewBox", `64 ${64 * (1 - 0.125 * 2)} 128 ${128 * 1.125}`)
+        logo.id = "main-logo"
+        let style = document.createElement("style")
+        style.innerText =
+            "#main-logo:hover #path80, #main-logo:hover #rect3765 { animation: kvarn-rotate 20s linear infinite; transform-origin: 101.1% 75.7%; }\n#main-logo { pointer-events: all; height: calc(var(--height) * 1.125) }"
+        logo_container.appendChild(style)
+        changed = true
+    })
+}
