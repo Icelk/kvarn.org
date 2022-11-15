@@ -41,9 +41,20 @@ Which Cargo features are required for certain items are also shown in the [docs]
     automatically. This uses the info stored in the certificate.
 -   [`nonce`](/nonce.): enables usage of [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) on inline `<script>` and `<style>` elements.
 -   [`websocket`](https://doc.kvarn.org/kvarn/websocket/): enables the `websocket` module in Kvarn which allows easy and fast WebSockets from you web application.
+-   `async-networking`: use Tokio's async networking primitives instead of the blocking `std::net` variants.
+    Recommended for every application that can enable it.
+    See [embedded](#embedded) for more details.
 
 There are additionally several _feature sets_:
 
 -   `full`: enables all the features above.
+-   `base`: enables `async-networking`, a feature considered critical for all platforms except embedded (e.g. ESP32-IDF)
 -   `all-http`: enables all HTTP standards and versions available - `https` & `http2`
 -   `all-compression`: enables all compression features - `br` & `gzip`
+
+# Embedded
+
+Some embedded platforms have `std` support (e.g. ESP32-IDF) but don't support `mio`.
+Disabling the feature `async-networking` causes Kvarn to block on every request,
+but removes the dependency on `mio`. It's very useful for IOT devices which don't need large throughput nor
+sub-ms responsiveness (which the embedded controllers doesn't have computing power to achieve anyway).
