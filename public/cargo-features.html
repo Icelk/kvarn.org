@@ -13,12 +13,13 @@ Disabling them cuts down on compilation time, memory requirements, and space req
 </blockquote>
 <p>These can be enabled in your <code>Cargo.toml</code>:</p>
 <pre><code class="language-ini">[dependencies]
-kvarn = { version = &quot;0.4&quot;, default-features = false, features = [&quot;https&quot;, &quot;http2&quot;, &quot;all-compression&quot;] }
+kvarn = { version = &quot;0.5&quot;, default-features = false, features = [&quot;base&quot;, &quot;https&quot;, &quot;http2&quot;, &quot;all-compression&quot;] }
 </code></pre>
 <p>See the <a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a> on the matter.</p>
 <hr />
 <p>Which Cargo features are required for certain items are also shown in the <a href="https://doc.kvarn.org/">docs</a>
 (e.g. the <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new"><code>Host::new</code></a> function).</p>
+<p>Please always enable <code>base</code> (see below for more details).</p>
 <ul>
 <li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>, the secure HTTP protocol.
 This is strongly recommended if you’re doing anything that’s not resource constrained and local.</li>

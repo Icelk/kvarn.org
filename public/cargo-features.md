@@ -17,7 +17,7 @@ These can be enabled in your `Cargo.toml`:
 
 ```ini
 [dependencies]
-kvarn = { version = "0.4", default-features = false, features = ["https", "http2", "all-compression"] }
+kvarn = { version = "0.5", default-features = false, features = ["base", "https", "http2", "all-compression"] }
 ```
 
 See the [official Cargo guide](https://doc.rust-lang.org/cargo/reference/features.html) on the matter.
@@ -26,6 +26,8 @@ See the [official Cargo guide](https://doc.rust-lang.org/cargo/reference/feature
 
 Which Cargo features are required for certain items are also shown in the [docs](https://doc.kvarn.org/)
 (e.g. the [`Host::new`](https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new) function).
+
+Please always enable `base` (see below for more details).
 
 -   [`https`](/https.): Enables [HTTPS](https://en.wikipedia.org/wiki/HTTPS), the secure HTTP protocol.
     This is strongly recommended if you're doing anything that's not resource constrained and local.
