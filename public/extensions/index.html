@@ -164,7 +164,10 @@ extensions.add_prepare_single(&quot;/index.html&quot;, Box::new(ext));
 <h1 id="example">Example</h1>
 <p>Let’s build one of each extension to see how they fit together.</p>
 <p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
-<p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>. This does a lot under the hood.</p>
+<p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>.
+This does a lot under the hood.</p>
+<p>If any variables or names confuse you, copy the code and inspect it with your IDE (i.e. <code>rust-analyzer</code>).
+The macros are designed to cooperate with Rust tools to give the best possible feedback.</p>
 <p><code>Cargo.toml</code>:</p>
 <pre><code class="language-ini">[package]
 name = &quot;unicorn-backend&quot;
@@ -175,8 +178,8 @@ edition = &quot;2021&quot;
 
 [dependencies]
 kvarn = &quot;0.5&quot;
-tokio = { version = &quot;1.20&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
-env_logger = &quot;0.9&quot;
+tokio = { version = &quot;1.24&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
+env_logger = &quot;0.10&quot;
 </code></pre>
 <p><code>src/main.rs</code>:</p>
 <pre><code class="language-rust">use kvarn::prelude::*;
@@ -311,7 +314,7 @@ async fn main() {
 
     let host = Host::unsecure(
         &quot;localhost&quot;,
-        &quot;non-existent&quot;,
+        &quot;non-existent-directory&quot;,
         extensions,
         host::Options::default(),
     );
@@ -324,7 +327,7 @@ async fn main() {
     println!(&quot;Started server at http://localhost:8080/&quot;);
     println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.&quot;);
     println!(
-        &quot;Test going to the page in a browser and the curling it, you'll get different results.&quot;
+        &quot;Test going to the page in a browser and then run curl on it; you'll get different results.&quot;
     );
     println!(&quot;Shutting down in 10 seconds.&quot;);
 

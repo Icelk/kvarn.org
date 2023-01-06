@@ -194,7 +194,11 @@ Let's build one of each extension to see how they fit together.
 
 This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.
 
-Note how we create extensions by calling [their respective macros](https://doc.kvarn.org/kvarn/#macros). This does a lot under the hood.
+Note how we create extensions by calling [their respective macros](https://doc.kvarn.org/kvarn/#macros).
+This does a lot under the hood.
+
+If any variables or names confuse you, copy the code and inspect it with your IDE (i.e. `rust-analyzer`).
+The macros are designed to cooperate with Rust tools to give the best possible feedback.
 
 `Cargo.toml`:
 
@@ -208,8 +212,8 @@ edition = "2021"
 
 [dependencies]
 kvarn = "0.5"
-tokio = { version = "1.20", features = ["rt-multi-thread", "macros"] }
-env_logger = "0.9"
+tokio = { version = "1.24", features = ["rt-multi-thread", "macros"] }
+env_logger = "0.10"
 ```
 
 `src/main.rs`:
@@ -347,7 +351,7 @@ async fn main() {
 
     let host = Host::unsecure(
         "localhost",
-        "non-existent",
+        "non-existent-directory",
         extensions,
         host::Options::default(),
     );
@@ -360,7 +364,7 @@ async fn main() {
     println!("Started server at http://localhost:8080/");
     println!("Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.");
     println!(
-        "Test going to the page in a browser and the curling it, you'll get different results."
+        "Test going to the page in a browser and then run curl on it; you'll get different results."
     );
     println!("Shutting down in 10 seconds.");
 
