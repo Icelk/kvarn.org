@@ -1,0 +1,53 @@
+(
+    extensions: {
+        "kvarn": [
+            Cors({
+                "/logo.svg": ( cache: 1209600, origins: ["https://github.com", "https://doc.kvarn.org"] ),
+                "/favicon.svg": ( cache: 1209600, origins: ["https://doc.kvarn.org"] ),
+            })
+        ],
+        "kvarn-doc": [
+            Redirect(Exact("/index.html"), "kvarn/"),
+            Csp({
+                "/*": FromDefault({ img_src: [ Uri("https://kvarn.org") ] }),
+            }),
+        ]
+    },
+    hosts: [
+        Plain (
+            cert: "kvarn-cert.pem",
+            pk: "kvarn-pk.pem",
+            path: "./",
+            extensions: ["base", "kvarn"],
+            name_override: Some("kvarn.org"),
+            options: (
+                disable_client_cache: true,
+                disable_server_cache: true,
+                hsts: true,
+            ),
+            addons: [
+                SearchEngine (
+                    api_route: "/search",
+                    kind: Lossless,
+                    ignore_paths: ["/rsync-ignore"],
+                )
+            ],
+        ),
+        Plain (
+            cert: "doc.kvarn-cert.pem",
+            pk: "doc.kvarn-pk.pem",
+            path: "../kvarn/target/doc",
+            extensions: ["base", "kvarn-doc"],
+            name_override: Some("doc.kvarn.org"),
+            options: (
+                disable_client_cache: true,
+                disable_server_cache: true,
+                public_data_directory: ".",
+                hsts: true,
+            ),
+        ),
+    ],
+    host_collections: {
+        "s": ["kvarn.org", "doc.kvarn.org"]
+    }
+)

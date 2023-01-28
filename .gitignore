@@ -3,3 +3,7 @@ logo/*.jpg
 logo/inspiration.pur
 
 *.woff*
+
+*.pem
+*.secret
+*.passwd

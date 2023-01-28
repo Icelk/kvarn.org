@@ -1,6 +1,5 @@
 # [kvarn.org](https://kvarn.org/)
 
-This is the source of [Kvarn's](https://github.com/Icelk/kvarn) website.
 To get the full version running, [download the fonts](download-fonts.sh) and start
 the [Kvarn reference implementation](https://github.com/Icelk/kvarn-reference) with
 
@@ -9,6 +8,24 @@ $ cargo r --features high_ports
 ```
 
 to run it on high ports (8080, 8443), so you don't need superuser privileges.
+
+This is the source of [Kvarn's](https://github.com/Icelk/kvarn) website.
+To get the full version running,
+[download the fonts](download-fonts.sh) and start the server:
+
+> You do have to clone [Mölla](https://github.com/Icelk/moella)
+> to `../moella` to get a successful build.
+
+```shell
+# go to your cloned icelk.dev
+$ cd ../icelk.dev
+$ cd server
+$ cargo install --path .
+$ cd ..
+$ kvarn-icelk -c icelk.dev.ron --high-ports -d kvarn.org
+```
+
+to run on high ports (8080, 8443), so you don't need superuser privileges.
 
 ## Contribution
 
