@@ -8,7 +8,7 @@
 
 # The Kvarn Ecosystem
 
-To make Kvarn competetive with the major players, several pre-built extensions are encouraged to be used.
+To make Kvarn competitive with the major players, several pre-built extensions are encouraged to be used.
 
 [Mölla](/moella/) provides an easy and powerful way to use Kvarn.
 
@@ -63,8 +63,9 @@ It's smart, so if you declare any [present extensions](../extensions/#present), 
 
 It also supports adding to the HTML header by simply declaring a `<head>` element the first thing in the document.
 
-## Example implementation
+## Reference implementation
 
-In addition to the tools above, an example implementation (the one which is currently serving you content) is [available](https://github.com/Icelk/kvarn-reference/). In the future, that'll use a [config](../config.).
+In addition to the tools above, a reference implementation (the one which is currently serving you content)
+is [available on GitHub](https://github.com/Icelk/moella/). It uses an intuitive [config format](/moella/).
 
-Due to the modularity of Kvarn, and it marely being a library for listening to ports, a binary implementation is needed. If this is the reference implementation or your program embedding Kvarn, doesn't matter.
+Due to the modularity of Kvarn, and it merely being a library for listening to ports, a binary implementation is needed. If this is the reference implementation or your program embedding Kvarn, doesn't matter.
