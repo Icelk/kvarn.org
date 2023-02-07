@@ -11,7 +11,8 @@
 
 To easen writing for the web, Kvarn offers a tool called Chute. It consumes Markdown documents and produces HTML documents.
 
-Chute is a CLI tool. It can be built from the [source](https://github.com/Icelk/kvarn/tree/main/chute). Linux downloads are available on [GitHub actions](https://github.com/Icelk/kvarn/actions/workflows/chute.yml).
+Chute is a CLI tool. Downloads are [available](https://github.com/Icelk/moella/releases/).
+Nightly Linux downloads are available on [GitHub actions](https://github.com/Icelk/kvarn/actions/workflows/chute.yml).
 
 ${toc}
 

@@ -123,6 +123,20 @@ $[close-head]$[navigation]
     </p>
 
     <h1 id="getting-started">Getting started</h1>
+
+    <p>
+        See <a href="/moella/#getting-started">Mölla</a> for how to install the reference Kvarn implementation.
+        You'll have a web server running in under 5 minutes and the power to write search-indexed websites
+        with user authentication in no time.
+    </p>
+
+    <p>
+        We recommend using <a href="/chute/">Kvarn Chute</a> for writing documents. It allows you to use Markdown on web
+        pages. It utilizes <a href="/templates.">Kvarn templates</a>
+        for integration with headers and footers.
+    </p>
+
+    <h2>Using Kvarn as a library</h2>
     <p>
         Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>. You'll need to
         <a href="https://rust-lang.org/tools/install">download it</a> before using the Kvarn web server.
@@ -160,19 +174,6 @@ async fn main() {
         <code>web/public/</code> relative to the directory.
     </p>
     <p>See <a href="/extensions/#writing-an-example">the extensions page</a> for a more holistic example.</p>
-    <p>
-        I recommend using <a href="/chute/">Kvarn Chute</a> for writing documents. It allows you to use Markdown on web
-        pages. It utilizes <a href="/templates.">Kvarn templates</a>
-        for integration with headers and footers.
-    </p>
-    <blockquote>
-        <p>
-            Soon, the <a href="https://github.com/Icelk/kvarn-reference">reference implementation</a> will use a
-            <a href="/config.">configuration file</a>. Until then, you have to use the Kvarn library from Rust code and
-            therefore compile in all the hosts and extensions.
-        </p>
-        <p>For a battle-tested implementation, see the link above.</p>
-    </blockquote>
 
     <h1 id="docs">Docs</h1>
     <span>

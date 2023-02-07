@@ -1,0 +1,471 @@
+!> tmpl standard.html markdown.html
+$[head]
+    <title>Mölla</title>
+    <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
+    <meta name="description" content="Kvarn with a simple yet extensive config format and zero downtime.">
+    $[highlight]
+$[dependencies]$[md-imports]$[close-head]$[navigation]
+<main><md><p>Mölla (often written moella, pronounced /mœla/ (œ as in b<strong>ir</strong>d with a British accent))
+is a binary that reads config file(s) and spinns up a Kvarn web server.
+It supports all the major Kvarn extensions and gives you most options Kvarn supports.</p>
+<p>Mölla can serve multiple hosts on a single server, extending to serving multiple sets of hosts on different ports / NICs—all within 1 process.
+When you run <code>kvarnctl reload</code>, Mölla will restart and load any changes made to the config (or run a new version of the binary),
+with 0 milliseconds of downtime.</p>
+<h1 id="getting-started">Getting started</h1>
+<p>Download the binary for your platform from <a href="https://github.com/Icelk/moella/releases">this page</a>.</p>
+<ul>
+<li>Platform specifics:
+<ul>
+<li>If you run Linux: run <code>chmod +x &lt;downloaded binary&gt;</code> to make it executable.</li>
+<li>If you run macOS: run <code>chmod +x &lt;downloaded binary&gt;</code>, then open Finder and find
+the binary. Right click and press <code>Open</code>. Accept the warning.</li>
+</ul>
+</li>
+<li>Lastly, run the command <code>./&lt;downloaded binary&gt; --help</code> in your shell to
+get usage information.</li>
+</ul>
+<p>Now, create a Mölla config in a file named <code>host.ron</code>:</p>
+<!-- json highlighting seemed to work fine for ron! -->
+<pre><code class="language-json">// My Moella config
+(
+    extensions: {
+        &quot;website&quot;: [ AllDefaults ]
+    },
+    hosts: [
+        Http (
+            name: &quot;mywebsite.org&quot;,
+            path: &quot;./&quot;,
+            extensions: [&quot;website&quot;],
+            options: (
+                disable_client_cache: true,
+                disable_server_cache: true,
+            )
+        )
+    ],
+    ports: Standard(Host(&quot;mywebsite.org&quot;)),
+)
+</code></pre>
+<p>Next, run the web server using <code>./&lt;downloaded binary&gt; --config host.ron --high-ports</code> and go to <code>http://localhost:8080</code>.
+The contents of <code>./public/index.html</code> will be loaded in your browser (refresh page to update content).
+The <code>--high-ports</code> tells Mölla to use port 8080 instead of 80 (the default for the unencrypted web),
+because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
+<h1 id="config-schema">Config schema</h1>
+<p>Here, all the options of the config are documented.</p>
+<pre><code class="language-json">// optional to specify `KvarnConfig`
+// all paths in the config will always be relative to the config's location
+KvarnConfig (
+    // Import other config files to add to the set of `extensions` and `hosts`.
+    //
+    // Note that only one config file can define `ports` (see at the end of the config)
+    //
+    // So say you have a common extension set for all you hosts,
+    // then all those configs can load `extensions.ron` and this (main) config
+    // in turn import those. Any one of the configs can define the `ports` parameter.
+    //
+    // This prints a warning if loading a config failed, but it isn't considered critical.
+    //
+    // When you define a host collection twice with the same name,
+    // imported hosts are appended to the host collection
+    import: [&quot;other-host.ron&quot;],
+
+    // all options are optional unless labled `required`
+    // Please note that globbing (usage of &quot;*&quot;) generally only works as the first or last character
+    extensions: {
+        // define sets of extensions, and then add one or more sets of extensions to hosts
+        // several of the same extension can be used (if they don't override the previous)
+        &quot;icelk&quot;: [
+            // don't add the default extensions: https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.new
+            NoDefaults,
+
+            // the following are excluded when using `NoDefaults`, but present by default
+            // Redirect `/kvarn/` to `/kvarn/index.html`, very important
+            RedirectIndexHtml,
+            Referrer(None),
+            CorsSafe,
+            CspSafe,
+            // https://kvarn.org/nonce.html
+            Nonce,
+            // If HTTPS is available, redirect all users to it
+            RedirectHttpToHttps,
+
+            // Add all quality of life extensions: https://doc.kvarn.org/kvarn_extensions/fn.mount_all.html
+            //
+            // adds the present internal extensions
+            // [ &quot;download&quot;, &quot;cache&quot;, &quot;hide&quot;, &quot;private&quot; (same as hide),
+            //  &quot;allow-ips&quot;, &quot;tmpl&quot; (templates), and &quot;push&quot; (HTTP/2 push) ]
+            AllDefaults,
+            // Adds template support: https://kvarn.org/templates.html
+            Templates,
+            // Adds HTTP/2 push: https://kvarn.org/push.html
+            Http2Push (
+                // interval before we push again
+                push_interval: 120,
+                // every nth request to check if we should push again
+                check_every_request: 8,
+            ),
+
+            // Only runs if predicate is true
+            If (
+                // required
+                // predicate can also be Not(a), And ([a,b,c,..]), and Or ([a,b,c,..])
+                predicate: Exists(&quot;../php/cgi-bin&quot;),
+                // required
+                // can be any other extension
+                // this is an example of PHP support: https://kvarn.org/php.html
+                extension: Php (
+                    // required
+                    // tcp:// and udp:// are also available
+                    connection: &quot;unix:///var/run/php-fpm.sock&quot;,
+                    // required
+                    // where on the website to capture all requests
+                    capture_route: &quot;/cgi-bin/&quot;,
+                    // required
+                    // kvarn shutdown down if this doesn't exist
+                    working_directory: &quot;../php/cgi-bin&quot;,
+                )
+            ),
+            // The first is a filter:
+            // filters can have the same logical operators as predicates (see PHP above),
+            // but support `Exact`, `StartsWith`, `EndsWith`, and `Contains` in regard to the
+            // request path, instead of file system queries.
+            //
+            // So this extensions redirects the user agent to kvarn.org
+            // on all pages under the directory `public/kvarn`
+            Redirect (StartsWith(&quot;/kvarn/&quot;, &quot;https://kvarn.org&quot;)),
+            // tell the web browser to cache:
+            // `Changing` = 2 minutes, `Full` = 2 years, `None` = no caching, `MaxAge(seconds)`, `Ignore` = don't change the HTTP header
+            ClientCache ({
+                &quot;.png&quot;: Changing,
+                &quot;.avif&quot;: Full,
+                &quot;.jpg&quot;: Full,
+                &quot;.ico&quot;: Full,
+                &quot;.woff2&quot;: Full,
+                &quot;/highlight.js/&quot;: Full,
+            }),
+            // https://kvarn.org/csp.html
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+            Csp ({
+                // Bases `CspRule` on the defaults (allow requests to self and inline style tags)
+                &quot;*&quot;: FromDefault ({ img_src: [ Uri (&quot;https://kvarn.org&quot;) ] }),
+                // Bases `CspRule` on the rule found at `/`
+                &quot;/index.html&quot;: Inherit (&quot;/&quot;, { script_src: [ UnsafeInline ] }),
+                // the following two are equivalent (except for the route they match, of course)
+                // Empty tells Kvarn to not touch CSP
+                &quot;/api/*&quot;: FromEmpty ({}),
+                &quot;/ip&quot;: Empty,
+                &quot;/ulogger/*&quot;: FromDefault ({
+                    default_src: [
+                        Uri (&quot;https://maps.googleapis.com&quot;),
+                        Uri (&quot;https://maps.gstatic.com&quot;)
+                    ],
+                    img_src: [
+                        Uri(&quot;https://*.openstreetmap.org&quot;),
+                        Uri(&quot;https://maps.googleapis.com&quot;),
+                        Uri(&quot;https://maps.gstatic.com&quot;),
+                        Scheme(&quot;data:&quot;),
+                    ],
+                }),
+                &quot;/admin&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
+                &quot;/quizlet-learn/login.html&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
+                &quot;/articles/*&quot;: FromDefault ({
+                    style_src: [
+                        UnsafeInline,
+                        Uri(&quot;https://fonts.googleapis.com&quot;),
+                        Uri(&quot;https://fonts.googleapis.com&quot;),
+                    ],
+                    default_src: [ Uri(&quot;https://fonts.gstatic.com&quot;) ],
+                }),
+            }),
+            // https://kvarn.org/cors.html
+            // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+            Cors ({
+                // cache is optional and in seconds (client side)
+                // origins is required to not be empty
+                // methods is optional
+                //
+                // If &quot;*&quot; is present in `origins`, all origins are allowed
+                // If `All` is present in `methods`, all methods are allowed
+                &quot;/logo.svg&quot;: ( cache: 1209600, origins: [&quot;https://github.com&quot;, &quot;https://doc.kvarn.org&quot;] ),
+                &quot;/favicon.svg&quot;: ( cache: 1209600, origins: [&quot;https://doc.kvarn.org&quot;] ),
+                &quot;/images/*&quot;: ( origins: [&quot;https://icelk.dev&quot;], methods: [POST] )
+            }),
+
+            // https://kvarn.org/reverse-proxy.html
+            ReverseProxy (
+                // required
+                // The part of the website to capture
+                route: &quot;/private-ical/&quot;,
+                // required
+                // connection to backend server. Assumes HTTP/1.1 without TLS
+                connection: &quot;tcp://localhost:5232&quot;,
+                // in seconds, decimals are allowed
+                timeout: 10,
+                options: [
+                    // adds header before sending to backend server
+                    AddHeader(&quot;x-script-name&quot;, &quot;/private-ical&quot;),
+                    // The actual pattern to strip by is determined by the host's `folder_default`
+                    StripIndexHtml (
+                        // optional override
+                        index_html_name: &quot;index.html&quot;
+                    ),
+                    // Forward the real IP as `x-real-ip`
+                    // Because the backend server just sees the IP of the Kvarn server, this can be used to get the real IP of the user agent
+                    ForwardIp,
+                    // Disable URL rewrite (so the request URL isn't modified)
+                    // Advanced, not recommended
+                    DisableUrlRewrite,
+                ]
+            ),
+            // https://kvarn.org/security/#authentication
+            // Explanation of options: https://doc.icelk.dev/kvarn-auth/kvarn_auth/struct.Builder.html
+            Auth (
+                // required
+                credentials: SpaceSepparatedAccoutPerLine(&quot;quizlet-learn.passwd&quot;),
+                // required
+                // `TODO`: allow user to specify a public (validation) key instead of the private (secret) key.
+                secret: &quot;quizlet-learn.secret&quot;,
+                // required
+                auth_api_route: &quot;/quizlet-learn/auth&quot;,
+                // required (is usually a page telling the user they're unauthorized or the login page)
+                unauthorized_route: &quot;/quizlet-learn/login.&quot;,
+                // required
+                // Can only be StartsWith or AcceptAll
+                // where the authentication is enforced
+                filter: StartsWith(&quot;/quizlet-learn/&quot;),
+                // time between authentication token refreshes.
+                // higher intervals decreases auth server load, but if someone steals a user's
+                // JWT, they have full, irrevocable access for the duration of this interval
+                jwt_refresh_interval: 3600,
+                // see https://docs.rs/kvarn-auth/0.1.0/kvarn_auth/struct.Builder.html
+                lax_samsite: false,
+                // Allows reading the auth cookies from JavaScript
+                relaxed_httponly: false,
+                force_relog_on_ip_change: false,
+                jwt_cookie_name: &quot;auth-jwt&quot;,
+                credentials_cookie_name: &quot;auth-credentials&quot;,
+                // use `x-real-ip` header instead of connection address for IP check
+                behind_reverse_proxy: true,
+            ),
+
+            // counts the views of all HTML pages
+            ViewCounter (
+                // required
+                filter: StartsWith(&quot;/&quot;),
+                // required
+                log_path: &quot;../icelk-views&quot;,
+                // default is to write to disk every hour
+                commit_interval: 3600,
+                accept_same_ip_interval: 3600,
+            )
+        ],
+    },
+    hosts: [
+        // Multiple hosts with the same name isn't supported for obvious reasons.
+        // Here, the same host is shown using all methods of defining a host
+        Plain (
+            // Doesn't need name parameter as that's read from the certificate
+
+            // The certificate and private key need to be in the PEM format (which is the most common)
+            // required
+            cert: &quot;icelk-cert.pem&quot;,
+            // required
+            pk: &quot;icelk-pk.pem&quot;,
+            // required
+            // the path to read templates, errors, and public files from
+            path: &quot;../icelk.dev&quot;,
+            // required
+            // can add multiple lists of extensions
+            extensions: [&quot;icelk&quot;],
+            // you can however override the name, if you for example use a self-signed cert
+            name_override: Some(&quot;icelk.dev&quot;),
+            // all the values are optional
+            options: (
+                // don't serve files from the file system
+                disable_fs: false,
+                no_http_to_https_redirect: true,
+                disable_client_cache: false,
+                disable_fs_cache: false,
+                disable_response_cache: false,
+                disable_server_cache: false,
+                // compresson level
+                brotli_level: 7,
+                // compresson level
+                gzip_level: 7,
+                // Tell browsers to only use HTTPS when connecting to us.
+                // Use with care, since setting this will disallow browsers
+                // from connecting to your website via HTTP for the next two years!
+                // off by default
+                hsts: true,
+                // you might want to change the following if you use PHP on your entire website
+                // redirect `/kvarn/` to `/kvarn/index.html` (this is the default)
+                folder_default: &quot;index.html&quot;,
+                // redirect `/icelk.` to `/icelk.html` (this is the default)
+                extension_default: &quot;html&quot;,
+                // The directory to serve files from.
+                // If you set this to `.`, make sure no certificates are exposed at `path`!
+                public_data_dir: &quot;public&quot;,
+            ),
+            addons: [
+                // see https://docs.rs/kvarn-search/latest/kvarn_search/struct.Options.html
+                SearchEngine (
+                    // required
+                    api_route: &quot;/search&quot;,
+                    // required
+                    kind: Lossless,
+                    // example value
+                    ignore_paths: [&quot;/private&quot;],
+                    force_refresh: true,
+                    word_count_limit: 2_500,
+                    response_hits_limit: 10,
+                    query_max_length: 100,
+                    query_max_terms: 10,
+                    additional_paths: [],
+                    index_wordpress_sitemap: true,
+                )
+            ],
+        ),
+        // tries to load the certificates, but falls back to only serving unencrypted HTTP
+        // if that fails.
+        TryCertificatesOrUnencrypted (
+            // required (because we can't be sure we can read the name from the cert if the cert fails)
+            name: &quot;icelk.dev&quot;,
+            // required
+            cert: &quot;icelk.cert&quot;,
+            // required
+            pk: &quot;icelk.pk&quot;,
+            // required
+            path: &quot;../icelk.dev&quot;,
+            // required
+            extensions: [&quot;icelk&quot;],
+            // all the values are optional
+            // HostOptions is optional (you can have just parentheses) (just like with KvarnConfig)
+            // see Plain
+            options: HostOptions (
+                // these are the alternative names your site will also be recognized by
+                // Are read from the certificate (therefore, you can't set this for Plain hosts)
+                alternative_names: [&quot;icelk.com&quot;],
+                hsts: true,
+            ),
+            // see Plain
+            addons: [],
+        ),
+        Http (
+            // required
+            name: &quot;doc.icelk.dev&quot;,
+            // required
+            path: &quot;../icelk.dev/docs&quot;,
+            // required
+            extensions: [],
+            // like Plain, except no_http_to_https_redirect
+            // all the values are optional
+            options: (),
+            // see Plain
+            addons: [],
+        )*/
+    ],
+    // only required if you want to use `Collection` as a port source.
+    // When you define a host collection twice with the same name,
+    // hosts (e.g. those loaded from imports) are appended to the host collection
+    host_collections: {
+        &quot;s&quot;: [&quot;icelk.dev&quot;],
+    },
+    ports: Map({
+        8080: ( encrypted: false, source: Collection(&quot;s&quot;) ),
+        8443: ( encrypted: true, source: Collection(&quot;s&quot;) ),
+    }),
+    // or
+    // here, Host() can also be Collection()
+    // Standard binds 80 (HTTP (with redirect to HTTPS, if that's enabled)) and 443 (HTTPS)
+    ports: Standard(Host(&quot;icelk.dev&quot;)),
+    // or
+    ports: HttpOnly(Hosts([&quot;icelk.dev&quot;, &quot;kvarn.org&quot;])),
+    // or HttpsOnly
+)
+</code></pre>
+<p>That’s the whole config!</p>
+<h1 id="command-line-options">Command line options</h1>
+<ul>
+<li><code>--high-ports</code> avoid port permission problems on Linux by binding to 8080 and 8443</li>
+<li><code>-c | --config &lt;CONFIG FILE&gt;</code> tells Mölla which config to use</li>
+<li><code>-d | --host &lt;DEFAULT HOST&gt;</code> for local development, which host to show if you have several defined</li>
+<li><code>-p | --ctl-path &lt;INSTANCE&gt;</code> the instance name / control socket path to use.
+This is critical to change if you want multiple instances of Mölla to run on the same machine.
+If you run Mölla again with the same <code>INSTANCE</code>, it will take over and shut down the previous.
+You must specity the same <code>INSTANCE</code> when running <a href="/ctl/"><code>kvarnctl</code></a></li>
+</ul>
+<h1 id="history-and-why-this-exists">History and why this exists</h1>
+<p>Before Mölla, you had to write the host and extension descriptors in Rust,
+and recompile after every change. This made for a way too high barrier to entry and
+way too slow development cycle.
+For <a href="https://icelk.dev">icelk.dev</a>, I need <a href="https://github.com/Icelk/icelk.dev/blob/6127d3f/icelk.dev.ron#L93-L95">custom extensions</a>,
+which are <a href="https://github.com/Icelk/icelk.dev/blob/659df7f/server/src/main.rs#L15-L19">easily integrated</a>
+into Mölla!</p>
+<h1 id="examples">Examples</h1>
+<h2 id="kvarnorg"><a href="/">kvarn.org</a> and <a href="https://doc.kvarn.org">doc.kvarn.org</a></h2>
+<p>You might notice the following doesn’t include a <code>ports</code> property.
+That’s due to this config being imported from another.</p>
+<p>The host collection <code>s</code> is defined, but due to Mölla handles collections,
+the hosts are appended to <code>s</code>, not replacing previously defined hosts.
+This allows simple multi-host setup with split configs for easier version control.</p>
+<p>You may also notice that the extension set <code>base</code> isn’t found anywhere.
+That’s because it’s defined in the “parent” config that imports this.
+The implicit usage of undefined extension sets might be deprecated in the future
+(forcing you to import the relevant config in this file too, instead of relying on the parent config).</p>
+<pre><code class="language-json">(
+    extensions: {
+        &quot;kvarn&quot;: [
+            Cors({
+                &quot;/logo.svg&quot;: ( cache: 1209600, origins: [&quot;https://github.com&quot;, &quot;https://doc.kvarn.org&quot;] ),
+                &quot;/favicon.svg&quot;: ( cache: 1209600, origins: [&quot;https://doc.kvarn.org&quot;] ),
+            })
+        ],
+        &quot;kvarn-doc&quot;: [
+            Redirect(Exact(&quot;/index.html&quot;), &quot;kvarn/&quot;),
+            Csp({
+                &quot;/*&quot;: FromDefault({ img_src: [ Uri(&quot;https://kvarn.org&quot;) ] }),
+            }),
+        ]
+    },
+    hosts: [
+        Plain (
+            cert: &quot;kvarn-cert.pem&quot;,
+            pk: &quot;kvarn-pk.pem&quot;,
+            path: &quot;./&quot;,
+            extensions: [&quot;base&quot;, &quot;kvarn&quot;],
+            // for development self-signed cert
+            name_override: Some(&quot;kvarn.org&quot;),
+            options: (
+                disable_client_cache: true,
+                disable_server_cache: true,
+                hsts: true,
+            ),
+            addons: [
+                SearchEngine (
+                    api_route: &quot;/search&quot;,
+                    kind: Lossless,
+                    ignore_paths: [&quot;/rsync-ignore&quot;],
+                )
+            ],
+        ),
+        Plain (
+            cert: &quot;doc.kvarn-cert.pem&quot;,
+            pk: &quot;doc.kvarn-pk.pem&quot;,
+            path: &quot;../kvarn/target/doc&quot;,
+            extensions: [&quot;base&quot;, &quot;kvarn-doc&quot;],
+            // for development self-signed cert
+            name_override: Some(&quot;doc.kvarn.org&quot;),
+            options: (
+                disable_client_cache: true,
+                disable_server_cache: true,
+                public_data_directory: &quot;.&quot;,
+                hsts: true,
+            ),
+        ),
+    ],
+    host_collections: {
+        &quot;s&quot;: [&quot;kvarn.org&quot;, &quot;doc.kvarn.org&quot;]
+    }
+)
+</code></pre>
+</md></main>
+$[footer]

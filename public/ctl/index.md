@@ -8,6 +8,9 @@
 
 `kvarnctl` is a binary available for UNIX systems. It commnicates with your Kvarn instances to execute commands with arguments.
 
+Downloads are [available](https://github.com/Icelk/moella/releases/).
+Nightly Linux downloads are available on [GitHub actions](https://github.com/Icelk/kvarn/actions/workflows/kvarnctl.yml).
+
 # Commands
 
 These correspond to [plugins](https://doc.kvarn.org/kvarn/ctl/index.html).
