@@ -23,6 +23,7 @@ Download the binary for your platform from [this page](https://github.com/Icelk/
     -   If you run Linux: run `chmod +x <downloaded binary>` to make it executable.
     -   If you run macOS: run `chmod +x <downloaded binary>`, then open Finder and find
         the binary. Right click and press `Open`. Accept the warning.
+    -   On Windows, it should just run
 -   Lastly, run the command `./<downloaded binary> --help` in your shell to
     get usage information.
 
