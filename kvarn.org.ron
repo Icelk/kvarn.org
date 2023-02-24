@@ -19,7 +19,7 @@
             pk: "kvarn-pk.pem",
             path: "./",
             extensions: ["base", "kvarn"],
-            name_override: Some("kvarn.org"),
+            name: Some("kvarn.org"),
             options: (
                 disable_client_cache: true,
                 disable_server_cache: true,
@@ -30,7 +30,10 @@
                     api_route: "/search",
                     kind: Lossless,
                     ignore_paths: ["/rsync-ignore"],
-                )
+                ),
+                AutomaticCertificate (
+                    contact: "mailto:main@icelk.dev",
+                ),
             ],
         ),
         Plain (
@@ -38,13 +41,18 @@
             pk: "doc.kvarn-pk.pem",
             path: "../kvarn/target/doc",
             extensions: ["base", "kvarn-doc"],
-            name_override: Some("doc.kvarn.org"),
+            name: Some("doc.kvarn.org"),
             options: (
                 disable_client_cache: true,
                 disable_server_cache: true,
                 public_data_directory: ".",
                 hsts: true,
             ),
+            addons: [
+                AutomaticCertificate (
+                    contact: "mailto:main@icelk.dev",
+                ),
+            ],
         ),
     ],
     host_collections: {
