@@ -19,7 +19,17 @@ $[highlight]$[dependencies]
 
         height: calc(var(--height) - 2rem);
         background: var(--bg-head);
-        clip-path: polygon(100% -100%, 100% 40%, 90% 60%, 75% 72%, 63% 100%, 40% 100%, 20% 57%, 0 35%, 0 -100%);
+        clip-path: polygon(
+            100% -100%,
+            100% 40%,
+            90% 60%,
+            75% 72%,
+            63% 100%,
+            40% 100%,
+            20% 57%,
+            0 35%,
+            0 -100%
+        );
 
         position: relative;
     }
@@ -85,7 +95,11 @@ $[close-head]$[navigation]
         <a href="#getting-started" class="solid-button">Getting started</a>
         <a href="#applications" class="solid-button">Applications</a>
         <a href="#license" class="solid-button">License</a>
-        <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md" class="solid-button">Roadmap</a>
+        <a
+            href="https://github.com/Icelk/kvarn/blob/main/roadmap.md"
+            class="solid-button"
+            >Roadmap</a
+        >
     </div>
 </div>
 
@@ -99,16 +113,25 @@ $[close-head]$[navigation]
 <md>
     <center>
         <blockquote style="display: inline-block; margin: 0 1rem">
-            <b>A forward-thinking fast web server designed to fit <i>your</i> needs, efficiently.</b>
+            <b
+                >A forward-thinking fast web server designed to fit
+                <i>your</i> needs, efficiently.</b
+            >
         </blockquote>
     </center>
     <h1>About</h1>
     <p>
         Kvarn is a <a href="https://rust-lang.org">rusty</a>,
-        <a href="https://github.com/Icelk/kvarn/blob/main/LICENSE">open-source</a>, extendable backend library with
+        <a href="https://github.com/Icelk/kvarn/blob/main/LICENSE"
+            >open-source</a
+        >, extendable backend library with
         <a href="https://kvarn.org/extensions/">native async everywhere</a>;
-        <a href="https://kvarn.org/features/#graceful-shutdown--handover">zero downtime</a>; and
-        <a href="https://kvarn.org/features/#sane-defaults">safe &amp; fast defaults</a>.
+        <a href="https://kvarn.org/features/#graceful-shutdown--handover"
+            >zero downtime</a
+        >; and
+        <a href="https://kvarn.org/features/#sane-defaults"
+            >safe &amp; fast defaults</a
+        >.
     </p>
     <p>
         Kvarn is batteries-included (optional defaults) with support for
@@ -121,36 +144,48 @@ $[close-head]$[navigation]
         <a href="https://github.com/Icelk/kvarn/tree/main/chute/">Chute</a>.
     </p>
     <p>
-        You can follow progress on <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project is hosted. The
-        project is under active development to add features, reduce complexity, improve performance, and fix issues.
+        You can follow progress on
+        <a href="https://github.com/Icelk/kvarn/">GitHub</a> where the project
+        is hosted. The project is under active development to add features,
+        reduce complexity, improve performance, and fix issues.
     </p>
 
     <h1 id="getting-started">Getting started</h1>
 
     <p>
-        See <a href="/moella/#getting-started">Mölla</a> for how to install the reference Kvarn implementation.
-        You'll have a web server running in under 5 minutes and the power to write search-indexed websites
-        with user authentication in no time.
+        See <a href="/moella/#getting-started">Mölla</a> for how to install the
+        reference Kvarn implementation. You'll have a web server running in
+        under 5 minutes and the power to write search-indexed websites with user
+        authentication in no time.
     </p>
 
     <p>
-        We recommend using <a href="/chute/">Kvarn Chute</a> for writing documents. It allows you to use Markdown on web
-        pages. It utilizes <a href="/templates.">Kvarn templates</a>
+        We recommend using <a href="/chute/">Kvarn Chute</a> for writing
+        documents. It allows you to use Markdown on web pages. It utilizes
+        <a href="/templates.">Kvarn templates</a>
         for integration with headers and footers.
     </p>
 
     <h2>Using Kvarn as a library</h2>
     <p>
-        Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>. You'll need to
-        <a href="https://rust-lang.org/tools/install">download it</a> before using the Kvarn web server.
+        Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>.
+        You'll need to
+        <a href="https://rust-lang.org/tools/install">download it</a> before
+        using the Kvarn web server.
     </p>
-    <p>Then, enter a directory and initiate a Cargo (Rust's package manager, like NPM to node.js) project.</p>
+    <p>
+        Then, enter a directory and initiate a Cargo (Rust's package manager,
+        like NPM to node.js) project.
+    </p>
     <pre><code class="language-shell">$ cargo init</code></pre>
     <p>Next, add these dependencies in your <code>Cargo.toml</code>.</p>
     <pre><code class="language-ini">kvarn = "0.5"
 tokio = { version = "1.20", features = ["rt-multi-thread", "macros"] }
 env_logger = "0.9"</code></pre>
-    <p>Now, you can edit <code>src/main.rs</code> and replace the <code>Hello world!</code> example with this.</p>
+    <p>
+        Now, you can edit <code>src/main.rs</code> and replace the
+        <code>Hello world!</code> example with this.
+    </p>
     <pre><code class="language–rust">use kvarn::prelude::*;
 
 #[tokio::main]
@@ -173,26 +208,36 @@ async fn main() {
     <p>Start it with the following command.</p>
     <pre><code class="language-shell">$ cargo run</code></pre>
     <p>
-        Now you have a web server running at <a href="http://localhost:8080/">localhost:8080</a> serving files from
+        Now you have a web server running at
+        <a href="http://localhost:8080/">localhost:8080</a> serving files from
         <code>web/public/</code> relative to the directory.
     </p>
-    <p>See <a href="/extensions/#writing-an-example">the extensions page</a> for a more holistic example.</p>
+    <p>
+        See
+        <a href="/extensions/#writing-an-example">the extensions page</a> for a
+        more holistic example.
+    </p>
 
     <h1 id="docs">Docs</h1>
     <span>
         <ul>
             <li>A primer on <a href="/host.">hosts</a>.</li>
-            <li><a href="/ctl/">kvarnctl</a>, communication with Kvarn from the command line.</li>
+            <li>
+                <a href="/ctl/">kvarnctl</a>, communication with Kvarn from the
+                command line.
+            </li>
             <li>The <a href="pipeline.">pipeline</a> of handling a request.</li>
             <li>
-                All <a href="errors.">errors in the pipeline</a>. These surface as various error responses with
-                appropriate status codes.
+                All <a href="errors.">errors in the pipeline</a>. These surface
+                as various error responses with appropriate status codes.
             </li>
             <li>
-                <a href="/chute/">A Markdown to HTML generator</a> which nicely integrates with the
-                <a href="/templates.">templating engine</a>.
+                <a href="/chute/">A Markdown to HTML generator</a> which nicely
+                integrates with the <a href="/templates.">templating engine</a>.
             </li>
-            <li><a href="/security/">The security precautions</a> Kvarn takes.</li>
+            <li>
+                <a href="/security/">The security precautions</a> Kvarn takes.
+            </li>
             <li>
                 The Kvarn libraries: <a href="/utils."><code>utils</code></a
                 >, <a href="/async."><code>async</code></a
@@ -200,62 +245,87 @@ async fn main() {
                 >.
             </li>
             <li>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">Vary</a> header
-                <a href="/vary.">handling</a>.
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary"
+                    >Vary</a
+                >
+                header <a href="/vary.">handling</a>.
             </li>
-            <li>The <a href="/cargo-features.">optional features</a> chosen at compile-time.</li>
-            <li><a href="/shutdown-handover.">Graceful shutdown and handover.</a></li>
+            <li>
+                The <a href="/cargo-features.">optional features</a> chosen at
+                compile-time.
+            </li>
+            <li>
+                <a href="/shutdown-handover."
+                    >Graceful shutdown and handover.</a
+                >
+            </li>
             <li>Kvarn's <a href="/nonce.">nonce</a> implementation.</li>
             <li>
-                <a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a>, a fast, simple, and customizable
-                authentication extension.
+                <a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a>, a
+                fast, simple, and customizable authentication extension.
             </li>
-            <li>See <a href="/features/">the features page</a> for more links.</li>
+            <li>
+                See <a href="/features/">the features page</a> for more links.
+            </li>
         </ul>
     </span>
 
     <h1 id="performance">Performance</h1>
     <p>
-        Kvarn's performance is within margin of error of <a href="https://github.com/iron/iron#performance">Iron's</a>,
-        while being easier to work with, comes with <a href="/features/">more, integrated features out of the box</a>,
-        and is more agile.
+        Kvarn's performance is within margin of error of
+        <a href="https://github.com/iron/iron#performance">Iron's</a>, while
+        being easier to work with, comes with
+        <a href="/features/">more, integrated features out of the box</a>, and
+        is more agile.
         <br />
-        Kvarn also features zero-downtime upgrades without any config - just push a new binary to the server and run
+        Kvarn also features zero-downtime upgrades without any config - just
+        push a new binary to the server and run
         <code>kvarnctl reload</code>.
     </p>
 
     <h1 id="applications">Applications</h1>
     <p>
-        Kvarn can be used for anything ranging from large-scale websites in need of throughput and availability, to
-        personal websites with the ability to host unlimited domains from one IP, to IOT devices, like the Raspberry Pi.
+        Kvarn can be used for anything ranging from large-scale websites in need
+        of throughput and availability, to personal websites with the ability to
+        host unlimited domains from one IP, to IOT devices, like the Raspberry
+        Pi.
     </p>
     <p>
-        All features are configurable; if you want the latest HTTP and Web features, you can enable those features at
-        compile-time. Of you on the other hand run Kvarn as a web interface for a local device and don't need security
-        or the latest features, but require compile-time and only have spare resources, you can disable those features,
-        not compiling in HTTPS or HTTP/2 support.
+        All features are configurable; if you want the latest HTTP and Web
+        features, you can enable those features at compile-time. Of you on the
+        other hand run Kvarn as a web interface for a local device and don't
+        need security or the latest features, but require compile-time and only
+        have spare resources, you can disable those features, not compiling in
+        HTTPS or HTTP/2 support.
     </p>
     <p>
-        The extension system allows for easy creation of APIs and can interact with the host machine asynchronously. It
-        can access databases, change the GPIO pins, or anything else a program can do. When disabling features, no APIs
-        change. You always get the same developer experience.
+        The extension system allows for easy creation of APIs and can interact
+        with the host machine asynchronously. It can access databases, change
+        the GPIO pins, or anything else a program can do. When disabling
+        features, no APIs change. You always get the same developer experience.
     </p>
 
     <h1 id="license">License</h1>
     <p>
         The text and logo on this website is licensed under the
-        <a href="text-license.txt">CC-BY-SA-4.0 License</a>. The code examples and JavaScript source code is licensed
-        under the <a href="code-license.txt">MIT</a> license.
+        <a href="text-license.txt">CC-BY-SA-4.0 License</a>. The code examples
+        and JavaScript source code is licensed under the
+        <a href="code-license.txt">MIT</a> license.
     </p>
-    <p>The source code is available at <a href="https://github.com/Icelk/kvarn.org">GitHub</a>.</p>
+    <p>
+        The source code is available at
+        <a href="https://github.com/Icelk/kvarn.org">GitHub</a>.
+    </p>
 
     <h1 id="resources">Resources</h1>
     <div class="list">
-        <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md">Roadmap</a>
-        <a href="https://github.com/Icelk/kvarn.org">GitHub repo for this website</a>
-        <a href="https://www.ralfj.de/blog/2019/07/14/uninit.html">In-depth about uninitialized memory</a>
-        <a href="https://rust-lang.github.io/rfcs/2930-read-buf.html">Rust ReadBuf RFC</a>
-        <a href="https://tonsky.me/blog/font-size/">Article about font-size on the web</a>
+        <a href="https://github.com/Icelk/kvarn/blob/main/roadmap.md"
+            >Roadmap</a
+        >
+        <a href="https://github.com/Icelk/kvarn.org"
+            >GitHub repo for this website</a
+        >
     </div>
 </md>
 
