@@ -1,14 +1,15 @@
 !> tmpl standard.html markdown.html
 $[head]
     <title>Features of Kvarn</title>
+    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="features--why-to-use-kvarn">Features &amp; why to use Kvarn</h1>
+<p>All of these are available in <a href="/moella/">Mölla</a>!</p>
 <p>Kvarn tries to package many useful features without being bloated.
 Optional extensions are available in <a href="https://github.com/Icelk/kvarn/tree/main/kvarn_extensions">the extensions crate</a>.</p>
-<p>Here is a incomplete list of Kvarn’s features, most of which have guides in their respective pages.</p>
 <blockquote>
-<p>Some require certain <a href="/cargo-features.">Cargo “features”</a> to be compiled in,
-and some require <code>kvarn_extensions</code>.
+<p>When using Kvarn as a library: some require certain <a href="/cargo-features.">Cargo “features”</a>
+to be compiled in, and some require <code>kvarn_extensions</code>.
 This will be explicitly noted.</p>
 </blockquote>
 <table id="toc"><thead><tr><th>Contents</th></tr></thead><tbody>
@@ -18,6 +19,7 @@ This will be explicitly noted.</p>
 <tr><td><a href="#http2">4 HTTP/2</a></td></tr>
 <tr><td><span style="margin-left: 2em"></span><a href="#http2-push">4.1 HTTP/2 Push</a></td></tr>
 <tr><td><a href="#https">5 HTTPS</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#automatic-certificates">5.1 Automatic certificates</a></td></tr>
 <tr><td><a href="#full-documentation-coverage">6 Full documentation coverage</a></td></tr>
 <tr><td><a href="#extensions">7 Extensions</a></td></tr>
 <tr><td><a href="#cache">8 Cache</a></td></tr>
@@ -35,6 +37,8 @@ This will be explicitly noted.</p>
 <h1 id="batteries-included-but-not-required">Batteries included, but not required</h1>
 <p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website features.</p>
 <ul>
+<li><a href="#automatic-certificates">Automatic HTTPS certificates</a>: Kvarn handles your certificates
+for you—no need to renew or use <code>certbot</code> to get certificates.</li>
 <li><a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a>: A fast, simple, and customizable authentication extension.
 It provides a JWT implementation with support for persistent logins and validation servers.</li>
 <li><a href="#full-text-search-engine">Kvarn search</a>: A site search engine. You can try it out on the <a href="/">front page</a>.</li>
@@ -71,6 +75,39 @@ HTTPS before the request reaches your code.</p>
 <p>Kvarn also suggest using HSTS. When you’re ready, you only need to add one line of code to enable it for a host,
 improving security further.</p>
 <p>If you want maximum security, you can of course simply not listen on port <code>80</code>, reducing the code you write.</p>
+<h2 id="automatic-certificates">Automatic certificates</h2>
+<p>If you’re using <a href="/moella/">Mölla</a> (which is recommended), you can enable HTTPS and
+automatic certificates through <a href="https://letsencrypt.org">Let’s Encrypt</a>:</p>
+<pre><code class="language-json">(
+    // --snip--
+    hosts: [
+        Plain (
+            name: &quot;icelk.dev&quot;,
+            // the path to store the certificate chain at
+            cert: &quot;icelk-cert.pem&quot;,
+            // the path to store the private key at
+            pk: &quot;icelk-pk.pem&quot;
+            path: &quot;./&quot;,
+            // all the magic happens here!
+            auto_cert: true,
+
+            // if you'd like, you can customize it (completely optional)
+            addons: [
+                AutomaticCertificate (
+                    // Get notices from Let's Encrypt
+                    contact: &quot;mailto:main@icelk.dev&quot;,
+                    // saved in the ron format, same as this config
+                    // not security critical
+                    account_path: &quot;my-lets-encrypt-account.ron&quot;,
+                )
+            ]
+        )
+    ].
+)
+</code></pre>
+<blockquote>
+<p>We’re coming for you, <a href="https://caddyserver.com/">Caddy</a>…</p>
+</blockquote>
 <h1 id="full-documentation-coverage">Full documentation coverage</h1>
 <p>Documentation and examples are key to a good library.</p>
 <p>You can always read <a href="https://doc.kvarn.org">Kvarn’s documentation online</a>.

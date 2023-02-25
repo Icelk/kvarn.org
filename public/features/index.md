@@ -2,17 +2,18 @@
 
 <head>
     <title>Features of Kvarn</title>
+    $[highlight]
 </head>
 
 # Features & why to use Kvarn
 
+All of these are available in [Mölla](/moella/)!
+
 Kvarn tries to package many useful features without being bloated.
 Optional extensions are available in [the extensions crate](https://github.com/Icelk/kvarn/tree/main/kvarn_extensions).
 
-Here is a incomplete list of Kvarn's features, most of which have guides in their respective pages.
-
-> Some require certain [Cargo "features"](/cargo-features.) to be compiled in,
-> and some require `kvarn_extensions`.
+> When using Kvarn as a library: some require certain [Cargo "features"](/cargo-features.)
+> to be compiled in, and some require `kvarn_extensions`.
 > This will be explicitly noted.
 
 ${toc}
@@ -21,6 +22,8 @@ ${toc}
 
 The Kvarn [ecosystem](/ecosystem/) has extensions for many common website features.
 
+-   [Automatic HTTPS certificates](#automatic-certificates): Kvarn handles your certificates
+    for you—no need to renew or use `certbot` to get certificates.
 -   [Kvarn auth](https://crates.io/crates/kvarn-auth): A fast, simple, and customizable authentication extension.
     It provides a JWT implementation with support for persistent logins and validation servers.
 -   [Kvarn search](#full-text-search-engine): A site search engine. You can try it out on the [front page](/).
@@ -66,6 +69,42 @@ Kvarn also suggest using HSTS. When you're ready, you only need to add one line 
 improving security further.
 
 If you want maximum security, you can of course simply not listen on port `80`, reducing the code you write.
+
+## Automatic certificates
+
+If you're using [Mölla](/moella/) (which is recommended), you can enable HTTPS and
+automatic certificates through [Let's Encrypt](https://letsencrypt.org):
+
+```json
+(
+    // --snip--
+    hosts: [
+        Plain (
+            name: "icelk.dev",
+            // the path to store the certificate chain at
+            cert: "icelk-cert.pem",
+            // the path to store the private key at
+            pk: "icelk-pk.pem"
+            path: "./",
+            // all the magic happens here!
+            auto_cert: true,
+
+            // if you'd like, you can customize it (completely optional)
+            addons: [
+                AutomaticCertificate (
+                    // Get notices from Let's Encrypt
+                    contact: "mailto:main@icelk.dev",
+                    // saved in the ron format, same as this config
+                    // not security critical
+                    account_path: "my-lets-encrypt-account.ron",
+                )
+            ]
+        )
+    ].
+)
+```
+
+> We're coming for you, [Caddy](https://caddyserver.com/)...
 
 # Full documentation coverage
 

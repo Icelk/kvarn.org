@@ -5,13 +5,21 @@
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn with a simple yet extensive config format and zero downtime.">
     $[highlight]
+    <style>
+        main md {
+            /* so the code snippets are clearer */
+            max-width: 106ch;
+            max-width: min(90%, 106ch);
+        }
+    </style>
 </head>
 
 Mölla (often written moella, pronounced /mœla/ (œ as in b**ir**d with a British accent))
 is a binary that reads config file(s) and spinns up a Kvarn web server.
 It supports all the major Kvarn extensions and gives you most options Kvarn supports.
 
-Mölla can serve multiple hosts on a single server, extending to serving multiple sets of hosts on different ports / NICs—all within 1 process.
+Mölla can serve multiple hosts on a single server (with automatic certificates!),
+extending to serving multiple sets of hosts on different ports / NICs—all within 1 process.
 When you run `kvarnctl reload`, Mölla will restart and load any changes made to the config (or run a new version of the binary),
 with 0 milliseconds of downtime.
 
@@ -277,10 +285,17 @@ KvarnConfig (
             // Doesn't need name parameter as that's read from the certificate
 
             // The certificate and private key need to be in the PEM format (which is the most common)
+            // If `auto_cert` is enabled, the cert and pk files don't need to exist.
             // required
+            // path to cert
             cert: "icelk-cert.pem",
             // required
+            // path to pk
             pk: "icelk-pk.pem",
+            // Automatically get and renew the certificate for this host
+            // Assumes the host is serving the domain you specified as your `name`.
+            // default = false
+            auto_cert: true,
             // required
             // the path to read templates, errors, and public files from
             path: "../icelk.dev",
@@ -288,7 +303,7 @@ KvarnConfig (
             // can add multiple lists of extensions
             extensions: ["icelk"],
             // you can however override the name, if you for example use a self-signed cert
-            name_override: Some("icelk.dev"),
+            name: Some("icelk.dev"),
             // all the values are optional
             options: (
                 // don't serve files from the file system
@@ -332,6 +347,14 @@ KvarnConfig (
                     query_max_terms: 10,
                     additional_paths: [],
                     index_wordpress_sitemap: true,
+                ),
+                // Options for automatically getting and renewing the certificate for this host
+                AutomaticCertificate (
+                    // optional, but the format of `mailto:` and then your mail address is required
+                    contact: "mailto:main@icelk.dev"
+                    // optional, does not need to be persistent, but it's recommended
+                    // defaults to `./lets-encrypt-credentials-<your-contact>.ron`
+                    account_path: "/tmp/my-lets-encrypt-account.ron"
                 )
             ],
         ),
@@ -341,9 +364,14 @@ KvarnConfig (
             // required (because we can't be sure we can read the name from the cert if the cert fails)
             name: "icelk.dev",
             // required
+            // If `auto_cert` is enabled, the cert and pk files don't need to exist.
             cert: "icelk.cert",
             // required
             pk: "icelk.pk",
+            // Automatically get and renew the certificate for this host
+            // Assumes the host is serving the domain you specified as your `name`.
+            // default = false
+            auto_cert: true,
             // required
             path: "../icelk.dev",
             // required
@@ -371,6 +399,7 @@ KvarnConfig (
             // all the values are optional
             options: (),
             // see Plain
+            // `AutomaticCertificate` isn't valid for `Http`.
             addons: [],
         )*/
     ],
@@ -449,12 +478,12 @@ The implicit usage of undefined extension sets might be deprecated in the future
     },
     hosts: [
         Plain (
+            name: "kvarn.org",
             cert: "kvarn-cert.pem",
             pk: "kvarn-pk.pem",
+            auto_cert: true,
             path: "./",
             extensions: ["base", "kvarn"],
-            // for development self-signed cert
-            name_override: Some("kvarn.org"),
             options: (
                 disable_client_cache: true,
                 disable_server_cache: true,
@@ -474,7 +503,7 @@ The implicit usage of undefined extension sets might be deprecated in the future
             path: "../kvarn/target/doc",
             extensions: ["base", "kvarn-doc"],
             // for development self-signed cert
-            name_override: Some("doc.kvarn.org"),
+            name: Some("doc.kvarn.org"),
             options: (
                 disable_client_cache: true,
                 disable_server_cache: true,
