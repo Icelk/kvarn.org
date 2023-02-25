@@ -355,6 +355,10 @@ KvarnConfig (
                     // optional, does not need to be persistent, but it's recommended
                     // defaults to `./lets-encrypt-credentials-<your-contact>.ron`
                     account_path: "/tmp/my-lets-encrypt-account.ron"
+                    // force certificate renewal on webserver start
+                    // not recommended to enable this, unless you need to force renewal
+                    // please disable it again then
+                    force_renew_on_start: false,
                 )
             ],
         ),
