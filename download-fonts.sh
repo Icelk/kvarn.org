@@ -14,7 +14,7 @@ rm "$n.zip"
 
 n="cairo"
 
-curl "https://gwfh.mranftl.com/api/fonts/cairo?download=zip&subsets=latin-ext,latin&variants=300,700&formats=woff,woff2" -o "$n.zip"
+curl "https://gwfh.mranftl.com/api/fonts/cairo?download=zip&subsets=latin-ext,latin&variants=300,500,700&formats=woff,woff2" -o "$n.zip"
 
 mkdir "$n"
 unzip "$n.zip" -d "$n"

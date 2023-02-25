@@ -4,6 +4,8 @@
     text-align: justify;
     font-family: "Cairo", sans-serif;
 
+    font-weight: 300;
+
     --bg-darker: #0f0f0f;
     --bg-dark: #111216;
     --bg-light: #181b21;
