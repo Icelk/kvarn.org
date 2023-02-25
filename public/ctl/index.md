@@ -45,7 +45,8 @@ Waits for the Kvarn instance to shut down.
 
 Format: `kvarnctl clear <method> (<host> <file/URI>)`
 
-Clears caches. Methods available are `all`, `files`, `responses`, and two which clear a specific resource, `file` and `response`.
+Clears caches. Methods available are `all`, `files`, `responses` (these optionally take a host to clear),
+and two which clear a specific resource, `file` and `response`.
 
 # Waiting for Kvarn to turn off
 

@@ -26,7 +26,8 @@ if someone requests the webpage during the ~0.4s window, they get a <code>Server
 <p>Waits for the Kvarn instance to shut down.</p>
 <h2 id="clear"><code>clear</code></h2>
 <p>Format: <code>kvarnctl clear &lt;method&gt; (&lt;host&gt; &lt;file/URI&gt;)</code></p>
-<p>Clears caches. Methods available are <code>all</code>, <code>files</code>, <code>responses</code>, and two which clear a specific resource, <code>file</code> and <code>response</code>.</p>
+<p>Clears caches. Methods available are <code>all</code>, <code>files</code>, <code>responses</code> (these optionally take a host to clear),
+and two which clear a specific resource, <code>file</code> and <code>response</code>.</p>
 <h1 id="waiting-for-kvarn-to-turn-off">Waiting for Kvarn to turn off</h1>
 <p>If you want to wait for when Kvarn turns off, use the <code>--wait</code> flag. The advantage of using the flag instead of the command
 is that the command returns when an instance is shut down. The flag handles reloads, so it’ll still wait after a reload, for
