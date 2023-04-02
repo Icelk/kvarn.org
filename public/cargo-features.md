@@ -29,6 +29,7 @@ Which Cargo features are required for certain items are also shown in the [docs]
 
 Please always enable `base` (see below for more details).
 
+-   [`uring`](/uring.): Use the [io-uring](https://en.wikipedia.org/wiki/Io_uring) API for network and file system IO on Linux. ~0-15% better performance, depending on use-case. Do your own benchmarks!
 -   [`https`](/https.): Enables [HTTPS](https://en.wikipedia.org/wiki/HTTPS), the secure HTTP protocol.
     This is strongly recommended if you're doing anything that's not resource constrained and local.
 -   [`http2`](/http2.): Enables [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2).

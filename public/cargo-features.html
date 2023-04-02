@@ -21,6 +21,7 @@ kvarn = { version = &quot;0.5&quot;, default-features = false, features = [&quot
 (e.g. the <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new"><code>Host::new</code></a> function).</p>
 <p>Please always enable <code>base</code> (see below for more details).</p>
 <ul>
+<li><a href="/uring."><code>uring</code></a>: Use the <a href="https://en.wikipedia.org/wiki/Io_uring">io-uring</a> API for network and file system IO on Linux. ~0-15% better performance, depending on use-case. Do your own benchmarks!</li>
 <li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>, the secure HTTP protocol.
 This is strongly recommended if you’re doing anything that’s not resource constrained and local.</li>
 <li><a href="/http2."><code>http2</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a>.
