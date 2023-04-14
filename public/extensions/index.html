@@ -1,7 +1,6 @@
 !> tmpl standard.html markdown.html
 $[head]
     <title>Extensions | Kvarn</title>
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>.
 They are ran in an async context, so you can call async APIs to fetch data.
@@ -90,18 +89,18 @@ Cached</li>
 <p>Extensions can also attach to filetypes.</p>
 <h3 id="internal"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_internal">Internal</a></h3>
 <p>These are declared on the first line in a file, acording to the following syntax:</p>
-<pre><code class="language-md">!&gt; extension arg1 arg2 &amp;&gt; second-extension-name with these four arguments &amp;&gt; and-so-on
+<pre style="background-color:#2d2d2d;"><code class="language-md"><span style="color:#d3d0c8;">!&gt; extension arg1 arg2 &amp;&gt; second-extension-name with these four arguments &amp;&gt; and-so-on
 
 My blog...
-</code></pre>
+</span></code></pre>
 <p>There can be arbitrarily many extensions. The are separated by <a href="https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html"><code>&amp;&gt;</code></a>.</p>
 <p>The first word (space-separated) is the extension name. The others are arguments. Extensions might not look for arguments, or error if any invalid input is given,
 just like applications.</p>
 <p>You can naturally also give just one extension:</p>
-<pre><code class="language-md">!&gt; nonce
+<pre style="background-color:#2d2d2d;"><code class="language-md"><span style="color:#d3d0c8;">!&gt; nonce
 
 My vlog...
-</code></pre>
+</span></code></pre>
 <p>When Kvarn serves the file, this line is removed.</p>
 <p>Extensions are processed left to right.</p>
 <p><a href="#file">File</a> extensions are processed after the internal ones. Keep in mind that some file extensions might read from the file system.
@@ -129,39 +128,38 @@ Not cached</li>
 <p>You can however writing them manually.
 The adding methods of <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html"><code>Extensions</code></a>
 expect a boxed struct which implements the <a href="https://doc.kvarn.org/kvarn/extensions/index.html#traits">appropriate <code>*Call</code> trait</a>.</p>
-<pre><code class="language-rust">use kvarn::prelude::*;
+<pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#cc99cc;">use </span><span style="color:#d3d0c8;">kvarn::prelude::*;
 
-struct Ext {
-    name: &amp;'static str,
-    counter: threading::atomic::AtomicUsize,
+</span><span style="color:#cc99cc;">struct </span><span style="color:#d3d0c8;">Ext {
+    </span><span style="color:#f2777a;">name</span><span style="color:#d3d0c8;">: &amp;</span><span style="color:#cc99cc;">'static str</span><span style="color:#d3d0c8;">,
+    </span><span style="color:#f2777a;">counter</span><span style="color:#d3d0c8;">: threading::atomic::AtomicUsize,
 }
-impl extensions::PrepareCall for Ext {
-    fn call&lt;'a&gt;(
-        &amp;'a self,
-        request: &amp;'a mut FatRequest,
-        host: &amp;'a Host,
-        path: Option&lt;&amp;'a Path&gt;,
-        addr: SocketAddr,
-    ) -&gt; extensions::RetFut&lt;'a, FatResponse&gt; {
+</span><span style="color:#cc99cc;">impl </span><span style="color:#d3d0c8;">extensions::PrepareCall </span><span style="color:#cc99cc;">for </span><span style="color:#d3d0c8;">Ext {
+    </span><span style="color:#cc99cc;">fn </span><span style="color:#6699cc;">call</span><span style="color:#d3d0c8;">&lt;</span><span style="color:#cc99cc;">'a</span><span style="color:#d3d0c8;">&gt;(
+        &amp;</span><span style="color:#cc99cc;">'a </span><span style="color:#f2777a;">self</span><span style="color:#d3d0c8;">,
+        </span><span style="color:#f2777a;">request</span><span style="color:#d3d0c8;">: &amp;</span><span style="color:#cc99cc;">'a mut</span><span style="color:#d3d0c8;"> FatRequest,
+        </span><span style="color:#f2777a;">host</span><span style="color:#d3d0c8;">: &amp;</span><span style="color:#cc99cc;">'a</span><span style="color:#d3d0c8;"> Host,
+        </span><span style="color:#f2777a;">path</span><span style="color:#d3d0c8;">: Option&lt;&amp;</span><span style="color:#cc99cc;">'a</span><span style="color:#d3d0c8;"> Path&gt;,
+        </span><span style="color:#f2777a;">addr</span><span style="color:#d3d0c8;">: SocketAddr,
+    ) -&gt; extensions::RetFut&lt;</span><span style="color:#cc99cc;">'a</span><span style="color:#d3d0c8;">, FatResponse&gt; {
         extensions::ready(FatResponse::no_cache(Response::new(
             Bytes::try_from(format!(
-                &quot;# {}\n You are nr. {}.&quot;,
-                self.name,
-                self.counter.fetch_add(1, threading::Ordering::SeqCst)
+                &quot;</span><span style="color:#99cc99;"># </span><span style="color:#f99157;">{}</span><span style="color:#66cccc;">\n</span><span style="color:#99cc99;"> You are nr. </span><span style="color:#f99157;">{}</span><span style="color:#99cc99;">.</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#f2777a;">self</span><span style="color:#d3d0c8;">.name,
+                </span><span style="color:#f2777a;">self</span><span style="color:#d3d0c8;">.counter.</span><span style="color:#66cccc;">fetch_add</span><span style="color:#d3d0c8;">(</span><span style="color:#f99157;">1</span><span style="color:#d3d0c8;">, threading::Ordering::SeqCst)
             ))
-            .unwrap(),
+            .</span><span style="color:#66cccc;">unwrap</span><span style="color:#d3d0c8;">(),
         )))
     }
 }
 
-let mut extensions = Extensions::new();
-let ext = Ext {
-    name: &quot;My website&quot;,
-    counter: threading::atomic::AtomicUsize::new(1),
+</span><span style="color:#cc99cc;">let mut</span><span style="color:#d3d0c8;"> extensions = Extensions::new();
+</span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> ext = Ext {
+    name: &quot;</span><span style="color:#99cc99;">My website</span><span style="color:#d3d0c8;">&quot;,
+    counter: threading::atomic::AtomicUsize::new(</span><span style="color:#f99157;">1</span><span style="color:#d3d0c8;">),
 };
-extensions.add_prepare_single(&quot;/index.html&quot;, Box::new(ext));
-</code></pre>
-<h1 id="example">Example</h1>
+extensions.</span><span style="color:#66cccc;">add_prepare_single</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;, Box::new(ext));
+</span></code></pre><h1 id="example">Example</h1>
 <p>Let’s build one of each extension to see how they fit together.</p>
 <p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
 <p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>.
@@ -169,180 +167,179 @@ This does a lot under the hood.</p>
 <p>If any variables or names confuse you, copy the code and inspect it with your IDE (i.e. <code>rust-analyzer</code>).
 The macros are designed to cooperate with Rust tools to give the best possible feedback.</p>
 <p><code>Cargo.toml</code>:</p>
-<pre><code class="language-ini">[package]
-name = &quot;unicorn-backend&quot;
-version = &quot;0.1.0&quot;
-edition = &quot;2021&quot;
+<pre style="background-color:#2d2d2d;"><code class="language-javascript"><span style="color:#d3d0c8;">[</span><span style="color:#f2777a;">package</span><span style="color:#d3d0c8;">]
+</span><span style="color:#f2777a;">name </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">unicorn-backend</span><span style="color:#d3d0c8;">&quot;
+</span><span style="color:#f2777a;">version </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">0.1.0</span><span style="color:#d3d0c8;">&quot;
+</span><span style="color:#f2777a;">edition </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">2021</span><span style="color:#d3d0c8;">&quot;
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# </span><span style="color:#f2777a;">See more keys and their definitions at </span><span style="color:#d3d0c8;">https:</span><span style="color:#747369;">//doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
-kvarn = &quot;0.5&quot;
-tokio = { version = &quot;1.24&quot;, features = [&quot;rt-multi-thread&quot;, &quot;macros&quot;] }
-env_logger = &quot;0.10&quot;
-</code></pre>
+</span><span style="color:#d3d0c8;">[</span><span style="color:#f2777a;">dependencies</span><span style="color:#d3d0c8;">]
+</span><span style="color:#f2777a;">kvarn </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">0.5</span><span style="color:#d3d0c8;">&quot;
+</span><span style="color:#f2777a;">tokio </span><span style="color:#d3d0c8;">= { version = &quot;</span><span style="color:#99cc99;">1.24</span><span style="color:#d3d0c8;">&quot;, features = [&quot;</span><span style="color:#99cc99;">rt-multi-thread</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">macros</span><span style="color:#d3d0c8;">&quot;] }
+</span><span style="color:#f2777a;">env_logger </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">0.10</span><span style="color:#d3d0c8;">&quot;
+</span></code></pre>
 <p><code>src/main.rs</code>:</p>
-<pre><code class="language-rust">use kvarn::prelude::*;
+<pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#cc99cc;">use </span><span style="color:#d3d0c8;">kvarn::prelude::*;
 
-#[tokio::main]
-async fn main() {
+#[</span><span style="color:#f2777a;">tokio</span><span style="color:#d3d0c8;">::</span><span style="color:#f2777a;">main</span><span style="color:#d3d0c8;">]
+async </span><span style="color:#cc99cc;">fn </span><span style="color:#6699cc;">main</span><span style="color:#d3d0c8;">() {
     env_logger::init();
 
-    let mut extensions = Extensions::empty();
+    </span><span style="color:#cc99cc;">let mut</span><span style="color:#d3d0c8;"> extensions = Extensions::empty();
 
-    extensions.with_cors(
+    extensions.</span><span style="color:#66cccc;">with_cors</span><span style="color:#d3d0c8;">(
         Cors::empty()
-            .add(
-                &quot;/api*&quot;,
-                CorsAllowList::default().add_origin(&quot;https://icelk.dev&quot;),
+            .</span><span style="color:#66cccc;">add</span><span style="color:#d3d0c8;">(
+                &quot;</span><span style="color:#99cc99;">/api*</span><span style="color:#d3d0c8;">&quot;,
+                CorsAllowList::default().</span><span style="color:#66cccc;">add_origin</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">https://icelk.dev</span><span style="color:#d3d0c8;">&quot;),
             )
-            .arc(),
+            .</span><span style="color:#66cccc;">arc</span><span style="color:#d3d0c8;">(),
     );
 
-    extensions.add_prime(
+    extensions.</span><span style="color:#66cccc;">add_prime</span><span style="color:#d3d0c8;">(
         prime!(request, _host, _addr, {
-            if request.uri().path() == &quot;/&quot; {
-                // This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
+            </span><span style="color:#cc99cc;">if</span><span style="color:#d3d0c8;"> request.</span><span style="color:#66cccc;">uri</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">path</span><span style="color:#d3d0c8;">() == &quot;</span><span style="color:#99cc99;">/</span><span style="color:#d3d0c8;">&quot; {
+                </span><span style="color:#747369;">// This maps the Option&lt;HeaderValue&gt; to Option&lt;Result&lt;&amp;str, _&gt;&gt; which the
                 // `.and_then(Result::ok)` makes Option&lt;&amp;str&gt;, returning `Some` if the value is both `Ok` and `Some`.
                 // Could also be written as
                 // `.get(&quot;user-agent&quot;).and_then(|header| header.to_str().ok())`.
-                if let Some(ua) = request
-                    .headers()
-                    .get(&quot;user-agent&quot;)
-                    .map(HeaderValue::to_str)
-                    .and_then(Result::ok)
+                </span><span style="color:#cc99cc;">if let </span><span style="color:#d3d0c8;">Some(ua) = request
+                    .</span><span style="color:#66cccc;">headers</span><span style="color:#d3d0c8;">()
+                    .</span><span style="color:#66cccc;">get</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">user-agent</span><span style="color:#d3d0c8;">&quot;)
+                    .</span><span style="color:#66cccc;">map</span><span style="color:#d3d0c8;">(HeaderValue::to_str)
+                    .</span><span style="color:#66cccc;">and_then</span><span style="color:#d3d0c8;">(Result::ok)
                 {
-                    if ua.contains(&quot;curl&quot;) {
-                        Some(Uri::from_static(&quot;/ip&quot;))
-                    } else {
-                        Some(Uri::from_static(&quot;/index.html&quot;))
+                    </span><span style="color:#cc99cc;">if</span><span style="color:#d3d0c8;"> ua.</span><span style="color:#66cccc;">contains</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">curl</span><span style="color:#d3d0c8;">&quot;) {
+                        Some(Uri::from_static(&quot;</span><span style="color:#99cc99;">/ip</span><span style="color:#d3d0c8;">&quot;))
+                    } </span><span style="color:#cc99cc;">else </span><span style="color:#d3d0c8;">{
+                        Some(Uri::from_static(&quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;))
                     }
-                } else {
+                } </span><span style="color:#cc99cc;">else </span><span style="color:#d3d0c8;">{
                     None
                 }
-            } else {
+            } </span><span style="color:#cc99cc;">else </span><span style="color:#d3d0c8;">{
                 None
             }
         }),
-        Id::new(16, &quot;Redirect `/`&quot;),
+        Id::new(</span><span style="color:#f99157;">16</span><span style="color:#d3d0c8;">, &quot;</span><span style="color:#99cc99;">Redirect `/`</span><span style="color:#d3d0c8;">&quot;),
     );
 
-    extensions.add_prepare_single(
-        &quot;/ip&quot;,
+    extensions.</span><span style="color:#66cccc;">add_prepare_single</span><span style="color:#d3d0c8;">(
+        &quot;</span><span style="color:#99cc99;">/ip</span><span style="color:#d3d0c8;">&quot;,
         prepare!(_request, _host, _path, addr, {
-            let ip = addr.ip().to_string();
-            let response = Response::new(Bytes::copy_from_slice(ip.as_bytes()));
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> ip = addr.</span><span style="color:#66cccc;">ip</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">to_string</span><span style="color:#d3d0c8;">();
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> response = Response::new(Bytes::copy_from_slice(ip.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">()));
             FatResponse::no_cache(response)
         }),
     );
-    extensions.add_prepare_single(
-        &quot;/index.html&quot;,
+    extensions.</span><span style="color:#66cccc;">add_prepare_single</span><span style="color:#d3d0c8;">(
+        &quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;,
         prepare!(_, _host, _, addr, {
-            // This uses the present extension `simple-head` declared just below this extension.
-            let content = format!(
-                &quot;!&gt; simple-head Your IP address\n\
-                &lt;h2&gt;Your IP address is {}&lt;/h2&gt;&quot;,
-                addr.ip()
+            </span><span style="color:#747369;">// This uses the present extension `simple-head` declared just below this extension.
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> content = format!(
+                &quot;</span><span style="color:#99cc99;">!&gt; simple-head Your IP address</span><span style="color:#66cccc;">\n</span><span style="color:#99cc99;">\
+                &lt;h2&gt;Your IP address is </span><span style="color:#f99157;">{}</span><span style="color:#99cc99;">&lt;/h2&gt;</span><span style="color:#d3d0c8;">&quot;,
+                addr.</span><span style="color:#66cccc;">ip</span><span style="color:#d3d0c8;">()
             );
-            let response = Response::new(Bytes::copy_from_slice(content.as_bytes()));
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> response = Response::new(Bytes::copy_from_slice(content.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">()));
             FatResponse::new(response, comprash::ServerCachePreference::None)
         }),
     );
 
-    extensions.add_present_internal(
-        &quot;simple-head&quot;,
+    extensions.</span><span style="color:#66cccc;">add_present_internal</span><span style="color:#d3d0c8;">(
+        &quot;</span><span style="color:#99cc99;">simple-head</span><span style="color:#d3d0c8;">&quot;,
         present!(present_data, {
-            let content = present_data.response().body();
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> content = present_data.</span><span style="color:#66cccc;">response</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">body</span><span style="color:#d3d0c8;">();
 
-            let start = r#&quot;
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> start = </span><span style="color:#cc99cc;">r</span><span style="color:#d3d0c8;">#</span><span style="color:#99cc99;">&quot;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-    &lt;title&gt;&quot;#;
-            let middle = r#&quot;&lt;/title&gt;
+    &lt;title&gt;</span><span style="color:#d3d0c8;">&quot;#;
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> middle = </span><span style="color:#cc99cc;">r</span><span style="color:#d3d0c8;">#</span><span style="color:#99cc99;">&quot;&lt;/title&gt;
 &lt;/head&gt;
-&lt;body&gt;&quot;#;
-            let end = r#&quot;
+&lt;body&gt;</span><span style="color:#d3d0c8;">&quot;#;
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> end = </span><span style="color:#cc99cc;">r</span><span style="color:#d3d0c8;">#</span><span style="color:#99cc99;">&quot;
 &lt;/body&gt;
 &lt;/html&gt;
-&quot;#;
-            let title = present_data
-                .args()
-                .iter()
-                .fold(String::new(), |mut acc, arg| {
-                    acc.push_str(arg);
-                    acc.push(' ');
+</span><span style="color:#d3d0c8;">&quot;#;
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> title = present_data
+                .</span><span style="color:#66cccc;">args</span><span style="color:#d3d0c8;">()
+                .</span><span style="color:#66cccc;">iter</span><span style="color:#d3d0c8;">()
+                .</span><span style="color:#66cccc;">fold</span><span style="color:#d3d0c8;">(String::new(), |</span><span style="color:#cc99cc;">mut </span><span style="color:#f2777a;">acc</span><span style="color:#d3d0c8;">, </span><span style="color:#f2777a;">arg</span><span style="color:#d3d0c8;">| {
+                    acc.</span><span style="color:#66cccc;">push_str</span><span style="color:#d3d0c8;">(arg);
+                    acc.</span><span style="color:#66cccc;">push</span><span style="color:#d3d0c8;">(' ');
                     acc
                 });
 
-            let bytes = build_bytes!(
-                start.as_bytes(),
-                title.as_bytes(),
-                middle.as_bytes(),
+            </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> bytes = build_bytes!(
+                start.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">(),
+                title.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">(),
+                middle.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">(),
                 content,
-                end.as_bytes()
+                end.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">()
             );
-            *present_data.response_mut().body_mut() = bytes;
+            *present_data.</span><span style="color:#66cccc;">response_mut</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">body_mut</span><span style="color:#d3d0c8;">() = bytes;
         }),
     );
-    extensions.add_package(
+    extensions.</span><span style="color:#66cccc;">add_package</span><span style="color:#d3d0c8;">(
         package!(response, _request, _, {
             response
-                .headers_mut()
-                .insert(&quot;fun-header&quot;, HeaderValue::from_static(&quot;why not?&quot;));
-            response.headers_mut().insert(
-                &quot;content-security-policy&quot;,
-                HeaderValue::from_static(&quot;default-src 'self'; style-src 'unsafe-inline' 'self'&quot;),
+                .</span><span style="color:#66cccc;">headers_mut</span><span style="color:#d3d0c8;">()
+                .</span><span style="color:#66cccc;">insert</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">fun-header</span><span style="color:#d3d0c8;">&quot;, HeaderValue::from_static(&quot;</span><span style="color:#99cc99;">why not?</span><span style="color:#d3d0c8;">&quot;));
+            response.</span><span style="color:#66cccc;">headers_mut</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">insert</span><span style="color:#d3d0c8;">(
+                &quot;</span><span style="color:#99cc99;">content-security-policy</span><span style="color:#d3d0c8;">&quot;,
+                HeaderValue::from_static(&quot;</span><span style="color:#99cc99;">default-src 'self'; style-src 'unsafe-inline' 'self'</span><span style="color:#d3d0c8;">&quot;),
             );
         }),
-        Id::new(-1024, &quot;add headers&quot;),
+        Id::new(-</span><span style="color:#f99157;">1024</span><span style="color:#d3d0c8;">, &quot;</span><span style="color:#99cc99;">add headers</span><span style="color:#d3d0c8;">&quot;),
     );
-    extensions.add_post(
+    extensions.</span><span style="color:#66cccc;">add_post</span><span style="color:#d3d0c8;">(
         post!(_request, host, _response_pipe, identity_body, addr, {
-            if let Ok(mut body) = str::from_utf8(&amp;identity_body) {
-                body = body.get(0..512).unwrap_or(body);
-                println!(&quot;Sent {:?} to {} from {}&quot;, body, addr, host.name);
+            </span><span style="color:#cc99cc;">if let </span><span style="color:#d3d0c8;">Ok(</span><span style="color:#cc99cc;">mut</span><span style="color:#d3d0c8;"> body) = </span><span style="color:#cc99cc;">str</span><span style="color:#d3d0c8;">::from_utf8(&amp;identity_body) {
+                body = body.</span><span style="color:#66cccc;">get</span><span style="color:#d3d0c8;">(</span><span style="color:#f99157;">0</span><span style="color:#d3d0c8;">..</span><span style="color:#f99157;">512</span><span style="color:#d3d0c8;">).</span><span style="color:#66cccc;">unwrap_or</span><span style="color:#d3d0c8;">(body);
+                println!(&quot;</span><span style="color:#99cc99;">Sent </span><span style="color:#f99157;">{:?}</span><span style="color:#99cc99;"> to </span><span style="color:#f99157;">{}</span><span style="color:#99cc99;"> from </span><span style="color:#f99157;">{}</span><span style="color:#d3d0c8;">&quot;, body, addr, host.name);
             }
         }),
-        Id::new(0, &quot;Print sent data&quot;),
+        Id::new(</span><span style="color:#f99157;">0</span><span style="color:#d3d0c8;">, &quot;</span><span style="color:#99cc99;">Print sent data</span><span style="color:#d3d0c8;">&quot;),
     );
 
-    // Let's see which extensions are attached:
-    println!(&quot;Our extensions: {:#?}&quot;, extensions);
+    </span><span style="color:#747369;">// Let's see which extensions are attached:
+    </span><span style="color:#d3d0c8;">println!(&quot;</span><span style="color:#99cc99;">Our extensions: </span><span style="color:#f99157;">{:#?}</span><span style="color:#d3d0c8;">&quot;, extensions);
 
-    println!(&quot;Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.&quot;);
+    println!(&quot;</span><span style="color:#99cc99;">Notice all the CORS extensions. We added the CORS handler, which gives us all the extensions, with the right configuration.</span><span style="color:#d3d0c8;">&quot;);
 
-    let host = Host::unsecure(
-        &quot;localhost&quot;,
-        &quot;non-existent-directory&quot;,
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> host = Host::unsecure(
+        &quot;</span><span style="color:#99cc99;">localhost</span><span style="color:#d3d0c8;">&quot;,
+        &quot;</span><span style="color:#99cc99;">non-existent-directory</span><span style="color:#d3d0c8;">&quot;,
         extensions,
         host::Options::default(),
     );
-    // Consider using `.insert` here instead of `.default`.
+    </span><span style="color:#747369;">// Consider using `.insert` here instead of `.default`.
     // The reason I had to use `.default` is a small issue in v0.4.0, patched in the next version.
-    let data = HostCollection::builder().default(host).build();
-    let port = PortDescriptor::unsecure(8080, data);
-    let handle = RunConfig::new().bind(port).execute().await;
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> data = HostCollection::builder().</span><span style="color:#66cccc;">default</span><span style="color:#d3d0c8;">(host).</span><span style="color:#66cccc;">build</span><span style="color:#d3d0c8;">();
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> port = PortDescriptor::unsecure(</span><span style="color:#f99157;">8080</span><span style="color:#d3d0c8;">, data);
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> handle = RunConfig::new().</span><span style="color:#66cccc;">bind</span><span style="color:#d3d0c8;">(port).</span><span style="color:#66cccc;">execute</span><span style="color:#d3d0c8;">().await;
 
-    println!(&quot;Started server at http://localhost:8080/&quot;);
-    println!(&quot;Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.&quot;);
+    println!(&quot;</span><span style="color:#99cc99;">Started server at http://localhost:8080/</span><span style="color:#d3d0c8;">&quot;);
+    println!(&quot;</span><span style="color:#99cc99;">Try http://127.0.0.1:8080/ for the IPv4 version and http://[::1]:8080/ for IPv6.</span><span style="color:#d3d0c8;">&quot;);
     println!(
-        &quot;Test going to the page in a browser and then run curl on it; you'll get different results.&quot;
+        &quot;</span><span style="color:#99cc99;">Test going to the page in a browser and then run curl on it; you'll get different results.</span><span style="color:#d3d0c8;">&quot;
     );
-    println!(&quot;Shutting down in 10 seconds.&quot;);
+    println!(&quot;</span><span style="color:#99cc99;">Shutting down in 10 seconds.</span><span style="color:#d3d0c8;">&quot;);
 
-    let sendable_server_handle = Arc::clone(&amp;handle);
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> sendable_server_handle = Arc::clone(&amp;handle);
 
-    tokio::spawn(async move {
-        tokio::time::sleep(Duration::from_secs(10)).await;
-        println!(&quot;Starting graceful shutdown&quot;);
-        sendable_server_handle.shutdown();
+    tokio::spawn(async </span><span style="color:#cc99cc;">move </span><span style="color:#d3d0c8;">{
+        tokio::time::sleep(Duration::from_secs(</span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">)).await;
+        println!(&quot;</span><span style="color:#99cc99;">Starting graceful shutdown</span><span style="color:#d3d0c8;">&quot;);
+        sendable_server_handle.</span><span style="color:#66cccc;">shutdown</span><span style="color:#d3d0c8;">();
     });
 
-    handle.wait().await;
+    handle.</span><span style="color:#66cccc;">wait</span><span style="color:#d3d0c8;">().await;
 
-    println!(&quot;Graceful shutdown complete.&quot;);
+    println!(&quot;</span><span style="color:#99cc99;">Graceful shutdown complete.</span><span style="color:#d3d0c8;">&quot;);
 }
-</code></pre>
-</md></main>
+</span></code></pre></md></main>
 $[footer]

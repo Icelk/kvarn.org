@@ -4,7 +4,6 @@
     <title>Mölla</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn with a simple yet extensive config format and zero downtime.">
-    $[highlight]
     <style>
         main md {
             /* so the code snippets are clearer */
@@ -37,9 +36,7 @@ Download the binary for your platform from [this page](https://github.com/Icelk/
 
 Now, create a Mölla config in a file named `host.ron`:
 
-<!-- json highlighting seemed to work fine for ron! -->
-
-```json
+```ron
 // My Moella config
 (
     extensions: {
@@ -69,7 +66,7 @@ because you have to run `sudo` to get access to port 80 on Linux.
 
 Here, all the options of the config are documented.
 
-```json
+```ron
 // optional to specify `KvarnConfig`
 // all paths in the config will always be relative to the config's location
 KvarnConfig (
@@ -473,7 +470,7 @@ That's because it's defined in the "parent" config that imports this.
 The implicit usage of undefined extension sets might be deprecated in the future
 (forcing you to import the relevant config in this file too, instead of relying on the parent config).
 
-```json
+```ron
 (
     extensions: {
         "kvarn": [

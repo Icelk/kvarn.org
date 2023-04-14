@@ -4,7 +4,6 @@
     <title>Chute - Markdown support | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="The Chute tool utilizing Kvarn templates to give comprehensive Markdown support.">
-    $[highlight]
 </head>
 
 # Chute

@@ -4,7 +4,6 @@
     <title>Content security policy | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Details on content security policy (CSP) in Kvarn.">
-    $[highlight]
 </head>
 
 CSP tells the browser where it's OK to load resources from.

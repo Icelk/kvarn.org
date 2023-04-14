@@ -3,7 +3,6 @@ $[head]
     <title>Content security policy | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Details on content security policy (CSP) in Kvarn.">
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>CSP tells the browser where it’s OK to load resources from.</p>
 <p>This can help prevent certain attacks, such as <a href="https://en.wikipedia.org/wiki/Cross-site_scripting">XSS</a>. CSP disables the ability to load malicious scripts and styles.</p>
@@ -15,18 +14,16 @@ See the example below.</p>
 <h1 id="reverse-proxy-csp-getting-overridden">Reverse proxy CSP getting overridden</h1>
 <p>This is intended behaviour to reduce risks of XSS.</p>
 <p>You can disable CSP by adding a empty ruleset:</p>
-<pre><code class="language-rust">extensions.with_csp(Csp::empty().arc());
-</code></pre>
-<h1 id="examples">Examples</h1>
-<pre><code class="language-rust">let mut extensions = Extensions::new();
-extensions.with_csp(
+<pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#d3d0c8;">extensions.</span><span style="color:#66cccc;">with_csp</span><span style="color:#d3d0c8;">(Csp::empty().</span><span style="color:#66cccc;">arc</span><span style="color:#d3d0c8;">());
+</span></code></pre><h1 id="examples">Examples</h1>
+<pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#cc99cc;">let mut</span><span style="color:#d3d0c8;"> extensions = Extensions::new();
+extensions.</span><span style="color:#66cccc;">with_csp</span><span style="color:#d3d0c8;">(
     Csp::default()
-        .add(
-            &quot;*&quot;,
-            CspRule::default().img_src(CspValueSet::default().uri(&quot;https://kvarn.org&quot;)),
+        .</span><span style="color:#66cccc;">add</span><span style="color:#d3d0c8;">(
+            &quot;</span><span style="color:#99cc99;">*</span><span style="color:#d3d0c8;">&quot;,
+            CspRule::default().</span><span style="color:#66cccc;">img_src</span><span style="color:#d3d0c8;">(CspValueSet::default().</span><span style="color:#66cccc;">uri</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">https://kvarn.org</span><span style="color:#d3d0c8;">&quot;)),
         )
-        .arc(),
+        .</span><span style="color:#66cccc;">arc</span><span style="color:#d3d0c8;">(),
 );
-</code></pre>
-</md></main>
+</span></code></pre></md></main>
 $[footer]

@@ -1,7 +1,6 @@
 !> tmpl standard.html markdown.html
 $[head]
     <title>Features of Kvarn</title>
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="features--why-to-use-kvarn">Features &amp; why to use Kvarn</h1>
 <p>All of these are available in <a href="/moella/">Mölla</a>!</p>
@@ -78,33 +77,33 @@ improving security further.</p>
 <h2 id="automatic-certificates">Automatic certificates</h2>
 <p>If you’re using <a href="/moella/">Mölla</a> (which is recommended), you can enable HTTPS and
 automatic certificates through <a href="https://letsencrypt.org">Let’s Encrypt</a>:</p>
-<pre><code class="language-json">(
-    // --snip--
-    hosts: [
+<pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#d3d0c8;">(
+    </span><span style="color:#747369;">// --snip--
+</span><span style="color:#d3d0c8;">    hosts: [
         Plain (
-            name: &quot;icelk.dev&quot;,
-            // the path to store the certificate chain at
-            cert: &quot;icelk-cert.pem&quot;,
-            // the path to store the private key at
-            pk: &quot;icelk-pk.pem&quot;
-            path: &quot;./&quot;,
-            // all the magic happens here!
-            auto_cert: true,
+            name: &quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// the path to store the certificate chain at
+</span><span style="color:#d3d0c8;">            cert: &quot;</span><span style="color:#99cc99;">icelk-cert.pem</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// the path to store the private key at
+</span><span style="color:#d3d0c8;">            pk: &quot;</span><span style="color:#99cc99;">icelk-pk.pem</span><span style="color:#d3d0c8;">&quot;
+            path: &quot;</span><span style="color:#99cc99;">./</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// all the magic happens here!
+</span><span style="color:#d3d0c8;">            auto_cert: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
 
-            // if you'd like, you can customize it (completely optional)
-            addons: [
+            </span><span style="color:#747369;">// if you'd like, you can customize it (completely optional)
+</span><span style="color:#d3d0c8;">            addons: [
                 AutomaticCertificate (
-                    // Get notices from Let's Encrypt
-                    contact: &quot;mailto:main@icelk.dev&quot;,
-                    // saved in the ron format, same as this config
+                    </span><span style="color:#747369;">// Get notices from Let's Encrypt
+</span><span style="color:#d3d0c8;">                    contact: &quot;</span><span style="color:#99cc99;">mailto:main@icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+                    </span><span style="color:#747369;">// saved in the ron format, same as this config
                     // not security critical
-                    account_path: &quot;my-lets-encrypt-account.ron&quot;,
+</span><span style="color:#d3d0c8;">                    account_path: &quot;</span><span style="color:#99cc99;">my-lets-encrypt-account.ron</span><span style="color:#d3d0c8;">&quot;,
                 )
             ]
         )
     ].
 )
-</code></pre>
+</span></code></pre>
 <blockquote>
 <p>We’re coming for you, <a href="https://caddyserver.com/">Caddy</a>…</p>
 </blockquote>

@@ -3,7 +3,6 @@ $[head]
     <title>Compilation features | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Features of Kvarn which can be choosen when compiling">
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Certain features, such as HTTP/2, HTTPS, or compression might not be needed.
 When Kvarn is deployed to an IOT device controlled from within the network, these features aren’t needed.
@@ -12,9 +11,9 @@ Disabling them cuts down on compilation time, memory requirements, and space req
 <p>To view the dependencies used by each feature, see the <a href="https://github.com/Icelk/kvarn/blob/main/Cargo.toml">Cargo.toml file</a>.</p>
 </blockquote>
 <p>These can be enabled in your <code>Cargo.toml</code>:</p>
-<pre><code class="language-ini">[dependencies]
-kvarn = { version = &quot;0.5&quot;, default-features = false, features = [&quot;base&quot;, &quot;https&quot;, &quot;http2&quot;, &quot;all-compression&quot;] }
-</code></pre>
+<pre style="background-color:#2d2d2d;"><code class="language-toml"><span style="color:#6699cc;">[dependencies]
+kvarn</span><span style="color:#d3d0c8;"> = { version = &quot;</span><span style="color:#99cc99;">0.5</span><span style="color:#d3d0c8;">&quot;, default-features = false, features = </span><span style="color:#cc99cc;">[</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">base</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">https</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">http2</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">all-compression</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#cc99cc;">] </span><span style="color:#d3d0c8;">}
+</span></code></pre>
 <p>See the <a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a> on the matter.</p>
 <hr />
 <p>Which Cargo features are required for certain items are also shown in the <a href="https://doc.kvarn.org/">docs</a>

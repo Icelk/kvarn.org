@@ -4,7 +4,6 @@
     <title>Testing | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Method of testing Kvarn applications and the Kvarn library">
-    $[highlight]
 </head>
 
 Testing is integral to smooth deployment. Kvarn is covered by many unit and integration tests.
@@ -20,7 +19,7 @@ Below is an example of a production test. Unit tests are naturally also supporte
 
 `Cargo.toml`:
 
-```ini
+```toml
 # add the following to the bottom (or add to you dev-dependencies if you already have that section)
 [dev-dependencies]
 tokio = { version = "1", features = ["net", "io-util", "macros"] }

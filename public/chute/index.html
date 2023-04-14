@@ -3,7 +3,6 @@ $[head]
     <title>Chute - Markdown support | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="The Chute tool utilizing Kvarn templates to give comprehensive Markdown support.">
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="chute">Chute</h1>
 <p>To easen writing for the web, Kvarn offers a tool called Chute. It consumes Markdown documents and produces HTML documents.</p>
@@ -60,15 +59,14 @@ make Chute escape the last backslash, but only leave one. The zero-width space m
 <blockquote>
 <p>The present extensions are not required for this to work.</p>
 </blockquote>
-<pre><code class="language-html">!&gt; hide &amp;&gt; my-present-extension
+<pre style="background-color:#2d2d2d;"><code class="language-html"><span style="color:#d3d0c8;">!&gt; hide </span><span style="color:#2d2d2d;">&amp;</span><span style="color:#d3d0c8;">&gt; my-present-extension
 
-&lt;head&gt;
-    &lt;title&gt;Fun article&lt;/title&gt;
-&lt;/head&gt;
+&lt;</span><span style="color:#f2777a;">head</span><span style="color:#d3d0c8;">&gt;
+    &lt;</span><span style="color:#f2777a;">title</span><span style="color:#d3d0c8;">&gt;Fun article&lt;/</span><span style="color:#f2777a;">title</span><span style="color:#d3d0c8;">&gt;
+&lt;/</span><span style="color:#f2777a;">head</span><span style="color:#d3d0c8;">&gt;
 
 Text...
-</code></pre>
-<h2 id="issues-with-square-brackets-">Issues with square brackets \$[]</h2>
+</span></code></pre><h2 id="issues-with-square-brackets-">Issues with square brackets \$[]</h2>
 <p>When using square brackets (often found in Rust code and <code>Cargo.toml</code> files), the <a href="/templates.">Kvarn templating engine</a>
 tries to find a template. The text will therefore disappear and issues arise.
 You can escape this using two backslashes in Markdown source: <code>\$[]</code> or one backslash in code segments.</p>

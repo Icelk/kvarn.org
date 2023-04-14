@@ -3,7 +3,6 @@ $[head]
     <title>Redirects | Kvarn</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="How redirects work in Kvarn. Both index redirects and HTTP to HTTPS.">
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="uri-redirect">URI redirect</h1>
 <p>When you visit <code>kvarn.org</code>, the web server doesn’t fetch the directory that is the root of the files.
@@ -22,7 +21,7 @@ It naturally searches for <code>public/index.html</code>. That’s what most web
 There, it responds with the <code>307 Temporary Redirect</code>.</p>
 <p>The <a href="#uri-redirect">extension above</a> has a higher priority and is therefore ran before.
 Notice the <strong>/index.html</strong> below.</p>
-<pre><code class="language-shell">$ curl -i http://icelk.dev
+<pre style="background-color:#2d2d2d;"><code class="language-shell">$ curl -i http://icelk.dev
 HTTP/1.1 307 Temporary Redirect
 location: https://icelk.dev/index.html
 server: Kvarn/0.5.0 (Linux)

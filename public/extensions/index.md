@@ -2,7 +2,6 @@
 
 <head>
     <title>Extensions | Kvarn</title>
-    $[highlight]
 </head>
 
 To extend the core functionality of Kvarn, you'll use _extensions_.
@@ -202,7 +201,7 @@ The macros are designed to cooperate with Rust tools to give the best possible f
 
 `Cargo.toml`:
 
-```ini
+```javascript
 [package]
 name = "unicorn-backend"
 version = "0.1.0"

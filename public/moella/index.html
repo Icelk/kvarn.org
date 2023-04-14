@@ -3,7 +3,6 @@ $[head]
     <title>Mölla</title>
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn with a simple yet extensive config format and zero downtime.">
-    $[highlight]
     <style>
         main md {
             /* so the code snippets are clearer */
@@ -34,36 +33,35 @@ the binary. Right click and press <code>Open</code>. Accept the warning.</li>
 in your shell (<code>cmd.exe</code> in Windows) to get usage information.</li>
 </ul>
 <p>Now, create a Mölla config in a file named <code>host.ron</code>:</p>
-<!-- json highlighting seemed to work fine for ron! -->
-<pre><code class="language-json">// My Moella config
-(
+<pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#747369;">// My Moella config
+</span><span style="color:#d3d0c8;">(
     extensions: {
-        &quot;website&quot;: [ AllDefaults ]
+        &quot;</span><span style="color:#99cc99;">website</span><span style="color:#d3d0c8;">&quot;: [ AllDefaults ]
     },
     hosts: [
         Http (
-            name: &quot;mywebsite.org&quot;,
-            path: &quot;./&quot;,
-            extensions: [&quot;website&quot;],
+            name: &quot;</span><span style="color:#99cc99;">mywebsite.org</span><span style="color:#d3d0c8;">&quot;,
+            path: &quot;</span><span style="color:#99cc99;">./</span><span style="color:#d3d0c8;">&quot;,
+            extensions: [&quot;</span><span style="color:#99cc99;">website</span><span style="color:#d3d0c8;">&quot;],
             options: (
-                disable_client_cache: true,
-                disable_server_cache: true,
+                disable_client_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                disable_server_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
             )
         )
     ],
-    ports: Standard(Host(&quot;mywebsite.org&quot;)),
+    ports: Standard(Host(&quot;</span><span style="color:#99cc99;">mywebsite.org</span><span style="color:#d3d0c8;">&quot;)),
 )
-</code></pre>
+</span></code></pre>
 <p>Next, run the web server using <code>./&lt;downloaded binary&gt; --config host.ron --high-ports</code> and go to <code>http://localhost:8080</code>.
 The contents of <code>./public/index.html</code> will be loaded in your browser (refresh page to update content).
 The <code>--high-ports</code> tells Mölla to use port 8080 instead of 80 (the default for the unencrypted web),
 because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
 <h1 id="config-schema">Config schema</h1>
 <p>Here, all the options of the config are documented.</p>
-<pre><code class="language-json">// optional to specify `KvarnConfig`
+<pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#747369;">// optional to specify `KvarnConfig`
 // all paths in the config will always be relative to the config's location
-KvarnConfig (
-    // Import other config files to add to the set of `extensions` and `hosts`.
+</span><span style="color:#d3d0c8;">KvarnConfig (
+    </span><span style="color:#747369;">// Import other config files to add to the set of `extensions` and `hosts`.
     //
     // Note that only one config file can define `ports` (see at the end of the config)
     //
@@ -75,356 +73,356 @@ KvarnConfig (
     //
     // When you define a host collection twice with the same name,
     // imported hosts are appended to the host collection
-    import: [&quot;other-host.ron&quot;],
+</span><span style="color:#d3d0c8;">    import: [&quot;</span><span style="color:#99cc99;">other-host.ron</span><span style="color:#d3d0c8;">&quot;],
 
-    // all options are optional unless labled `required`
+    </span><span style="color:#747369;">// all options are optional unless labled `required`
     // Please note that globbing (usage of &quot;*&quot;) generally only works as the first or last character
-    extensions: {
-        // define sets of extensions, and then add one or more sets of extensions to hosts
+</span><span style="color:#d3d0c8;">    extensions: {
+        </span><span style="color:#747369;">// define sets of extensions, and then add one or more sets of extensions to hosts
         // several of the same extension can be used (if they don't override the previous)
-        &quot;icelk&quot;: [
-            // don't add the default extensions: https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.new
-            NoDefaults,
+        </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">icelk</span><span style="color:#d3d0c8;">&quot;: [
+            </span><span style="color:#747369;">// don't add the default extensions: https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.new
+</span><span style="color:#d3d0c8;">            NoDefaults,
 
-            // the following are excluded when using `NoDefaults`, but present by default
+            </span><span style="color:#747369;">// the following are excluded when using `NoDefaults`, but present by default
             // Redirect `/kvarn/` to `/kvarn/index.html`, very important
-            RedirectIndexHtml,
+</span><span style="color:#d3d0c8;">            RedirectIndexHtml,
             Referrer(None),
             CorsSafe,
             CspSafe,
-            // https://kvarn.org/nonce.html
-            Nonce,
-            // If HTTPS is available, redirect all users to it
-            RedirectHttpToHttps,
+            </span><span style="color:#747369;">// https://kvarn.org/nonce.html
+</span><span style="color:#d3d0c8;">            Nonce,
+            </span><span style="color:#747369;">// If HTTPS is available, redirect all users to it
+</span><span style="color:#d3d0c8;">            RedirectHttpToHttps,
 
-            // Add all quality of life extensions: https://doc.kvarn.org/kvarn_extensions/fn.mount_all.html
+            </span><span style="color:#747369;">// Add all quality of life extensions: https://doc.kvarn.org/kvarn_extensions/fn.mount_all.html
             //
             // adds the present internal extensions
             // [ &quot;download&quot;, &quot;cache&quot;, &quot;hide&quot;, &quot;private&quot; (same as hide),
             //  &quot;allow-ips&quot;, &quot;tmpl&quot; (templates), and &quot;push&quot; (HTTP/2 push) ]
-            AllDefaults,
-            // Adds template support: https://kvarn.org/templates.html
-            Templates,
-            // Adds HTTP/2 push: https://kvarn.org/push.html
-            Http2Push (
-                // interval before we push again
-                push_interval: 120,
-                // every nth request to check if we should push again
-                check_every_request: 8,
+</span><span style="color:#d3d0c8;">            AllDefaults,
+            </span><span style="color:#747369;">// Adds template support: https://kvarn.org/templates.html
+</span><span style="color:#d3d0c8;">            Templates,
+            </span><span style="color:#747369;">// Adds HTTP/2 push: https://kvarn.org/push.html
+</span><span style="color:#d3d0c8;">            Http2Push (
+                </span><span style="color:#747369;">// interval before we push again
+</span><span style="color:#d3d0c8;">                push_interval: </span><span style="color:#f99157;">120</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// every nth request to check if we should push again
+</span><span style="color:#d3d0c8;">                check_every_request: </span><span style="color:#f99157;">8</span><span style="color:#d3d0c8;">,
             ),
 
-            // Only runs if predicate is true
-            If (
-                // required
+            </span><span style="color:#747369;">// Only runs if predicate is true
+</span><span style="color:#d3d0c8;">            If (
+                </span><span style="color:#747369;">// required
                 // predicate can also be Not(a), And ([a,b,c,..]), and Or ([a,b,c,..])
-                predicate: Exists(&quot;../php/cgi-bin&quot;),
-                // required
+</span><span style="color:#d3d0c8;">                predicate: Exists(&quot;</span><span style="color:#99cc99;">../php/cgi-bin</span><span style="color:#d3d0c8;">&quot;),
+                </span><span style="color:#747369;">// required
                 // can be any other extension
                 // this is an example of PHP support: https://kvarn.org/php.html
-                extension: Php (
-                    // required
+</span><span style="color:#d3d0c8;">                extension: Php (
+                    </span><span style="color:#747369;">// required
                     // tcp:// and udp:// are also available
-                    connection: &quot;unix:///var/run/php-fpm.sock&quot;,
-                    // required
+</span><span style="color:#d3d0c8;">                    connection: &quot;</span><span style="color:#99cc99;">unix:///var/run/php-fpm.sock</span><span style="color:#d3d0c8;">&quot;,
+                    </span><span style="color:#747369;">// required
                     // where on the website to capture all requests
-                    capture_route: &quot;/cgi-bin/&quot;,
-                    // required
+</span><span style="color:#d3d0c8;">                    capture_route: &quot;</span><span style="color:#99cc99;">/cgi-bin/</span><span style="color:#d3d0c8;">&quot;,
+                    </span><span style="color:#747369;">// required
                     // kvarn shutdown down if this doesn't exist
-                    working_directory: &quot;../php/cgi-bin&quot;,
+</span><span style="color:#d3d0c8;">                    working_directory: &quot;</span><span style="color:#99cc99;">../php/cgi-bin</span><span style="color:#d3d0c8;">&quot;,
                 )
             ),
-            // The first is a filter:
+            </span><span style="color:#747369;">// The first is a filter:
             // filters can have the same logical operators as predicates (see PHP above),
             // but support `Exact`, `StartsWith`, `EndsWith`, and `Contains` in regard to the
             // request path, instead of file system queries.
             //
             // So this extensions redirects the user agent to kvarn.org
             // on all pages under the directory `public/kvarn`
-            Redirect (StartsWith(&quot;/kvarn/&quot;, &quot;https://kvarn.org&quot;)),
-            // tell the web browser to cache:
+</span><span style="color:#d3d0c8;">            Redirect (StartsWith(&quot;</span><span style="color:#99cc99;">/kvarn/</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">https://kvarn.org</span><span style="color:#d3d0c8;">&quot;)),
+            </span><span style="color:#747369;">// tell the web browser to cache:
             // `Changing` = 2 minutes, `Full` = 2 years, `None` = no caching, `MaxAge(seconds)`, `Ignore` = don't change the HTTP header
-            ClientCache ({
-                &quot;.png&quot;: Changing,
-                &quot;.avif&quot;: Full,
-                &quot;.jpg&quot;: Full,
-                &quot;.ico&quot;: Full,
-                &quot;.woff2&quot;: Full,
-                &quot;/highlight.js/&quot;: Full,
+</span><span style="color:#d3d0c8;">            ClientCache ({
+                &quot;</span><span style="color:#99cc99;">.png</span><span style="color:#d3d0c8;">&quot;: Changing,
+                &quot;</span><span style="color:#99cc99;">.avif</span><span style="color:#d3d0c8;">&quot;: Full,
+                &quot;</span><span style="color:#99cc99;">.jpg</span><span style="color:#d3d0c8;">&quot;: Full,
+                &quot;</span><span style="color:#99cc99;">.ico</span><span style="color:#d3d0c8;">&quot;: Full,
+                &quot;</span><span style="color:#99cc99;">.woff2</span><span style="color:#d3d0c8;">&quot;: Full,
+                &quot;</span><span style="color:#99cc99;">/highlight.js/</span><span style="color:#d3d0c8;">&quot;: Full,
             }),
-            // https://kvarn.org/csp.html
+            </span><span style="color:#747369;">// https://kvarn.org/csp.html
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-            Csp ({
-                // Bases `CspRule` on the defaults (allow requests to self and inline style tags)
-                &quot;*&quot;: FromDefault ({ img_src: [ Uri (&quot;https://kvarn.org&quot;) ] }),
-                // Bases `CspRule` on the rule found at `/`
-                &quot;/index.html&quot;: Inherit (&quot;/&quot;, { script_src: [ UnsafeInline ] }),
-                // the following two are equivalent (except for the route they match, of course)
+</span><span style="color:#d3d0c8;">            Csp ({
+                </span><span style="color:#747369;">// Bases `CspRule` on the defaults (allow requests to self and inline style tags)
+                </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">*</span><span style="color:#d3d0c8;">&quot;: FromDefault ({ img_src: [ Uri (&quot;</span><span style="color:#99cc99;">https://kvarn.org</span><span style="color:#d3d0c8;">&quot;) ] }),
+                </span><span style="color:#747369;">// Bases `CspRule` on the rule found at `/`
+                </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;: Inherit (&quot;</span><span style="color:#99cc99;">/</span><span style="color:#d3d0c8;">&quot;, { script_src: [ UnsafeInline ] }),
+                </span><span style="color:#747369;">// the following two are equivalent (except for the route they match, of course)
                 // Empty tells Kvarn to not touch CSP
-                &quot;/api/*&quot;: FromEmpty ({}),
-                &quot;/ip&quot;: Empty,
-                &quot;/ulogger/*&quot;: FromDefault ({
+                </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">/api/*</span><span style="color:#d3d0c8;">&quot;: FromEmpty ({}),
+                &quot;</span><span style="color:#99cc99;">/ip</span><span style="color:#d3d0c8;">&quot;: Empty,
+                &quot;</span><span style="color:#99cc99;">/ulogger/*</span><span style="color:#d3d0c8;">&quot;: FromDefault ({
                     default_src: [
-                        Uri (&quot;https://maps.googleapis.com&quot;),
-                        Uri (&quot;https://maps.gstatic.com&quot;)
+                        Uri (&quot;</span><span style="color:#99cc99;">https://maps.googleapis.com</span><span style="color:#d3d0c8;">&quot;),
+                        Uri (&quot;</span><span style="color:#99cc99;">https://maps.gstatic.com</span><span style="color:#d3d0c8;">&quot;)
                     ],
                     img_src: [
-                        Uri(&quot;https://*.openstreetmap.org&quot;),
-                        Uri(&quot;https://maps.googleapis.com&quot;),
-                        Uri(&quot;https://maps.gstatic.com&quot;),
-                        Scheme(&quot;data:&quot;),
+                        Uri(&quot;</span><span style="color:#99cc99;">https://*.openstreetmap.org</span><span style="color:#d3d0c8;">&quot;),
+                        Uri(&quot;</span><span style="color:#99cc99;">https://maps.googleapis.com</span><span style="color:#d3d0c8;">&quot;),
+                        Uri(&quot;</span><span style="color:#99cc99;">https://maps.gstatic.com</span><span style="color:#d3d0c8;">&quot;),
+                        Scheme(&quot;</span><span style="color:#99cc99;">data:</span><span style="color:#d3d0c8;">&quot;),
                     ],
                 }),
-                &quot;/admin&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
-                &quot;/quizlet-learn/login.html&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
-                &quot;/articles/*&quot;: FromDefault ({
+                &quot;</span><span style="color:#99cc99;">/admin</span><span style="color:#d3d0c8;">&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
+                &quot;</span><span style="color:#99cc99;">/quizlet-learn/login.html</span><span style="color:#d3d0c8;">&quot;: FromDefault ({ default_src: [ UnsafeInline ] }),
+                &quot;</span><span style="color:#99cc99;">/articles/*</span><span style="color:#d3d0c8;">&quot;: FromDefault ({
                     style_src: [
                         UnsafeInline,
-                        Uri(&quot;https://fonts.googleapis.com&quot;),
-                        Uri(&quot;https://fonts.googleapis.com&quot;),
+                        Uri(&quot;</span><span style="color:#99cc99;">https://fonts.googleapis.com</span><span style="color:#d3d0c8;">&quot;),
+                        Uri(&quot;</span><span style="color:#99cc99;">https://fonts.googleapis.com</span><span style="color:#d3d0c8;">&quot;),
                     ],
-                    default_src: [ Uri(&quot;https://fonts.gstatic.com&quot;) ],
+                    default_src: [ Uri(&quot;</span><span style="color:#99cc99;">https://fonts.gstatic.com</span><span style="color:#d3d0c8;">&quot;) ],
                 }),
             }),
-            // https://kvarn.org/cors.html
+            </span><span style="color:#747369;">// https://kvarn.org/cors.html
             // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-            Cors ({
-                // cache is optional and in seconds (client side)
+</span><span style="color:#d3d0c8;">            Cors ({
+                </span><span style="color:#747369;">// cache is optional and in seconds (client side)
                 // origins is required to not be empty
                 // methods is optional
                 //
                 // If &quot;*&quot; is present in `origins`, all origins are allowed
                 // If `All` is present in `methods`, all methods are allowed
-                &quot;/logo.svg&quot;: ( cache: 1209600, origins: [&quot;https://github.com&quot;, &quot;https://doc.kvarn.org&quot;] ),
-                &quot;/favicon.svg&quot;: ( cache: 1209600, origins: [&quot;https://doc.kvarn.org&quot;] ),
-                &quot;/images/*&quot;: ( origins: [&quot;https://icelk.dev&quot;], methods: [POST] )
+                </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">/logo.svg</span><span style="color:#d3d0c8;">&quot;: ( cache: </span><span style="color:#f99157;">1209600</span><span style="color:#d3d0c8;">, origins: [&quot;</span><span style="color:#99cc99;">https://github.com</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">https://doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;] ),
+                &quot;</span><span style="color:#99cc99;">/favicon.svg</span><span style="color:#d3d0c8;">&quot;: ( cache: </span><span style="color:#f99157;">1209600</span><span style="color:#d3d0c8;">, origins: [&quot;</span><span style="color:#99cc99;">https://doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;] ),
+                &quot;</span><span style="color:#99cc99;">/images/*</span><span style="color:#d3d0c8;">&quot;: ( origins: [&quot;</span><span style="color:#99cc99;">https://icelk.dev</span><span style="color:#d3d0c8;">&quot;], methods: [</span><span style="color:#f99157;">POST</span><span style="color:#d3d0c8;">] )
             }),
 
-            // https://kvarn.org/reverse-proxy.html
-            ReverseProxy (
-                // required
+            </span><span style="color:#747369;">// https://kvarn.org/reverse-proxy.html
+</span><span style="color:#d3d0c8;">            ReverseProxy (
+                </span><span style="color:#747369;">// required
                 // The part of the website to capture
-                route: &quot;/private-ical/&quot;,
-                // required
+</span><span style="color:#d3d0c8;">                route: &quot;</span><span style="color:#99cc99;">/private-ical/</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// required
                 // connection to backend server. Assumes HTTP/1.1 without TLS
-                connection: &quot;tcp://localhost:5232&quot;,
-                // in seconds, decimals are allowed
-                timeout: 10,
+</span><span style="color:#d3d0c8;">                connection: &quot;</span><span style="color:#99cc99;">tcp://localhost:5232</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// in seconds, decimals are allowed
+</span><span style="color:#d3d0c8;">                timeout: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
                 options: [
-                    // adds header before sending to backend server
-                    AddHeader(&quot;x-script-name&quot;, &quot;/private-ical&quot;),
-                    // The actual pattern to strip by is determined by the host's `folder_default`
-                    StripIndexHtml (
-                        // optional override
-                        index_html_name: &quot;index.html&quot;
+                    </span><span style="color:#747369;">// adds header before sending to backend server
+</span><span style="color:#d3d0c8;">                    AddHeader(&quot;</span><span style="color:#99cc99;">x-script-name</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">/private-ical</span><span style="color:#d3d0c8;">&quot;),
+                    </span><span style="color:#747369;">// The actual pattern to strip by is determined by the host's `folder_default`
+</span><span style="color:#d3d0c8;">                    StripIndexHtml (
+                        </span><span style="color:#747369;">// optional override
+</span><span style="color:#d3d0c8;">                        index_html_name: &quot;</span><span style="color:#99cc99;">index.html</span><span style="color:#d3d0c8;">&quot;
                     ),
-                    // Forward the real IP as `x-real-ip`
+                    </span><span style="color:#747369;">// Forward the real IP as `x-real-ip`
                     // Because the backend server just sees the IP of the Kvarn server, this can be used to get the real IP of the user agent
-                    ForwardIp,
-                    // Disable URL rewrite (so the request URL isn't modified)
+</span><span style="color:#d3d0c8;">                    ForwardIp,
+                    </span><span style="color:#747369;">// Disable URL rewrite (so the request URL isn't modified)
                     // Advanced, not recommended
-                    DisableUrlRewrite,
+</span><span style="color:#d3d0c8;">                    DisableUrlRewrite,
                 ]
             ),
-            // https://kvarn.org/security/#authentication
+            </span><span style="color:#747369;">// https://kvarn.org/security/#authentication
             // Explanation of options: https://doc.icelk.dev/kvarn-auth/kvarn_auth/struct.Builder.html
-            Auth (
-                // required
-                credentials: SpaceSepparatedAccoutPerLine(&quot;quizlet-learn.passwd&quot;),
-                // required
+</span><span style="color:#d3d0c8;">            Auth (
+                </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                credentials: SpaceSepparatedAccoutPerLine(&quot;</span><span style="color:#99cc99;">quizlet-learn.passwd</span><span style="color:#d3d0c8;">&quot;),
+                </span><span style="color:#747369;">// required
                 // `TODO`: allow user to specify a public (validation) key instead of the private (secret) key.
-                secret: &quot;quizlet-learn.secret&quot;,
-                // required
-                auth_api_route: &quot;/quizlet-learn/auth&quot;,
-                // required (is usually a page telling the user they're unauthorized or the login page)
-                unauthorized_route: &quot;/quizlet-learn/login.&quot;,
-                // required
+</span><span style="color:#d3d0c8;">                secret: &quot;</span><span style="color:#99cc99;">quizlet-learn.secret</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                auth_api_route: &quot;</span><span style="color:#99cc99;">/quizlet-learn/auth</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// required (is usually a page telling the user they're unauthorized or the login page)
+</span><span style="color:#d3d0c8;">                unauthorized_route: &quot;</span><span style="color:#99cc99;">/quizlet-learn/login.</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// required
                 // Can only be StartsWith or AcceptAll
                 // where the authentication is enforced
-                filter: StartsWith(&quot;/quizlet-learn/&quot;),
-                // time between authentication token refreshes.
+</span><span style="color:#d3d0c8;">                filter: StartsWith(&quot;</span><span style="color:#99cc99;">/quizlet-learn/</span><span style="color:#d3d0c8;">&quot;),
+                </span><span style="color:#747369;">// time between authentication token refreshes.
                 // higher intervals decreases auth server load, but if someone steals a user's
                 // JWT, they have full, irrevocable access for the duration of this interval
-                jwt_refresh_interval: 3600,
-                // see https://docs.rs/kvarn-auth/0.1.0/kvarn_auth/struct.Builder.html
-                lax_samsite: false,
-                // Allows reading the auth cookies from JavaScript
-                relaxed_httponly: false,
-                force_relog_on_ip_change: false,
-                jwt_cookie_name: &quot;auth-jwt&quot;,
-                credentials_cookie_name: &quot;auth-credentials&quot;,
-                // use `x-real-ip` header instead of connection address for IP check
-                behind_reverse_proxy: true,
+</span><span style="color:#d3d0c8;">                jwt_refresh_interval: </span><span style="color:#f99157;">3600</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// see https://docs.rs/kvarn-auth/0.1.0/kvarn_auth/struct.Builder.html
+</span><span style="color:#d3d0c8;">                lax_samsite: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// Allows reading the auth cookies from JavaScript
+</span><span style="color:#d3d0c8;">                relaxed_httponly: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                force_relog_on_ip_change: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                jwt_cookie_name: &quot;</span><span style="color:#99cc99;">auth-jwt</span><span style="color:#d3d0c8;">&quot;,
+                credentials_cookie_name: &quot;</span><span style="color:#99cc99;">auth-credentials</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// use `x-real-ip` header instead of connection address for IP check
+</span><span style="color:#d3d0c8;">                behind_reverse_proxy: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
             ),
 
-            // counts the views of all HTML pages
-            ViewCounter (
-                // required
-                filter: StartsWith(&quot;/&quot;),
-                // required
-                log_path: &quot;../icelk-views&quot;,
-                // default is to write to disk every hour
-                commit_interval: 3600,
-                accept_same_ip_interval: 3600,
+            </span><span style="color:#747369;">// counts the views of all HTML pages
+</span><span style="color:#d3d0c8;">            ViewCounter (
+                </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                filter: StartsWith(&quot;</span><span style="color:#99cc99;">/</span><span style="color:#d3d0c8;">&quot;),
+                </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                log_path: &quot;</span><span style="color:#99cc99;">../icelk-views</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// default is to write to disk every hour
+</span><span style="color:#d3d0c8;">                commit_interval: </span><span style="color:#f99157;">3600</span><span style="color:#d3d0c8;">,
+                accept_same_ip_interval: </span><span style="color:#f99157;">3600</span><span style="color:#d3d0c8;">,
             )
         ],
     },
     hosts: [
-        // Multiple hosts with the same name isn't supported for obvious reasons.
+        </span><span style="color:#747369;">// Multiple hosts with the same name isn't supported for obvious reasons.
         // Here, the same host is shown using all methods of defining a host
-        Plain (
-            // Doesn't need name parameter as that's read from the certificate
+</span><span style="color:#d3d0c8;">        Plain (
+            </span><span style="color:#747369;">// Doesn't need name parameter as that's read from the certificate
 
             // The certificate and private key need to be in the PEM format (which is the most common)
             // If `auto_cert` is enabled, the cert and pk files don't need to exist.
             // required
             // path to cert
-            cert: &quot;icelk-cert.pem&quot;,
-            // required
+</span><span style="color:#d3d0c8;">            cert: &quot;</span><span style="color:#99cc99;">icelk-cert.pem</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
             // path to pk
-            pk: &quot;icelk-pk.pem&quot;,
-            // Automatically get and renew the certificate for this host
+</span><span style="color:#d3d0c8;">            pk: &quot;</span><span style="color:#99cc99;">icelk-pk.pem</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// Automatically get and renew the certificate for this host
             // Assumes the host is serving the domain you specified as your `name`.
             // default = false
-            auto_cert: true,
-            // required
+</span><span style="color:#d3d0c8;">            auto_cert: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+            </span><span style="color:#747369;">// required
             // the path to read templates, errors, and public files from
-            path: &quot;../icelk.dev&quot;,
-            // required
+</span><span style="color:#d3d0c8;">            path: &quot;</span><span style="color:#99cc99;">../icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
             // can add multiple lists of extensions
-            extensions: [&quot;icelk&quot;],
-            // you can however override the name, if you for example use a self-signed cert
-            name: Some(&quot;icelk.dev&quot;),
-            // all the values are optional
-            options: (
-                // don't serve files from the file system
-                disable_fs: false,
-                no_http_to_https_redirect: true,
-                disable_client_cache: false,
-                disable_fs_cache: false,
-                disable_response_cache: false,
-                disable_server_cache: false,
-                // compresson level
-                brotli_level: 7,
-                // compresson level
-                gzip_level: 7,
-                // Tell browsers to only use HTTPS when connecting to us.
+</span><span style="color:#d3d0c8;">            extensions: [&quot;</span><span style="color:#99cc99;">icelk</span><span style="color:#d3d0c8;">&quot;],
+            </span><span style="color:#747369;">// you can however override the name, if you for example use a self-signed cert
+</span><span style="color:#d3d0c8;">            name: Some(&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;),
+            </span><span style="color:#747369;">// all the values are optional
+</span><span style="color:#d3d0c8;">            options: (
+                </span><span style="color:#747369;">// don't serve files from the file system
+</span><span style="color:#d3d0c8;">                disable_fs: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                no_http_to_https_redirect: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                disable_client_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                disable_fs_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                disable_response_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                disable_server_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// compresson level
+</span><span style="color:#d3d0c8;">                brotli_level: </span><span style="color:#f99157;">7</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// compresson level
+</span><span style="color:#d3d0c8;">                gzip_level: </span><span style="color:#f99157;">7</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// Tell browsers to only use HTTPS when connecting to us.
                 // Use with care, since setting this will disallow browsers
                 // from connecting to your website via HTTP for the next two years!
                 // off by default
-                hsts: true,
-                // you might want to change the following if you use PHP on your entire website
+</span><span style="color:#d3d0c8;">                hsts: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// you might want to change the following if you use PHP on your entire website
                 // redirect `/kvarn/` to `/kvarn/index.html` (this is the default)
-                folder_default: &quot;index.html&quot;,
-                // redirect `/icelk.` to `/icelk.html` (this is the default)
-                extension_default: &quot;html&quot;,
-                // The directory to serve files from.
+</span><span style="color:#d3d0c8;">                folder_default: &quot;</span><span style="color:#99cc99;">index.html</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// redirect `/icelk.` to `/icelk.html` (this is the default)
+</span><span style="color:#d3d0c8;">                extension_default: &quot;</span><span style="color:#99cc99;">html</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// The directory to serve files from.
                 // If you set this to `.`, make sure no certificates are exposed at `path`!
-                public_data_dir: &quot;public&quot;,
-                // limit the number of requests from an IP
-                limiter: Limit ({
-                    // all of these are required
-                    max_requests_per_interval: 10,
-                    interval: 10.3,
-                    check_one_in_n_requests: 10,
+</span><span style="color:#d3d0c8;">                public_data_dir: &quot;</span><span style="color:#99cc99;">public</span><span style="color:#d3d0c8;">&quot;,
+                </span><span style="color:#747369;">// limit the number of requests from an IP
+</span><span style="color:#d3d0c8;">                limiter: Limit ({
+                    </span><span style="color:#747369;">// all of these are required
+</span><span style="color:#d3d0c8;">                    max_requests_per_interval: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
+                    interval: </span><span style="color:#f99157;">10.3</span><span style="color:#d3d0c8;">,
+                    check_one_in_n_requests: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
                 }),
-                // Disable limiter
-                limiter: AllowAll,
+                </span><span style="color:#747369;">// Disable limiter
+</span><span style="color:#d3d0c8;">                limiter: AllowAll,
             ),
             addons: [
-                // see https://docs.rs/kvarn-search/latest/kvarn_search/struct.Options.html
-                SearchEngine (
-                    // required
-                    api_route: &quot;/search&quot;,
-                    // required
-                    kind: Lossless,
-                    // example value
-                    ignore_paths: [&quot;/private&quot;],
-                    force_refresh: true,
-                    word_count_limit: 2_500,
-                    response_hits_limit: 10,
-                    query_max_length: 100,
-                    query_max_terms: 10,
+                </span><span style="color:#747369;">// see https://docs.rs/kvarn-search/latest/kvarn_search/struct.Options.html
+</span><span style="color:#d3d0c8;">                SearchEngine (
+                    </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                    api_route: &quot;</span><span style="color:#99cc99;">/search</span><span style="color:#d3d0c8;">&quot;,
+                    </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">                    kind: Lossless,
+                    </span><span style="color:#747369;">// example value
+</span><span style="color:#d3d0c8;">                    ignore_paths: [&quot;</span><span style="color:#99cc99;">/private</span><span style="color:#d3d0c8;">&quot;],
+                    force_refresh: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                    word_count_limit: </span><span style="color:#f99157;">2_500</span><span style="color:#d3d0c8;">,
+                    response_hits_limit: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
+                    query_max_length: </span><span style="color:#f99157;">100</span><span style="color:#d3d0c8;">,
+                    query_max_terms: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
                     additional_paths: [],
-                    index_wordpress_sitemap: true,
+                    index_wordpress_sitemap: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
                 ),
-                // Options for automatically getting and renewing the certificate for this host
-                AutomaticCertificate (
-                    // optional, but the format of `mailto:` and then your mail address is required
-                    contact: &quot;mailto:main@icelk.dev&quot;
-                    // optional, does not need to be persistent, but it's recommended
+                </span><span style="color:#747369;">// Options for automatically getting and renewing the certificate for this host
+</span><span style="color:#d3d0c8;">                AutomaticCertificate (
+                    </span><span style="color:#747369;">// optional, but the format of `mailto:` and then your mail address is required
+</span><span style="color:#d3d0c8;">                    contact: &quot;</span><span style="color:#99cc99;">mailto:main@icelk.dev</span><span style="color:#d3d0c8;">&quot;
+                    </span><span style="color:#747369;">// optional, does not need to be persistent, but it's recommended
                     // defaults to `./lets-encrypt-credentials-&lt;your-contact&gt;.ron`
-                    account_path: &quot;/tmp/my-lets-encrypt-account.ron&quot;
-                    // force certificate renewal on webserver start
+</span><span style="color:#d3d0c8;">                    account_path: &quot;</span><span style="color:#99cc99;">/tmp/my-lets-encrypt-account.ron</span><span style="color:#d3d0c8;">&quot;
+                    </span><span style="color:#747369;">// force certificate renewal on webserver start
                     // not recommended to enable this, unless you need to force renewal
                     // please disable it again then
-                    force_renew_on_start: false,
+</span><span style="color:#d3d0c8;">                    force_renew_on_start: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
                 )
             ],
         ),
-        // tries to load the certificates, but falls back to only serving unencrypted HTTP
+        </span><span style="color:#747369;">// tries to load the certificates, but falls back to only serving unencrypted HTTP
         // if that fails.
-        TryCertificatesOrUnencrypted (
-            // required (because we can't be sure we can read the name from the cert if the cert fails)
-            name: &quot;icelk.dev&quot;,
-            // required
+</span><span style="color:#d3d0c8;">        TryCertificatesOrUnencrypted (
+            </span><span style="color:#747369;">// required (because we can't be sure we can read the name from the cert if the cert fails)
+</span><span style="color:#d3d0c8;">            name: &quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
             // If `auto_cert` is enabled, the cert and pk files don't need to exist.
-            cert: &quot;icelk.cert&quot;,
-            // required
-            pk: &quot;icelk.pk&quot;,
-            // Automatically get and renew the certificate for this host
+</span><span style="color:#d3d0c8;">            cert: &quot;</span><span style="color:#99cc99;">icelk.cert</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            pk: &quot;</span><span style="color:#99cc99;">icelk.pk</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// Automatically get and renew the certificate for this host
             // Assumes the host is serving the domain you specified as your `name`.
             // default = false
-            auto_cert: true,
-            // required
-            path: &quot;../icelk.dev&quot;,
-            // required
-            extensions: [&quot;icelk&quot;],
-            // all the values are optional
+</span><span style="color:#d3d0c8;">            auto_cert: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            path: &quot;</span><span style="color:#99cc99;">../icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            extensions: [&quot;</span><span style="color:#99cc99;">icelk</span><span style="color:#d3d0c8;">&quot;],
+            </span><span style="color:#747369;">// all the values are optional
             // HostOptions is optional (you can have just parentheses) (just like with KvarnConfig)
             // see Plain
-            options: HostOptions (
-                // these are the alternative names your site will also be recognized by
+</span><span style="color:#d3d0c8;">            options: HostOptions (
+                </span><span style="color:#747369;">// these are the alternative names your site will also be recognized by
                 // Are read from the certificate (therefore, you can't set this for Plain hosts)
-                alternative_names: [&quot;icelk.com&quot;],
-                hsts: true,
+</span><span style="color:#d3d0c8;">                alternative_names: [&quot;</span><span style="color:#99cc99;">icelk.com</span><span style="color:#d3d0c8;">&quot;],
+                hsts: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
             ),
-            // see Plain
-            addons: [],
+            </span><span style="color:#747369;">// see Plain
+</span><span style="color:#d3d0c8;">            addons: [],
         ),
         Http (
-            // required
-            name: &quot;doc.icelk.dev&quot;,
-            // required
-            path: &quot;../icelk.dev/docs&quot;,
-            // required
-            extensions: [],
-            // like Plain, except no_http_to_https_redirect
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            name: &quot;</span><span style="color:#99cc99;">doc.icelk.dev</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            path: &quot;</span><span style="color:#99cc99;">../icelk.dev/docs</span><span style="color:#d3d0c8;">&quot;,
+            </span><span style="color:#747369;">// required
+</span><span style="color:#d3d0c8;">            extensions: [],
+            </span><span style="color:#747369;">// like Plain, except no_http_to_https_redirect
             // all the values are optional
-            options: (),
-            // see Plain
+</span><span style="color:#d3d0c8;">            options: (),
+            </span><span style="color:#747369;">// see Plain
             // `AutomaticCertificate` isn't valid for `Http`.
-            addons: [],
+</span><span style="color:#d3d0c8;">            addons: [],
         )*/
     ],
-    // only required if you want to use `Collection` as a port source.
+    </span><span style="color:#747369;">// only required if you want to use `Collection` as a port source.
     // When you define a host collection twice with the same name,
     // hosts (e.g. those loaded from imports) are appended to the host collection
-    host_collections: {
-        &quot;s&quot;: [&quot;icelk.dev&quot;],
+</span><span style="color:#d3d0c8;">    host_collections: {
+        &quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;: [&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;],
     },
     ports: Map({
-        8080: ( encrypted: false, source: Collection(&quot;s&quot;) ),
-        8443: ( encrypted: true, source: Collection(&quot;s&quot;) ),
+        </span><span style="color:#f99157;">8080</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">, source: Collection(&quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;) ),
+        </span><span style="color:#f99157;">8443</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">, source: Collection(&quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;) ),
     }),
-    // or
+    </span><span style="color:#747369;">// or
     // here, Host() can also be Collection()
     // Standard binds 80 (HTTP (with redirect to HTTPS, if that's enabled)) and 443 (HTTPS)
-    ports: Standard(Host(&quot;icelk.dev&quot;)),
-    // or
-    ports: HttpOnly(Hosts([&quot;icelk.dev&quot;, &quot;kvarn.org&quot;])),
-    // or HttpsOnly
-)
-</code></pre>
+</span><span style="color:#d3d0c8;">    ports: Standard(Host(&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;)),
+    </span><span style="color:#747369;">// or
+</span><span style="color:#d3d0c8;">    ports: HttpOnly(Hosts([&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">kvarn.org</span><span style="color:#d3d0c8;">&quot;])),
+    </span><span style="color:#747369;">// or HttpsOnly
+</span><span style="color:#d3d0c8;">)
+</span></code></pre>
 <p>That’s the whole config!</p>
 <h1 id="command-line-options">Command line options</h1>
 <ul>
@@ -454,61 +452,60 @@ This allows simple multi-host setup with split configs for easier version contro
 That’s because it’s defined in the “parent” config that imports this.
 The implicit usage of undefined extension sets might be deprecated in the future
 (forcing you to import the relevant config in this file too, instead of relying on the parent config).</p>
-<pre><code class="language-json">(
+<pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#d3d0c8;">(
     extensions: {
-        &quot;kvarn&quot;: [
+        &quot;</span><span style="color:#99cc99;">kvarn</span><span style="color:#d3d0c8;">&quot;: [
             Cors({
-                &quot;/logo.svg&quot;: ( cache: 1209600, origins: [&quot;https://github.com&quot;, &quot;https://doc.kvarn.org&quot;] ),
-                &quot;/favicon.svg&quot;: ( cache: 1209600, origins: [&quot;https://doc.kvarn.org&quot;] ),
+                &quot;</span><span style="color:#99cc99;">/logo.svg</span><span style="color:#d3d0c8;">&quot;: ( cache: </span><span style="color:#f99157;">1209600</span><span style="color:#d3d0c8;">, origins: [&quot;</span><span style="color:#99cc99;">https://github.com</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">https://doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;] ),
+                &quot;</span><span style="color:#99cc99;">/favicon.svg</span><span style="color:#d3d0c8;">&quot;: ( cache: </span><span style="color:#f99157;">1209600</span><span style="color:#d3d0c8;">, origins: [&quot;</span><span style="color:#99cc99;">https://doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;] ),
             })
         ],
-        &quot;kvarn-doc&quot;: [
-            Redirect(Exact(&quot;/index.html&quot;), &quot;kvarn/&quot;),
+        &quot;</span><span style="color:#99cc99;">kvarn-doc</span><span style="color:#d3d0c8;">&quot;: [
+            Redirect(Exact(&quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;), &quot;</span><span style="color:#99cc99;">kvarn/</span><span style="color:#d3d0c8;">&quot;),
             Csp({
-                &quot;/*&quot;: FromDefault({ img_src: [ Uri(&quot;https://kvarn.org&quot;) ] }),
+                &quot;</span><span style="color:#99cc99;">/*</span><span style="color:#d3d0c8;">&quot;: FromDefault({ img_src: [ Uri(&quot;</span><span style="color:#99cc99;">https://kvarn.org</span><span style="color:#d3d0c8;">&quot;) ] }),
             }),
         ]
     },
     hosts: [
         Plain (
-            name: &quot;kvarn.org&quot;,
-            cert: &quot;kvarn-cert.pem&quot;,
-            pk: &quot;kvarn-pk.pem&quot;,
-            auto_cert: true,
-            path: &quot;./&quot;,
-            extensions: [&quot;base&quot;, &quot;kvarn&quot;],
+            name: &quot;</span><span style="color:#99cc99;">kvarn.org</span><span style="color:#d3d0c8;">&quot;,
+            cert: &quot;</span><span style="color:#99cc99;">kvarn-cert.pem</span><span style="color:#d3d0c8;">&quot;,
+            pk: &quot;</span><span style="color:#99cc99;">kvarn-pk.pem</span><span style="color:#d3d0c8;">&quot;,
+            auto_cert: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+            path: &quot;</span><span style="color:#99cc99;">./</span><span style="color:#d3d0c8;">&quot;,
+            extensions: [&quot;</span><span style="color:#99cc99;">base</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">kvarn</span><span style="color:#d3d0c8;">&quot;],
             options: (
-                disable_client_cache: true,
-                disable_server_cache: true,
-                hsts: true,
+                disable_client_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                disable_server_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                hsts: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
             ),
             addons: [
                 SearchEngine (
-                    api_route: &quot;/search&quot;,
+                    api_route: &quot;</span><span style="color:#99cc99;">/search</span><span style="color:#d3d0c8;">&quot;,
                     kind: Lossless,
-                    ignore_paths: [&quot;/rsync-ignore&quot;],
+                    ignore_paths: [&quot;</span><span style="color:#99cc99;">/rsync-ignore</span><span style="color:#d3d0c8;">&quot;],
                 )
             ],
         ),
         Plain (
-            cert: &quot;doc.kvarn-cert.pem&quot;,
-            pk: &quot;doc.kvarn-pk.pem&quot;,
-            path: &quot;../kvarn/target/doc&quot;,
-            extensions: [&quot;base&quot;, &quot;kvarn-doc&quot;],
-            // for development self-signed cert
-            name: Some(&quot;doc.kvarn.org&quot;),
+            cert: &quot;</span><span style="color:#99cc99;">doc.kvarn-cert.pem</span><span style="color:#d3d0c8;">&quot;,
+            pk: &quot;</span><span style="color:#99cc99;">doc.kvarn-pk.pem</span><span style="color:#d3d0c8;">&quot;,
+            path: &quot;</span><span style="color:#99cc99;">../kvarn/target/doc</span><span style="color:#d3d0c8;">&quot;,
+            extensions: [&quot;</span><span style="color:#99cc99;">base</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">kvarn-doc</span><span style="color:#d3d0c8;">&quot;],
+            </span><span style="color:#747369;">// for development self-signed cert
+</span><span style="color:#d3d0c8;">            name: Some(&quot;</span><span style="color:#99cc99;">doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;),
             options: (
-                disable_client_cache: true,
-                disable_server_cache: true,
-                public_data_directory: &quot;.&quot;,
-                hsts: true,
+                disable_client_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                disable_server_cache: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
+                public_data_directory: &quot;</span><span style="color:#99cc99;">.</span><span style="color:#d3d0c8;">&quot;,
+                hsts: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">,
             ),
         ),
     ],
     host_collections: {
-        &quot;s&quot;: [&quot;kvarn.org&quot;, &quot;doc.kvarn.org&quot;]
+        &quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;: [&quot;</span><span style="color:#99cc99;">kvarn.org</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;]
     }
 )
-</code></pre>
-</md></main>
+</span></code></pre></md></main>
 $[footer]

@@ -2,7 +2,6 @@
 
 <head>
     <title>Features of Kvarn</title>
-    $[highlight]
 </head>
 
 # Features & why to use Kvarn
@@ -75,7 +74,7 @@ If you want maximum security, you can of course simply not listen on port `80`, 
 If you're using [Mölla](/moella/) (which is recommended), you can enable HTTPS and
 automatic certificates through [Let's Encrypt](https://letsencrypt.org):
 
-```json
+```ron
 (
     // --snip--
     hosts: [

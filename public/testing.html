@@ -3,7 +3,6 @@ $[head]
     <title>Testing | Kvarn</title>
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Method of testing Kvarn applications and the Kvarn library">
-    $[highlight]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Testing is integral to smooth deployment. Kvarn is covered by many unit and integration tests.
 Using <a href="https://github.com/Icelk/kvarn/actions">GitHub Actions</a>, the whole codebase is linted and tested for every change.</p>
@@ -12,50 +11,50 @@ Using <a href="https://github.com/Icelk/kvarn/actions">GitHub Actions</a>, the w
 <p>If you’re an author of an application powered by Kvarn and want to test it, you’ve come to the right place.</p>
 <p>Below is an example of a production test. Unit tests are naturally also supported, and look exactly the same.</p>
 <p><code>Cargo.toml</code>:</p>
-<pre><code class="language-ini"># add the following to the bottom (or add to you dev-dependencies if you already have that section)
-[dev-dependencies]
-tokio = { version = &quot;1&quot;, features = [&quot;net&quot;, &quot;io-util&quot;, &quot;macros&quot;] }
-# use the same version as the main Kvarn library
-kvarn_testing = &quot;0.4&quot;
-</code></pre>
+<pre style="background-color:#2d2d2d;"><code class="language-toml"><span style="color:#747369;"># add the following to the bottom (or add to you dev-dependencies if you already have that section)
+</span><span style="color:#6699cc;">[dev-dependencies]
+tokio</span><span style="color:#d3d0c8;"> = { version = &quot;</span><span style="color:#99cc99;">1</span><span style="color:#d3d0c8;">&quot;, features = </span><span style="color:#cc99cc;">[</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">net</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">io-util</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">macros</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#cc99cc;">] </span><span style="color:#d3d0c8;">}
+</span><span style="color:#747369;"># use the same version as the main Kvarn library
+</span><span style="color:#6699cc;">kvarn_testing</span><span style="color:#d3d0c8;"> = &quot;</span><span style="color:#99cc99;">0.4</span><span style="color:#d3d0c8;">&quot;
+</span></code></pre>
 <p><code>tests/byte_ranges.rs</code>:</p>
-<pre><code class="language-rust">use kvarn_testing::prelude::*;
+<pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#cc99cc;">use </span><span style="color:#d3d0c8;">kvarn_testing::prelude::*;
 
-static DATA: &amp;str = &quot;This is test data&quot;;
+</span><span style="color:#cc99cc;">static </span><span style="color:#f99157;">DATA</span><span style="color:#d3d0c8;">: &amp;</span><span style="color:#cc99cc;">str </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">This is test data</span><span style="color:#d3d0c8;">&quot;;
 
-#[tokio::test]
-async fn out_of_bounds() {
-    // Add an extension to the server
-    let server = ServerBuilder::default().with_extensions(|ext| {
-        ext.add_prepare_single(
-            &quot;/index.html&quot;,
+#[</span><span style="color:#f2777a;">tokio</span><span style="color:#d3d0c8;">::</span><span style="color:#f2777a;">test</span><span style="color:#d3d0c8;">]
+async </span><span style="color:#cc99cc;">fn </span><span style="color:#6699cc;">out_of_bounds</span><span style="color:#d3d0c8;">() {
+    </span><span style="color:#747369;">// Add an extension to the server
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> server = ServerBuilder::default().</span><span style="color:#66cccc;">with_extensions</span><span style="color:#d3d0c8;">(|</span><span style="color:#f2777a;">ext</span><span style="color:#d3d0c8;">| {
+        ext.</span><span style="color:#66cccc;">add_prepare_single</span><span style="color:#d3d0c8;">(
+            &quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;,
             prepare!(_request, _host, _path, _addr, {
-                let bytes = Bytes::from_static(DATA.as_bytes());
+                </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> bytes = Bytes::from_static(</span><span style="color:#f99157;">DATA</span><span style="color:#d3d0c8;">.</span><span style="color:#66cccc;">as_bytes</span><span style="color:#d3d0c8;">());
                 FatResponse::cache(Response::new(bytes))
             }),
         );
     });
-    // start the server (automatically chooses an available port)
-    let server = server.run().await;
+    </span><span style="color:#747369;">// start the server (automatically chooses an available port)
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> server = server.</span><span style="color:#66cccc;">run</span><span style="color:#d3d0c8;">().await;
 
-    // send GET request
-    let response = server
-        .get(&quot;/&quot;)
-        .header(&quot;range&quot;, &quot;bytes=50-100&quot;)
-        .send()
+    </span><span style="color:#747369;">// send GET request
+    </span><span style="color:#cc99cc;">let</span><span style="color:#d3d0c8;"> response = server
+        .</span><span style="color:#66cccc;">get</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">/</span><span style="color:#d3d0c8;">&quot;)
+        .</span><span style="color:#66cccc;">header</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">range</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">bytes=50-100</span><span style="color:#d3d0c8;">&quot;)
+        .</span><span style="color:#66cccc;">send</span><span style="color:#d3d0c8;">()
         .await
-        .unwrap();
+        .</span><span style="color:#66cccc;">unwrap</span><span style="color:#d3d0c8;">();
 
     assert_eq!(
-        response.status(),
-        reqwest::StatusCode::RANGE_NOT_SATISFIABLE
-    );
+        response.</span><span style="color:#66cccc;">status</span><span style="color:#d3d0c8;">(),
+        reqwest::StatusCode::</span><span style="color:#f99157;">RANGE_NOT_SATISFIABLE
+    </span><span style="color:#d3d0c8;">);
     assert_eq!(
-        response.headers().get(&quot;reason&quot;).unwrap().to_str().unwrap(),
-        &quot;Range start after end of body&quot;
+        response.</span><span style="color:#66cccc;">headers</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">get</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">reason</span><span style="color:#d3d0c8;">&quot;).</span><span style="color:#66cccc;">unwrap</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">to_str</span><span style="color:#d3d0c8;">().</span><span style="color:#66cccc;">unwrap</span><span style="color:#d3d0c8;">(),
+        &quot;</span><span style="color:#99cc99;">Range start after end of body</span><span style="color:#d3d0c8;">&quot;
     )
 }
-</code></pre>
+</span></code></pre>
 <p>The documentation for the testing library can be found at <a href="https://doc.kvarn.org/kvarn_testing/">doc.kvarn.org</a>.</p>
 </md></main>
 $[footer]
