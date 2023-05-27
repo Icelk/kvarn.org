@@ -55,7 +55,4 @@
             ],
         ),
     ],
-    host_collections: {
-        "s": ["kvarn.org", "doc.kvarn.org"]
-    }
 )

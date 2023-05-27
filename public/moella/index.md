@@ -82,6 +82,7 @@ KvarnConfig (
     //
     // When you define a host collection twice with the same name,
     // imported hosts are appended to the host collection
+    // Or, you can simply use `All` when binding to a port.
     import: ["other-host.ron"],
 
     // all options are optional unless labled `required`
@@ -417,14 +418,14 @@ KvarnConfig (
     // When you define a host collection twice with the same name,
     // hosts (e.g. those loaded from imports) are appended to the host collection
     host_collections: {
-        "s": ["icelk.dev"],
+        "s": [/* unused */],
     },
     ports: Map({
-        8080: ( encrypted: false, source: Collection("s") ),
-        8443: ( encrypted: true, source: Collection("s") ),
+        8080: ( encrypted: false, source: All ),
+        8443: ( encrypted: true, source: All ),
     }),
     // or
-    // here, Host() can also be Collection()
+    // here, Host() can also be Collection() or All
     // Standard binds 80 (HTTP (with redirect to HTTPS, if that's enabled)) and 443 (HTTPS)
     ports: Standard(Host("icelk.dev")),
     // or
@@ -460,10 +461,7 @@ into Mölla!
 
 You might notice the following doesn't include a `ports` property.
 That's due to this config being imported from another.
-
-The host collection `s` is defined, but due to Mölla handles collections,
-the hosts are appended to `s`, not replacing previously defined hosts.
-This allows simple multi-host setup with split configs for easier version control.
+Since the main config contains `ports: Standard(All)`, all the hosts defined here are included.
 
 You may also notice that the extension set `base` isn't found anywhere.
 That's because it's defined in the "parent" config that imports this.
@@ -522,8 +520,5 @@ The implicit usage of undefined extension sets might be deprecated in the future
             ),
         ),
     ],
-    host_collections: {
-        "s": ["kvarn.org", "doc.kvarn.org"]
-    }
 )
 ```

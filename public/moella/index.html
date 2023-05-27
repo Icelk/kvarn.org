@@ -73,6 +73,7 @@ because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
     //
     // When you define a host collection twice with the same name,
     // imported hosts are appended to the host collection
+    // Or, you can simply use `All` when binding to a port.
 </span><span style="color:#d3d0c8;">    import: [&quot;</span><span style="color:#99cc99;">other-host.ron</span><span style="color:#d3d0c8;">&quot;],
 
     </span><span style="color:#747369;">// all options are optional unless labled `required`
@@ -408,14 +409,14 @@ because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
     // When you define a host collection twice with the same name,
     // hosts (e.g. those loaded from imports) are appended to the host collection
 </span><span style="color:#d3d0c8;">    host_collections: {
-        &quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;: [&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;],
+        &quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;: [</span><span style="color:#747369;">/* unused */</span><span style="color:#d3d0c8;">],
     },
     ports: Map({
-        </span><span style="color:#f99157;">8080</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">, source: Collection(&quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;) ),
-        </span><span style="color:#f99157;">8443</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">, source: Collection(&quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;) ),
+        </span><span style="color:#f99157;">8080</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">, source: All ),
+        </span><span style="color:#f99157;">8443</span><span style="color:#d3d0c8;">: ( encrypted: </span><span style="color:#f99157;">true</span><span style="color:#d3d0c8;">, source: All ),
     }),
     </span><span style="color:#747369;">// or
-    // here, Host() can also be Collection()
+    // here, Host() can also be Collection() or All
     // Standard binds 80 (HTTP (with redirect to HTTPS, if that's enabled)) and 443 (HTTPS)
 </span><span style="color:#d3d0c8;">    ports: Standard(Host(&quot;</span><span style="color:#99cc99;">icelk.dev</span><span style="color:#d3d0c8;">&quot;)),
     </span><span style="color:#747369;">// or
@@ -444,10 +445,8 @@ into Mölla!</p>
 <h1 id="examples">Examples</h1>
 <h2 id="kvarnorg"><a href="/">kvarn.org</a> and <a href="https://doc.kvarn.org">doc.kvarn.org</a></h2>
 <p>You might notice the following doesn’t include a <code>ports</code> property.
-That’s due to this config being imported from another.</p>
-<p>The host collection <code>s</code> is defined, but due to Mölla handles collections,
-the hosts are appended to <code>s</code>, not replacing previously defined hosts.
-This allows simple multi-host setup with split configs for easier version control.</p>
+That’s due to this config being imported from another.
+Since the main config contains <code>ports: Standard(All)</code>, all the hosts defined here are included.</p>
 <p>You may also notice that the extension set <code>base</code> isn’t found anywhere.
 That’s because it’s defined in the “parent” config that imports this.
 The implicit usage of undefined extension sets might be deprecated in the future
@@ -503,9 +502,6 @@ The implicit usage of undefined extension sets might be deprecated in the future
             ),
         ),
     ],
-    host_collections: {
-        &quot;</span><span style="color:#99cc99;">s</span><span style="color:#d3d0c8;">&quot;: [&quot;</span><span style="color:#99cc99;">kvarn.org</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">doc.kvarn.org</span><span style="color:#d3d0c8;">&quot;]
-    }
 )
 </span></code></pre></md></main>
 $[footer]
