@@ -21,6 +21,11 @@ kvarn</span><span style="color:#d3d0c8;"> = { version = &quot;</span><span style
 <p>Please always enable <code>base</code> (see below for more details).</p>
 <ul>
 <li><a href="/uring."><code>uring</code></a>: Use the <a href="https://en.wikipedia.org/wiki/Io_uring">io-uring</a> API for network and file system IO on Linux. ~0-15% better performance, depending on use-case. Do your own benchmarks!</li>
+<li><a href="/http3."><code>http3</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/3">HTTP/3</a>.
+Strongly recommended, since HTTP/3 is faster than both HTTP/1 &amp; HTTP/2, due to the new protocol, QUIC.
+Enabling HTTP/2 in tandem is also recommended, since the initial connection is done over TCP,
+so having the fastest TCP protocol (HTTP/2) available is beneficial.
+Works both with and without <code>uring</code> (world first!).</li>
 <li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>, the secure HTTP protocol.
 This is strongly recommended if you’re doing anything that’s not resource constrained and local.</li>
 <li><a href="/http2."><code>http2</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a>.
@@ -43,7 +48,7 @@ See <a href="#embedded">embedded</a> for more details.</li>
 <ul>
 <li><code>full</code>: enables all the features above.</li>
 <li><code>base</code>: enables <code>async-networking</code>, a feature considered critical for all platforms except embedded (e.g. ESP32-IDF)</li>
-<li><code>all-http</code>: enables all HTTP standards and versions available - <code>https</code> &amp; <code>http2</code></li>
+<li><code>all-http</code>: enables all HTTP standards and versions available - <code>https</code> &amp; <code>http2</code> &amp; <code>http3</code></li>
 <li><code>all-compression</code>: enables all compression features - <code>br</code> &amp; <code>gzip</code></li>
 </ul>
 <h1 id="embedded">Embedded</h1>

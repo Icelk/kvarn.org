@@ -1,0 +1,15 @@
+!> tmpl standard.html markdown.html
+$[head]
+    <title>HTTP/3 with io_uring | Kvarn</title>
+    <meta name="permalinks" content="enabled">
+    <meta name="description" content="Web server with HTTP/3 using io_uring">
+$[dependencies]$[md-imports]$[close-head]$[navigation]
+<main><md><p><a href="https://en.wikipedia.org/wiki/HTTP/3">HTTP/3</a> is enabled by default.</p>
+<p>Using a modern transport protocol, QUIC, enables HTTP/3 to be what HTTP/2 aimed
+to be: fault-tolerant and massively parallel. Add way faster handshakes on top
+on that, and HTTP/3 is groundbreaking. You can naturally
+<a href="cargo-features.">disable</a> the feature.</p>
+<p>A custom implementation of QUIC using <code>io_uring</code> is embedded in Kvarn. This
+gives you the power of the latest protocol with the fastest IO platform.</p>
+</md></main>
+$[footer]

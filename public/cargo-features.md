@@ -29,6 +29,11 @@ Which Cargo features are required for certain items are also shown in the [docs]
 Please always enable `base` (see below for more details).
 
 -   [`uring`](/uring.): Use the [io-uring](https://en.wikipedia.org/wiki/Io_uring) API for network and file system IO on Linux. ~0-15% better performance, depending on use-case. Do your own benchmarks!
+-   [`http3`](/http3.): Enables [HTTP/3](https://en.wikipedia.org/wiki/HTTP/3).
+    Strongly recommended, since HTTP/3 is faster than both HTTP/1 & HTTP/2, due to the new protocol, QUIC.
+    Enabling HTTP/2 in tandem is also recommended, since the initial connection is done over TCP,
+    so having the fastest TCP protocol (HTTP/2) available is beneficial.
+    Works both with and without `uring` (world first!).
 -   [`https`](/https.): Enables [HTTPS](https://en.wikipedia.org/wiki/HTTPS), the secure HTTP protocol.
     This is strongly recommended if you're doing anything that's not resource constrained and local.
 -   [`http2`](/http2.): Enables [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2).
@@ -51,7 +56,7 @@ There are additionally several _feature sets_:
 
 -   `full`: enables all the features above.
 -   `base`: enables `async-networking`, a feature considered critical for all platforms except embedded (e.g. ESP32-IDF)
--   `all-http`: enables all HTTP standards and versions available - `https` & `http2`
+-   `all-http`: enables all HTTP standards and versions available - `https` & `http2` & `http3`
 -   `all-compression`: enables all compression features - `br` & `gzip`
 
 # Embedded

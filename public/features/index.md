@@ -33,6 +33,15 @@ The Kvarn [ecosystem](/ecosystem/) has extensions for many common website featur
 
 [The example](/#getting-started) of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.
 
+# [HTTP/3](/http3.)
+
+> Requires the feature `http3` (part of `default` and `full`)
+
+Using a modern transport protocol, QUIC, enables HTTP/3 to be what HTTP/2 aimed
+to be: fault-tolerant and massively parallel. Add way faster handshakes on top
+on that, and HTTP/3 is groundbreaking. You can naturally
+[disable](cargo-features.) the feature.
+
 # [HTTP/2](/http2.)
 
 > Requires the feature `http2` (part of `default` and `full`)
@@ -42,6 +51,14 @@ This means you get all the pros of the latest protocols without any code.
 
 Kvarn passes the [h2spec test](https://github.com/summerwind/h2spec).
 If something doesn't work, it's the user agent not conforming.
+
+# [io_uring](/uring.)
+
+> Requires the feature `uring` (not `default`)
+
+Kvarn can be compiled to use [`io_uring`](https://en.wikipedia.org/wiki/io_uring),
+the hottest IO platform under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 & HTTP/2),
+and HTTP/3 (using a custom QUIC interop).
 
 ## [HTTP/2 Push](/push.)
 

@@ -15,23 +15,25 @@ This will be explicitly noted.</p>
 <tr><td><a href="#features--why-to-use-kvarn">1 Features & why to use Kvarn</a></td></tr>
 <tr><td><a href="#batteries-included-but-not-required">2 Batteries included, but not required</a></td></tr>
 <tr><td><a href="#sane-defaults">3 Sane defaults</a></td></tr>
-<tr><td><a href="#http2">4 HTTP/2</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span><a href="#http2-push">4.1 HTTP/2 Push</a></td></tr>
-<tr><td><a href="#https">5 HTTPS</a></td></tr>
-<tr><td><span style="margin-left: 2em"></span><a href="#automatic-certificates">5.1 Automatic certificates</a></td></tr>
-<tr><td><a href="#full-documentation-coverage">6 Full documentation coverage</a></td></tr>
-<tr><td><a href="#extensions">7 Extensions</a></td></tr>
-<tr><td><a href="#cache">8 Cache</a></td></tr>
-<tr><td><a href="#php">9 PHP</a></td></tr>
-<tr><td><a href="#markdown">10 MarkDown</a></td></tr>
-<tr><td><a href="#templates">11 Templates</a></td></tr>
-<tr><td><a href="#full-text-search-engine">12 Full text search engine</a></td></tr>
-<tr><td><a href="#cors">13 CORS</a></td></tr>
-<tr><td><a href="#graceful-shutdown--handover">14 Graceful shutdown & handover</a></td></tr>
-<tr><td><a href="#reverse-proxy">15 Reverse proxy</a></td></tr>
-<tr><td><a href="#guaranteed-memorysafety">16 Guaranteed memory-safety</a></td></tr>
-<tr><td><a href="#other-fundamental-features--systems">17 Other fundamental features & systems</a></td></tr>
-<tr><td><a href="#back-to-the-basics">18 Back to the basics</a></td></tr>
+<tr><td><a href="#http3">4 HTTP/3</a></td></tr>
+<tr><td><a href="#http2">5 HTTP/2</a></td></tr>
+<tr><td><a href="#iouring">6 io_uring</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#http2-push">6.1 HTTP/2 Push</a></td></tr>
+<tr><td><a href="#https">7 HTTPS</a></td></tr>
+<tr><td><span style="margin-left: 2em"></span><a href="#automatic-certificates">7.1 Automatic certificates</a></td></tr>
+<tr><td><a href="#full-documentation-coverage">8 Full documentation coverage</a></td></tr>
+<tr><td><a href="#extensions">9 Extensions</a></td></tr>
+<tr><td><a href="#cache">10 Cache</a></td></tr>
+<tr><td><a href="#php">11 PHP</a></td></tr>
+<tr><td><a href="#markdown">12 MarkDown</a></td></tr>
+<tr><td><a href="#templates">13 Templates</a></td></tr>
+<tr><td><a href="#full-text-search-engine">14 Full text search engine</a></td></tr>
+<tr><td><a href="#cors">15 CORS</a></td></tr>
+<tr><td><a href="#graceful-shutdown--handover">16 Graceful shutdown & handover</a></td></tr>
+<tr><td><a href="#reverse-proxy">17 Reverse proxy</a></td></tr>
+<tr><td><a href="#guaranteed-memorysafety">18 Guaranteed memory-safety</a></td></tr>
+<tr><td><a href="#other-fundamental-features--systems">19 Other fundamental features & systems</a></td></tr>
+<tr><td><a href="#back-to-the-basics">20 Back to the basics</a></td></tr>
 </tbody></table>
 <h1 id="batteries-included-but-not-required">Batteries included, but not required</h1>
 <p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website features.</p>
@@ -46,6 +48,14 @@ It provides a JWT implementation with support for persistent logins and validati
 </ul>
 <h1 id="sane-defaults">Sane defaults</h1>
 <p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
+<h1 id="http3"><a href="/http3.">HTTP/3</a></h1>
+<blockquote>
+<p>Requires the feature <code>http3</code> (part of <code>default</code> and <code>full</code>)</p>
+</blockquote>
+<p>Using a modern transport protocol, QUIC, enables HTTP/3 to be what HTTP/2 aimed
+to be: fault-tolerant and massively parallel. Add way faster handshakes on top
+on that, and HTTP/3 is groundbreaking. You can naturally
+<a href="cargo-features.">disable</a> the feature.</p>
 <h1 id="http2"><a href="/http2.">HTTP/2</a></h1>
 <blockquote>
 <p>Requires the feature <code>http2</code> (part of <code>default</code> and <code>full</code>)</p>
@@ -54,6 +64,13 @@ It provides a JWT implementation with support for persistent logins and validati
 This means you get all the pros of the latest protocols without any code.</p>
 <p>Kvarn passes the <a href="https://github.com/summerwind/h2spec">h2spec test</a>.
 If something doesn’t work, it’s the user agent not conforming.</p>
+<h1 id="iouring"><a href="/uring.">io_uring</a></h1>
+<blockquote>
+<p>Requires the feature <code>uring</code> (not <code>default</code>)</p>
+</blockquote>
+<p>Kvarn can be compiled to use <a href="https://en.wikipedia.org/wiki/io_uring"><code>io_uring</code></a>,
+the hottest IO platform under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 &amp; HTTP/2),
+and HTTP/3 (using a custom QUIC interop).</p>
 <h2 id="http2-push"><a href="/push.">HTTP/2 Push</a></h2>
 <blockquote>
 <p>Part of <code>kvarn_extensions</code> under the feature <code>push</code> (part of <code>default</code>)</p>
