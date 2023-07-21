@@ -4,44 +4,48 @@
     <title>Extensions | Kvarn</title>
 </head>
 
-To extend the core functionality of Kvarn, you'll use _extensions_.
-They are ran in an async context, so you can call async APIs to fetch data.
-They provide options for attaching to all parts of the request pipeline,
-with virtually no overhead compared to editing Kvarn's source.
+To extend the core functionality of Kvarn, you'll use _extensions_. They are ran
+in an async context, so you can call async APIs to fetch data. They provide
+options for attaching to all parts of the request pipeline, with virtually no
+overhead compared to editing Kvarn's source.
 
 ${toc}
 
 # Details
 
-The following pages are details on implementation useful to read if you're working with Kvarn, even just as the web server to host your files.
+The following pages are details on implementation useful to read if you're
+working with Kvarn, even just as the web server to host your files.
 
 -   [Redirects](redirects.)
--   APIs under the path `/./` are not accessible from the outside, as Kvarn's security guarantees forbid this.\
+-   APIs under the path `/./` are not accessible from the outside, as Kvarn's
+    security guarantees forbid this.\
     A common pattern is to make [Prime](https://doc.kvarn.org/kvarn/extensions/type.Prime.html)
-    extensions which redirect to [Prepare](https://doc.kvarn.org/kvarn/extensions/type.Prepare.html) APIs located here.
-    Then, you can conditionally change the path of a request to internal APIs (e.g. authentication, special admin panels).
+    extensions which redirect to [Prepare](https://doc.kvarn.org/kvarn/extensions/type.Prepare.html)
+    APIs located here. Then, you can conditionally change the path of a request to
+    internal APIs (e.g. authentication, special admin panels).
 
 # Building an API
 
-In Kvarn, you can attach to single URLs
-or provide a function which takes the request and
-determines whether or not your code should override the deafult.
+In Kvarn, you can attach to single URLs or provide a function which takes the
+request and determines whether or not your code should override the deafult.
 
-> In the immediate future, you should be able to say "I want to capture `/api/{string}/{0..=100}`"
+> In the immediate future, you should be able to say "I want to capture
+> `/api/{string}/{0..=100}`"
 
-You then get request, a reference to the target host, an optional path, and the IP and port the request came from.
-You provide a response, which can be asynchronous,
-and Kvarn will handle all comression, `content-length`,
-delivery, HTTP protocols, caching (according to your preference, returned as part of the reponse),
-other extension, and encryption.
+You then get request, a reference to the target host, an optional path, and the
+IP and port the request came from. You provide a response, which can be
+asynchronous, and Kvarn will handle all comression, `content-length`, delivery,
+HTTP protocols, caching (according to your preference, returned as part of the
+reponse), other extension, and encryption.
 
-This is in contrast to Node.js where you have to handle all cases,
-resulting in large `if else` statements
-(if you don't use a library, in which case Kvarn is a lot faster and just as convenient).
+This is in contrast to Node.js where you have to handle all cases, resulting in
+large `if else` statements (if you don't use a library, in which case Kvarn is a
+lot faster and just as convenient).
 
 # The five *P*s
 
-Kvarn is very extensible. Therefore, several pluggable interfaces (called extensions) exist to make integration fast and seamless.
+Kvarn is very extensible. Therefore, several pluggable interfaces (called
+extensions) exist to make integration fast and seamless.
 
 Here are the five *P*s chronologically ordered from the request's perspective.
 
@@ -49,30 +53,35 @@ Here are the five *P*s chronologically ordered from the request's perspective.
 
 -   [ ] Not cached
 
-This is where you can add cache redirects.
-If you for example want to load the login page on all privileged pages (when the user is not logged in),
-you can check for the `authentication` HTTP header
-and from there decide to intercept the request.
+This is where you can add cache redirects. If you for example want to load the
+login page on all privileged pages (when the user is not logged in), you can
+check for the `authentication` HTTP header and from there decide to intercept
+the request.
 
-It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to
-a special page where a 307 redirect is responded with.
+It is also here where all HTTP requests are upgraded to HTTPS, by redirecting
+the request to a special page where a 307 redirect is responded with.
 
 ## [Prepare](https://doc.kvarn.org/kvarn/macro.prepare.html)
 
--   [x] Optional. If the response contains a future (WebSockets), it'll never cache.
+-   [x] Optional. If the response contains a future (WebSockets), it'll never
+        cache.
 
-You provide either a URI or a function of when to activate your code.
-Will still get all other extensions applied.
+You provide either a URI or a function of when to activate your code. Will still
+get all other extensions applied.
 
-> The `path` variable you get here will be `None` if the `fs` feature of a `Host` isn't enabled or percent decoding failed.
-> Be sure to handle percent encoding when taking the `request.uri().path()`. Using the `path` handles this for you.
+> The `path` variable you get here will be `None` if the `fs` feature of a
+> `Host` isn't enabled or percent decoding failed. Be sure to handle percent
+> encoding when taking the `request.uri().path()`. Using the `path` handles this
+> for you.
 
-**You have to handle all HTTP methods**, as Kvarn passes all, except for `HEAD`, which it handles by simply omitting the body.
-**If your `response-type` is something other than HTML, you must set the header.**
+**You have to handle all HTTP methods**, as Kvarn passes all, except for `HEAD`,
+which it handles by simply omitting the body. **If your `response-type` is
+something other than HTML, you must set the header.**
 
 It's very useful for APIs (both REST and GraphQL!)
 
-Here, you could, for example, implement reading from the file system, like Kvarn does by default.
+Here, you could, for example, implement reading from the file system, like Kvarn
+does by default.
 
 ### [Single](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_prepare_single)
 
@@ -86,7 +95,8 @@ You provide a predicate which returns whether or not to run this extension.
 
 -   [x] Cached
 
-Here, files can opt in to extensions to manipulate data, such as the template system and `hide` extension.
+Here, files can opt in to extensions to manipulate data, such as the template
+system and `hide` extension.
 
 This type can modify most data in response and will be executed in series.
 
@@ -94,18 +104,22 @@ Extensions can also attach to filetypes.
 
 ### [Internal](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_internal)
 
-These are declared on the first line in a file, acording to the following syntax:
+These are declared on the first line in a file, acording to the following
+syntax:
 
 ```md
-!> extension arg1 arg2 &> second-extension-name with these four arguments &> and-so-on
+!> extension arg1 arg2 &> second-extension-name with these four arguments &>
+and-so-on
 
 My blog...
 ```
 
-There can be arbitrarily many extensions. The are separated by [`&>`](https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html).
+There can be arbitrarily many extensions. The are separated by
+[`&>`](https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html).
 
-The first word (space-separated) is the extension name. The others are arguments. Extensions might not look for arguments, or error if any invalid input is given,
-just like applications.
+The first word (space-separated) is the extension name. The others are
+arguments. Extensions might not look for arguments, or error if any invalid
+input is given, just like applications.
 
 You can naturally also give just one extension:
 
@@ -119,21 +133,25 @@ When Kvarn serves the file, this line is removed.
 
 Extensions are processed left to right.
 
-[File](#file) extensions are processed after the internal ones. Keep in mind that some file extensions might read from the file system.
-Changes to the response isn't written, so the changes will be lost.
+[File](#file) extensions are processed after the internal ones. Keep in mind
+that some file extensions might read from the file system. Changes to the
+response isn't written, so the changes will be lost.
 
 ### [File](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_file)
 
 These are set on a per filename basis.
 
-`.php` files can be bound to be processed by `fastcgi`, as the [`kvarn-extensions` extension](https://doc.kvarn.org/kvarn_extensions/php/index.) does.
+`.php` files can be bound to be processed by `fastcgi`, as the
+[`kvarn-extensions` extension](https://doc.kvarn.org/kvarn_extensions/php/index.)
+does.
 
 ## [Package](https://doc.kvarn.org/kvarn/macro.package.html)
 
 -   [ ] Not cached
 
-Here, you can define headers to add to the final response.
-These headers are not cached, but applied every time. You can therefore compare things like other headers and the version of the request.
+Here, you can define headers to add to the final response. These headers are not
+cached, but applied every time. You can therefore compare things like other
+headers and the version of the request.
 
 Cookies can be defined here, since they won't be cached.
 
@@ -141,17 +159,21 @@ Cookies can be defined here, since they won't be cached.
 
 -   [ ] Not cached
 
-These extensions are called after all data are written to the user. This will almost exclusively be used for HTTP/2 push.
+These extensions are called after all data are written to the user. This will
+almost exclusively be used for HTTP/2 push.
 
-Maybe, it can be used to sync data to a database after the request is written to not block it?
+Maybe, it can be used to sync data to a database after the request is written to
+not block it?
 
 # Writing an extension
 
-Using [the macros](https://doc.kvarn.org/kvarn/index.html#macros) is recommended.
+Using [the macros](https://doc.kvarn.org/kvarn/index.html#macros) is
+recommended.
 
-You can however writing them manually.
-The adding methods of [`Extensions`](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html)
-expect a boxed struct which implements the [appropriate `*Call` trait](https://doc.kvarn.org/kvarn/extensions/index.html#traits).
+You can however writing them manually. The adding methods of
+[`Extensions`](https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html)
+expect a boxed struct which implements the
+[appropriate `*Call` trait](https://doc.kvarn.org/kvarn/extensions/index.html#traits).
 
 ```rust
 use kvarn::prelude::*;
@@ -191,13 +213,16 @@ extensions.add_prepare_single("/index.html", Box::new(ext));
 
 Let's build one of each extension to see how they fit together.
 
-This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.
+This example requires basic knowledge about Rust to be understood, but the
+general workflow should be clear.
 
-Note how we create extensions by calling [their respective macros](https://doc.kvarn.org/kvarn/#macros).
-This does a lot under the hood.
+Note how we create extensions by calling
+[their respective macros](https://doc.kvarn.org/kvarn/#macros). This does a lot
+under the hood.
 
-If any variables or names confuse you, copy the code and inspect it with your IDE (i.e. `rust-analyzer`).
-The macros are designed to cooperate with Rust tools to give the best possible feedback.
+If any variables or names confuse you, copy the code and inspect it with your
+IDE (i.e. `rust-analyzer`). The macros are designed to cooperate with Rust tools
+to give the best possible feedback.
 
 `Cargo.toml`:
 

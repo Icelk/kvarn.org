@@ -5,26 +5,36 @@ $[head]
     <meta name="description" content="The Kvarn ecosystem. A guide to all it's components and features.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="the-kvarn-ecosystem">The Kvarn Ecosystem</h1>
-<p>To make Kvarn competetive with the major players, several pre-built extensions are encouraged to be used.</p>
+<p>To make Kvarn competitive with the major players, several pre-built extensions
+are encouraged to be used.</p>
 <p><a href="/moella/">Mölla</a> provides an easy and powerful way to use Kvarn.</p>
-<p>Kvarn has a <a href="/extensions/">extensive extension API</a> which allows you, the user of Kvarn, to do whatever you
-want with Kvarn, with performance like it was built in.</p>
+<p>Kvarn has a <a href="/extensions/">extensive extension API</a> which allows you, the user
+of Kvarn, to do whatever you want with Kvarn, with performance like it was built
+in.</p>
 <h2 id="extensions">Extensions</h2>
 <p>Kvarn strives to be as modular as possible.</p>
-<p>There exists five points you can attach to modify request, responses, and other metadata, both before and after the request is sent (e.g. to log, HTTP/2 push).
+<p>There exists five points you can attach to modify request, responses, and other
+metadata, both before and after the request is sent (e.g. to log, HTTP/2 push).
 Common patterns are documented at <a href="../extensions/#details">the extensions page</a>.
-Details on the functionality of extensions are also <a href="http://localhost:8080/extensions/#the-five-ps">available</a>.</p>
+Details on the functionality of extensions are also
+<a href="http://localhost:8080/extensions/#the-five-ps">available</a>.</p>
 <hr />
-<p>More extensions are available using the <a href="https://doc.kvarn.org/kvarn_extensions/"><code>kvarn_extensions</code></a>.
-There, you get PHP support, a reverse proxy, templates, HTTP/2 push, and several present extensions.
-Everything is naturally <a href="../cargo-features.">optional</a>.</p>
+<p>More extensions are available using the
+<a href="https://doc.kvarn.org/kvarn_extensions/"><code>kvarn_extensions</code></a>. There, you get
+PHP support, a reverse proxy, templates, HTTP/2 push, and several present
+extensions. Everything is naturally <a href="../cargo-features.">optional</a>.</p>
 <h3 id="search">Search</h3>
 <p>A <a href="../search.">site search engine integration</a> with Kvarn is also available.</p>
 <h3 id="auth">Auth</h3>
-<p>A fast, simple, and customizable <a href="https://crates.io/crates/kvarn-auth">authentication extension</a>
-which makes it impossible to shot yourself in your foot!</p>
-<p>Kvarn auth provides an easy-to-use JWT-based authentication helper with support for persistent logins and validation servers.</p>
-<p>You provide an async callback which gives the user a level of authorization. You can return any structured data based on serde. The JWT is automatically renewed, as the server stores a credentials cookie (encrypted using the server’s private key). Everything is configurable.</p>
+<p>A fast, simple, and customizable
+<a href="https://crates.io/crates/kvarn-auth">authentication extension</a> which makes it
+impossible to shot yourself in your foot!</p>
+<p>Kvarn auth provides an easy-to-use JWT-based authentication helper with support
+for persistent logins and validation servers.</p>
+<p>You provide an async callback which gives the user a level of authorization. You
+can return any structured data based on serde. The JWT is automatically renewed,
+as the server stores a credentials cookie (encrypted using the server’s private
+key). Everything is configurable.</p>
 <h2 id="docs">Docs</h2>
 <p><a href="https://doc.kvarn.org">Online documentation</a> is available for the git branch.
 Refer to <a href="https://docs.rs/kvarn">docs.rs</a> for docs for stable releases.</p>
@@ -32,13 +42,23 @@ Refer to <a href="https://docs.rs/kvarn">docs.rs</a> for docs for stable release
 <p>Management of the Kvarn server is done through IPC, using UNIX sockets.
 <a href="../ctl/"><code>kvarnctl</code></a> is a feature-complete command dispatcher.</p>
 <h2 id="markdown">Markdown</h2>
-<p>Using <a href="/chute/">Kvarn chute</a> you can convert CommonMark documents to HTML pages, making use of <a href="/features/#templates">Kvarn’s templates</a>.
-In fact, I’m writing this document in CommonMark and having chute export it every time I save.</p>
-<p>This enables fast prototyping and writing with quality results, fitting in with the rest of the website.</p>
-<p>It’s smart, so if you declare any <a href="../extensions/#present">present extensions</a>, they are transferred. The <code>hide</code> extension is removed, so MD documents can be hidden (this is).</p>
-<p>It also supports adding to the HTML header by simply declaring a <code>&lt;head&gt;</code> element the first thing in the document.</p>
-<h2 id="example-implementation">Example implementation</h2>
-<p>In addition to the tools above, an example implementation (the one which is currently serving you content) is <a href="https://github.com/Icelk/kvarn-reference/">available</a>. In the future, that’ll use a <a href="../config.">config</a>.</p>
-<p>Due to the modularity of Kvarn, and it marely being a library for listening to ports, a binary implementation is needed. If this is the reference implementation or your program embedding Kvarn, doesn’t matter.</p>
+<p>Using <a href="/chute/">Kvarn chute</a> you can convert CommonMark documents to HTML pages,
+making use of <a href="/features/#templates">Kvarn’s templates</a>. In fact, I’m writing
+this document in CommonMark and having chute export it every time I save.</p>
+<p>This enables fast prototyping and writing with quality results, fitting in with
+the rest of the website.</p>
+<p>It’s smart, so if you declare any <a href="../extensions/#present">present extensions</a>,
+they are transferred. The <code>hide</code> extension is removed, so MD documents can be
+hidden (this is).</p>
+<p>It also supports adding to the HTML header by simply declaring a <code>&lt;head&gt;</code>
+element the first thing in the document.</p>
+<h2 id="reference-implementation">Reference implementation</h2>
+<p>In addition to the tools above, a reference implementation (the one which is
+currently serving you content) is
+<a href="https://github.com/Icelk/moella/">available on GitHub</a>. It uses an intuitive
+<a href="/moella/">config format</a>.</p>
+<p>Due to the modularity of Kvarn, and it merely being a library for listening to
+ports, a binary implementation is needed. If this is the reference
+implementation or your program embedding Kvarn, doesn’t matter.</p>
 </md></main>
 $[footer]

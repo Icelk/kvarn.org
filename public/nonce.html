@@ -4,20 +4,29 @@ $[head]
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Kvarn's integration with Content Security Policy nonce values.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>If you need inline scripts or styles, using <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce">nonce</a>s
+<main><md><p>If you need inline scripts or styles, using
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce">nonce</a>s
 are a great idea. They guarantee only your scripts are ran on your website.</p>
 <blockquote>
-<p>See <a href="/csp.">CSP</a> for more general information regarding the security of your website, especially regarding XSS attacks.</p>
+<p>See <a href="/csp.">CSP</a> for more general information regarding the security of your
+website, especially regarding XSS attacks.</p>
 </blockquote>
-<p>Kvarn, by <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.new">default</a>, adds a <a href="https://doc.kvarn.org/kvarn/extensions/type.Present.">Present</a>
-extension which enables the <code>nonce</code> <a href="/extensions/#internal">internal present</a> extension.
-Add that to the top of your file and just insert a nonce attribute to your inline style or script element: <code>&lt;script|style nonce=&quot;&quot;&gt;...&lt;/script|style&gt;</code>.
-The content (if any) between the quotes (both <code>&quot;</code> and <code>'</code> are supported) is replaced by the random nonce value, which is also included in the
-<code>content-security-policy</code> header.
-This random value is a 128-bit random number generated from a cryptographically secure source, encoded in Base64. It will therefore always have the length 24 bytes. This is what’s recommended by MDN.</p>
+<p>Kvarn, by
+<a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.new">default</a>,
+adds a <a href="https://doc.kvarn.org/kvarn/extensions/type.Present.">Present</a> extension
+which enables the <code>nonce</code> <a href="/extensions/#internal">internal present</a> extension.
+Add that to the top of your file and just insert a nonce attribute to your
+inline style or script element: <code>&lt;script|style nonce=&quot;&quot;&gt;...&lt;/script|style&gt;</code>. The
+content (if any) between the quotes (both <code>&quot;</code> and <code>'</code> are supported) is replaced
+by the random nonce value, which is also included in the
+<code>content-security-policy</code> header. This random value is a 128-bit random number
+generated from a cryptographically secure source, encoded in Base64. It will
+therefore always have the length 24 bytes. This is what’s recommended by MDN.</p>
 <blockquote>
-<p>Between the nonce being generated in the Present extension and consumed in the Package extension (which is what adds the CSP header),
-the nonce value is stored in the response header <code>csp-nonce</code>, which is removed by the Package extension.</p>
+<p>Between the nonce being generated in the Present extension and consumed in the
+Package extension (which is what adds the CSP header), the nonce value is
+stored in the response header <code>csp-nonce</code>, which is removed by the Package
+extension.</p>
 </blockquote>
 </md></main>
 $[footer]

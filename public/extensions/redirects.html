@@ -5,30 +5,43 @@ $[head]
     <meta name="description" content="How redirects work in Kvarn. Both index redirects and HTTP to HTTPS.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="uri-redirect">URI redirect</h1>
-<p>When you visit <code>kvarn.org</code>, the web server doesn’t fetch the directory that is the root of the files.
-It naturally searches for <code>public/index.html</code>. That’s what most web servers do when a query points to a directory.</p>
-<p>Kvarn takes this a step further (by default, you can of course disable this behaviour, but why would you?). For one, it checks the path of the request URI for a final <code>/</code>. Only then does it search for an <code>index.html</code>. This is due to performance - we wouldn’t want to check the FS if the request is a directory or a file. That takes time.</p>
-<p>Additionally, it looks up <code>.html</code> if the path ends in <code>.</code>. <code>kvarn.org/pipeline.</code> = <code>kvarn.org/pipeline.html</code>. If an empty filename doesn’t make sense, why should a empty file extension?</p>
+<p>When you visit <code>kvarn.org</code>, the web server doesn’t fetch the directory that is
+the root of the files. It naturally searches for <code>public/index.html</code>. That’s
+what most web servers do when a query points to a directory.</p>
+<p>Kvarn takes this a step further (by default, you can of course disable this
+behaviour, but why would you?). For one, it checks the path of the request URI
+for a final <code>/</code>. Only then does it search for an <code>index.html</code>. This is due to
+performance - we wouldn’t want to check the FS if the request is a directory or
+a file. That takes time.</p>
+<p>Additionally, it looks up <code>.html</code> if the path ends in <code>.</code>. <code>kvarn.org/pipeline.</code>
+= <code>kvarn.org/pipeline.html</code>. If an empty filename doesn’t make sense, why should
+a empty file extension?</p>
 <blockquote>
 <p>This may cause trouble with social media. Just insert a <code>html</code> at the end.</p>
 </blockquote>
-<p>The <code>.html</code> and <code>index.html</code> aren’t hard-coded, but can be <a href="https://doc.kvarn.org/kvarn/host/struct.Options.html#structfield.folder_default">changed</a>.</p>
-<p>This is handled using a <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">prime</a> extension, which internally redirects the request if it ends with <code>.</code> or <code>/</code>.</p>
-<p>The method which handles this is <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_uri_redirect"><code>with_uri_redirect</code></a>.</p>
+<p>The <code>.html</code> and <code>index.html</code> aren’t hard-coded, but can be
+<a href="https://doc.kvarn.org/kvarn/host/struct.Options.html#structfield.folder_default">changed</a>.</p>
+<p>This is handled using a
+<a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">prime</a> extension, which
+internally redirects the request if it ends with <code>.</code> or <code>/</code>.</p>
+<p>The method which handles this is
+<a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.with_uri_redirect"><code>with_uri_redirect</code></a>.</p>
 <h1 id="http-to-https">HTTP to HTTPS</h1>
-<p>By default, Kvarn tries to upgrade HTTP requests to HTTPS ones, by replying with a <code>307 Temporary Redirect</code> with a location of the same page, but with HTTPS.</p>
-<p>This is also a prime extension, that redirects the request to a special prepare extension which is only accessible to the internals.
-There, it responds with the <code>307 Temporary Redirect</code>.</p>
-<p>The <a href="#uri-redirect">extension above</a> has a higher priority and is therefore ran before.
-Notice the <strong>/index.html</strong> below.</p>
-<pre style="background-color:#2d2d2d;"><code class="language-shell">$ curl -i http://icelk.dev
-HTTP/1.1 307 Temporary Redirect
-location: https://icelk.dev/index.html
-server: Kvarn/0.5.0 (Linux)
-connection: keep-alive
+<p>By default, Kvarn tries to upgrade HTTP requests to HTTPS ones, by replying with
+a <code>307 Temporary Redirect</code> with a location of the same page, but with HTTPS.</p>
+<p>This is also a prime extension, that redirects the request to a special prepare
+extension which is only accessible to the internals. There, it responds with the
+<code>307 Temporary Redirect</code>.</p>
+<p>The <a href="#uri-redirect">extension above</a> has a higher priority and is therefore ran
+before. Notice the <strong>/index.html</strong> below.</p>
+<pre style="background-color:#2d2d2d;"><code class="language-shell"><span style="color:#6699cc;">$</span><span style="color:#d3d0c8;"> curl</span><span style="color:#f2777a;"> -i</span><span style="color:#d3d0c8;"> http://icelk.dev
+</span><span style="color:#6699cc;">HTTP/1.1</span><span style="color:#d3d0c8;"> 307 Temporary Redirect
+</span><span style="color:#6699cc;">location:</span><span style="color:#d3d0c8;"> https://icelk.dev/index.html
+</span><span style="color:#6699cc;">server:</span><span style="color:#d3d0c8;"> Kvarn/0.5.0 (Linux)
+</span><span style="color:#6699cc;">connection:</span><span style="color:#d3d0c8;"> keep-alive
 
-...
-</code></pre>
+</span><span style="color:#6699cc;">...
+</span></code></pre>
 <p>That is a by-product of the URI redirection.</p>
 </md></main>
 $[footer]

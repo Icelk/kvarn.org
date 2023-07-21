@@ -4,41 +4,51 @@ $[head]
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Communication with Kvarn from the command line.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p><code>kvarnctl</code> is a binary available for UNIX systems. It commnicates with your Kvarn instances to execute commands with arguments.</p>
-<p>Downloads are <a href="https://github.com/Icelk/moella/releases/">available</a>.
-Nightly Linux downloads are available on <a href="https://github.com/Icelk/kvarn/actions/workflows/kvarnctl.yml">GitHub actions</a>.</p>
+<main><md><p><code>kvarnctl</code> is a binary available for UNIX systems. It commnicates with your
+Kvarn instances to execute commands with arguments.</p>
+<p>Downloads are <a href="https://github.com/Icelk/moella/releases/">available</a>. Nightly
+Linux downloads are available on
+<a href="https://github.com/Icelk/kvarn/actions/workflows/kvarnctl.yml">GitHub actions</a>.</p>
 <h1 id="commands">Commands</h1>
 <p>These correspond to <a href="https://doc.kvarn.org/kvarn/ctl/index.html">plugins</a>.</p>
 <h2 id="shutdown"><code>shutdown</code></h2>
 <p>Shut the Kvarn instance down.</p>
-<p>If the <code>graceful-shutdown</code> <a href="/cargo-features.">cargo feature</a> is enabled, this performs a graceful shutdown (no connections are abruptly terminated).
-You can implement your own shutdown mechanism.</p>
+<p>If the <code>graceful-shutdown</code> <a href="/cargo-features.">cargo feature</a> is enabled, this
+performs a graceful shutdown (no connections are abruptly terminated). You can
+implement your own shutdown mechanism.</p>
 <h2 id="ping"><code>ping</code></h2>
 <p>Pings Kvarn. The response will be all the arguments joined with spaces</p>
 <h2 id="reload"><code>reload</code></h2>
-<p>Starts a new instance in place and performs a graceful shutdown.
-Requires both the capabilities necessitated by <a href="#shutdown"><code>shutdown</code></a> and that the OS is UNIX &amp; !Solaris &amp; !illumos.
-This is also what <a href="/shutdown-handover.#handover">is required by handover</a>.</p>
-<p>If handover isn’t available, there will be a small gap where no listener is online -
-if someone requests the webpage during the ~0.4s window, they get a <code>Server couldn't be reached</code> error from their browser.</p>
-<p>If the argument <code>wait</code> is passed (<code>kvarnctl reload wait</code>), the command doesn’t return until the old instance has been shut down.</p>
+<p>Starts a new instance in place and performs a graceful shutdown. Requires both
+the capabilities necessitated by <a href="#shutdown"><code>shutdown</code></a> and that the OS is UNIX
+&amp; !Solaris &amp; !illumos. This is also what
+<a href="/shutdown-handover.#handover">is required by handover</a>.</p>
+<p>If handover isn’t available, there will be a small gap where no listener is
+online - if someone requests the webpage during the ~0.4s window, they get a
+<code>Server couldn't be reached</code> error from their browser.</p>
+<p>If the argument <code>wait</code> is passed (<code>kvarnctl reload wait</code>), the command doesn’t
+return until the old instance has been shut down.</p>
 <h2 id="wait"><code>wait</code></h2>
 <p>Waits for the Kvarn instance to shut down.</p>
 <h2 id="clear"><code>clear</code></h2>
 <p>Format: <code>kvarnctl clear &lt;method&gt; (&lt;host&gt; &lt;file/URI&gt;)</code></p>
-<p>Clears caches. Methods available are <code>all</code>, <code>files</code>, <code>responses</code> (these optionally take a host to clear),
-and two which clear a specific resource, <code>file</code> and <code>response</code>.</p>
+<p>Clears caches. Methods available are <code>all</code>, <code>files</code>, <code>responses</code> (these
+optionally take a host to clear), and two which clear a specific resource,
+<code>file</code> and <code>response</code>.</p>
 <h1 id="waiting-for-kvarn-to-turn-off">Waiting for Kvarn to turn off</h1>
-<p>If you want to wait for when Kvarn turns off, use the <code>--wait</code> flag. The advantage of using the flag instead of the command
-is that the command returns when an instance is shut down. The flag handles reloads, so it’ll still wait after a reload, for
-a <code>shutdown</code> (or anything else that makes Kvarn shut down).</p>
+<p>If you want to wait for when Kvarn turns off, use the <code>--wait</code> flag. The
+advantage of using the flag instead of the command is that the command returns
+when an instance is shut down. The flag handles reloads, so it’ll still wait
+after a reload, for a <code>shutdown</code> (or anything else that makes Kvarn shut down).</p>
 <blockquote>
 <p>This is accomplished by trying to reconnect once the <code>wait</code> command returns.</p>
 </blockquote>
 <h1 id="path">Path</h1>
-<p>By default, Kvarn listens on <code>/run/user/&lt;uid&gt;/kvarn.sock</code> for users and <code>/run/kvarn.sock</code> for root users.
-You can <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path">change this</a>.</p>
+<p>By default, Kvarn listens on <code>/run/user/&lt;uid&gt;/kvarn.sock</code> for users and
+<code>/run/kvarn.sock</code> for root users. You can
+<a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.set_ctl_path">change this</a>.</p>
 <h2 id="disable">Disable</h2>
-<p>You can also <a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.disable_ctl">disable the IPC altogether</a>.</p>
+<p>You can also
+<a href="https://doc.kvarn.org/kvarn/struct.RunConfig.html#method.disable_ctl">disable the IPC altogether</a>.</p>
 </md></main>
 $[footer]

@@ -1,12 +1,12 @@
 # Kvarn's candidates for fonts on the website
 
-> During the pick of the font, I came across several good-looking fonts.
-> Here, I've collected them if we'd like to change in the future.
+> During the pick of the font, I came across several good-looking fonts. Here,
+> I've collected them if we'd like to change in the future.
 
 ## Handwriting
 
-> This one of the best handwriting fonts I've ever come across.
-> Always seems to pop up!
+> This one of the best handwriting fonts I've ever come across. Always seems to
+> pop up!
 
 <https://fonts.google.com/specimen/Dancing+Script>
 
@@ -16,8 +16,7 @@
 
 <https://fonts.google.com/specimen/Cairo>
 
-This one is a bit more boxy.<br>
-<https://fonts.google.com/specimen/Electrolize>
+This one is a bit more boxy.<br> <https://fonts.google.com/specimen/Electrolize>
 
 ## Stylised
 

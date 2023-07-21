@@ -4,12 +4,13 @@ $[head]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="features--why-to-use-kvarn">Features &amp; why to use Kvarn</h1>
 <p>All of these are available in <a href="/moella/">Mölla</a>!</p>
-<p>Kvarn tries to package many useful features without being bloated.
-Optional extensions are available in <a href="https://github.com/Icelk/kvarn/tree/main/kvarn_extensions">the extensions crate</a>.</p>
+<p>Kvarn tries to package many useful features without being bloated. Optional
+extensions are available in
+<a href="https://github.com/Icelk/kvarn/tree/main/kvarn_extensions">the extensions crate</a>.</p>
 <blockquote>
-<p>When using Kvarn as a library: some require certain <a href="/cargo-features.">Cargo “features”</a>
-to be compiled in, and some require <code>kvarn_extensions</code>.
-This will be explicitly noted.</p>
+<p>When using Kvarn as a library: some require certain
+<a href="/cargo-features.">Cargo “features”</a> to be compiled in, and some require
+<code>kvarn_extensions</code>. This will be explicitly noted.</p>
 </blockquote>
 <table id="toc"><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#features--why-to-use-kvarn">1 Features & why to use Kvarn</a></td></tr>
@@ -36,18 +37,23 @@ This will be explicitly noted.</p>
 <tr><td><a href="#back-to-the-basics">20 Back to the basics</a></td></tr>
 </tbody></table>
 <h1 id="batteries-included-but-not-required">Batteries included, but not required</h1>
-<p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website features.</p>
+<p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website
+features.</p>
 <ul>
-<li><a href="#automatic-certificates">Automatic HTTPS certificates</a>: Kvarn handles your certificates
-for you—no need to renew or use <code>certbot</code> to get certificates.</li>
-<li><a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a>: A fast, simple, and customizable authentication extension.
-It provides a JWT implementation with support for persistent logins and validation servers.</li>
-<li><a href="#full-text-search-engine">Kvarn search</a>: A site search engine. You can try it out on the <a href="/">front page</a>.</li>
-<li>Kvarn extensions: a <a href="https://crates.io/crates/kvarn-extensions">crate</a> with several useful extensions, including
-<a href="#reverse-proxy">a reverse proxy</a>, <a href="#php">PHP support</a>, and <a href="#templates">templates</a>.</li>
+<li><a href="#automatic-certificates">Automatic HTTPS certificates</a>: Kvarn handles your
+certificates for you—no need to renew or use <code>certbot</code> to get certificates.</li>
+<li><a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a>: A fast, simple, and
+customizable authentication extension. It provides a JWT implementation with
+support for persistent logins and validation servers.</li>
+<li><a href="#full-text-search-engine">Kvarn search</a>: A site search engine. You can try
+it out on the <a href="/">front page</a>.</li>
+<li>Kvarn extensions: a <a href="https://crates.io/crates/kvarn-extensions">crate</a> with
+several useful extensions, including <a href="#reverse-proxy">a reverse proxy</a>,
+<a href="#php">PHP support</a>, and <a href="#templates">templates</a>.</li>
 </ul>
 <h1 id="sane-defaults">Sane defaults</h1>
-<p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
+<p><a href="/#getting-started">The example</a> of running a Kvarn server provides sane
+defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
 <h1 id="http3"><a href="/http3.">HTTP/3</a></h1>
 <blockquote>
 <p>Requires the feature <code>http3</code> (part of <code>default</code> and <code>full</code>)</p>
@@ -60,40 +66,43 @@ on that, and HTTP/3 is groundbreaking. You can naturally
 <blockquote>
 <p>Requires the feature <code>http2</code> (part of <code>default</code> and <code>full</code>)</p>
 </blockquote>
-<p>HTTP/2 is abstracted from all other internal and extension logic; offering complete parity.
-This means you get all the pros of the latest protocols without any code.</p>
-<p>Kvarn passes the <a href="https://github.com/summerwind/h2spec">h2spec test</a>.
-If something doesn’t work, it’s the user agent not conforming.</p>
+<p>HTTP/2 is abstracted from all other internal and extension logic; offering
+complete parity. This means you get all the pros of the latest protocols without
+any code.</p>
+<p>Kvarn passes the <a href="https://github.com/summerwind/h2spec">h2spec test</a>. If
+something doesn’t work, it’s the user agent not conforming.</p>
 <h1 id="iouring"><a href="/uring.">io_uring</a></h1>
 <blockquote>
 <p>Requires the feature <code>uring</code> (not <code>default</code>)</p>
 </blockquote>
-<p>Kvarn can be compiled to use <a href="https://en.wikipedia.org/wiki/io_uring"><code>io_uring</code></a>,
-the hottest IO platform under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 &amp; HTTP/2),
-and HTTP/3 (using a custom QUIC interop).</p>
+<p>Kvarn can be compiled to use
+<a href="https://en.wikipedia.org/wiki/io_uring"><code>io_uring</code></a>, the hottest IO platform
+under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 &amp; HTTP/2), and
+HTTP/3 (using a custom QUIC interop).</p>
 <h2 id="http2-push"><a href="/push.">HTTP/2 Push</a></h2>
 <blockquote>
 <p>Part of <code>kvarn_extensions</code> under the feature <code>push</code> (part of <code>default</code>)</p>
 </blockquote>
-<p>HTTP/2 introduced a features where the server can push other resources before the client requests them.
-This has not been widely used because of the problem with pushing to the client when it’s already got
-the resource in a cache.</p>
-<p>Kvarn aims to solve this by making it simple to integrate, <em>not requiring any configuration</em>
-and not sending the same resource twice to a client.</p>
+<p>HTTP/2 introduced a features where the server can push other resources before
+the client requests them. This has not been widely used because of the problem
+with pushing to the client when it’s already got the resource in a cache.</p>
+<p>Kvarn aims to solve this by making it simple to integrate, <em>not requiring any
+configuration</em> and not sending the same resource twice to a client.</p>
 <h1 id="https"><a href="/https.">HTTPS</a></h1>
 <blockquote>
 <p>Requires the feature <code>https</code> (part of <code>default</code> and <code>full</code>)</p>
 </blockquote>
-<p>HTTPS makes the web more secure. Kvarn’s design is not only influenced by HTTPS, but
-encourages you to use it.</p>
-<p>When creating a virtual host, the recommended constructor redirects all HTTP requests to
-HTTPS before the request reaches your code.</p>
-<p>Kvarn also suggest using HSTS. When you’re ready, you only need to add one line of code to enable it for a host,
-improving security further.</p>
-<p>If you want maximum security, you can of course simply not listen on port <code>80</code>, reducing the code you write.</p>
+<p>HTTPS makes the web more secure. Kvarn’s design is not only influenced by HTTPS,
+but encourages you to use it.</p>
+<p>When creating a virtual host, the recommended constructor redirects all HTTP
+requests to HTTPS before the request reaches your code.</p>
+<p>Kvarn also suggest using HSTS. When you’re ready, you only need to add one line
+of code to enable it for a host, improving security further.</p>
+<p>If you want maximum security, you can of course simply not listen on port <code>80</code>,
+reducing the code you write.</p>
 <h2 id="automatic-certificates">Automatic certificates</h2>
-<p>If you’re using <a href="/moella/">Mölla</a> (which is recommended), you can enable HTTPS and
-automatic certificates through <a href="https://letsencrypt.org">Let’s Encrypt</a>:</p>
+<p>If you’re using <a href="/moella/">Mölla</a> (which is recommended), you can enable HTTPS
+and automatic certificates through <a href="https://letsencrypt.org">Let’s Encrypt</a>:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#d3d0c8;">(
     </span><span style="color:#747369;">// --snip--
 </span><span style="color:#d3d0c8;">    hosts: [
@@ -126,133 +135,172 @@ automatic certificates through <a href="https://letsencrypt.org">Let’s Encrypt
 </blockquote>
 <h1 id="full-documentation-coverage">Full documentation coverage</h1>
 <p>Documentation and examples are key to a good library.</p>
-<p>You can always read <a href="https://doc.kvarn.org">Kvarn’s documentation online</a>.
-Under <code>Crates</code> to the left, you can explore all other crates part of <a href="/ecosystem/">the ecosystem</a>.</p>
-<p>The full coverage is enforced by the compiler. All examples are enforced to run correctly by Rust’s builtin testing.</p>
+<p>You can always read <a href="https://doc.kvarn.org">Kvarn’s documentation online</a>. Under
+<code>Crates</code> to the left, you can explore all other crates part of
+<a href="/ecosystem/">the ecosystem</a>.</p>
+<p>The full coverage is enforced by the compiler. All examples are enforced to run
+correctly by Rust’s builtin testing.</p>
 <h1 id="extensions"><a href="/extensions/">Extensions</a></h1>
-<p>Kvarn in it’s default acts as a file-server. That in itself isn’t useful for building a backend.
-To build a API, implement authentication, add dynamic language support, or <a href="https://en.wikipedia.org/wiki/CORS">CORS</a>,
-<em>extensions</em> provides the data and tools you need.</p>
-<p>As there are few and small performance benefits of implementing features directly into Kvarn, but great flexibility advantages.
-Therefore, as many features as possible are built as extensions.</p>
-<p>When writing an API, Kvarn handles all HTTP boilerplate. It’ll cache, compress, encrypt, set <code>content-length</code>, and <a href="/security/">secure</a>
-the response, with minimal info from the implementation.</p>
-<p>There exists several types of extensions, all of which have a separate function for complete control over the response pipeline.
-A <em>present</em> extension can be called from within a file.
-If it start with <code>!&gt;</code> you can specify present extensions like this <code>!&gt; my-extension arg1 arg2 &amp;&gt; another-extension argument...</code>.
-These are evaluated in order, first to last.</p>
-<p>Here, server-side caching is critical for heavy workloads.
-The flexibility of Kvarn is advantageous; if you have frequent changes, content is recalculated on the fly, but if you need performance,
-it’ll cache the results as a complete response, ready to be sent.
-Kvarn tries to generalize requests, reducing cache misses.
-This also acts as a primitive anti-DOS strategy; if no new content is calculated (or read from disk),
-the requests are <em>very</em> cheap.</p>
+<p>Kvarn in it’s default acts as a file-server. That in itself isn’t useful for
+building a backend. To build a API, implement authentication, add dynamic
+language support, or <a href="https://en.wikipedia.org/wiki/CORS">CORS</a>, <em>extensions</em>
+provides the data and tools you need.</p>
+<p>As there are few and small performance benefits of implementing features
+directly into Kvarn, but great flexibility advantages. Therefore, as many
+features as possible are built as extensions.</p>
+<p>When writing an API, Kvarn handles all HTTP boilerplate. It’ll cache, compress,
+encrypt, set <code>content-length</code>, and <a href="/security/">secure</a> the response, with
+minimal info from the implementation.</p>
+<p>There exists several types of extensions, all of which have a separate function
+for complete control over the response pipeline. A <em>present</em> extension can be
+called from within a file. If it start with <code>!&gt;</code> you can specify present
+extensions like this
+<code>!&gt; my-extension arg1 arg2 &amp;&gt; another-extension argument...</code>. These are
+evaluated in order, first to last.</p>
+<p>Here, server-side caching is critical for heavy workloads. The flexibility of
+Kvarn is advantageous; if you have frequent changes, content is recalculated on
+the fly, but if you need performance, it’ll cache the results as a complete
+response, ready to be sent. Kvarn tries to generalize requests, reducing cache
+misses. This also acts as a primitive anti-DOS strategy; if no new content is
+calculated (or read from disk), the requests are <em>very</em> cheap.</p>
 <h1 id="cache"><a href="/cache.">Cache</a></h1>
-<p>When Kvarn was created, a reverse-proxy caching the responses from a web application seemed slow.
-It holds up to this day.</p>
-<p>The built in cache in Kvarn is in-memory for performance and integration with extensions is seamless.</p>
-<p>If you build extensions directly in Kvarn with it’s convenient <a href="https://doc.kvarn.org/kvarn/index.html#macros">macros</a>
-with C-like performance. It’s much faster, and easier to manage, than a reverse-proxy fighting with Node’s
-<code>transfer-encoding: chunked</code> and not being sure of exactly how to cache the content.</p>
-<p>If you need the maintenance advantage of a modular system, look no further than <a href="#graceful-shutdown--handover">Kvarn’s handover</a>.</p>
+<p>When Kvarn was created, a reverse-proxy caching the responses from a web
+application seemed slow. It holds up to this day.</p>
+<p>The built in cache in Kvarn is in-memory for performance and integration with
+extensions is seamless.</p>
+<p>If you build extensions directly in Kvarn with it’s convenient
+<a href="https://doc.kvarn.org/kvarn/index.html#macros">macros</a> with C-like performance.
+It’s much faster, and easier to manage, than a reverse-proxy fighting with
+Node’s <code>transfer-encoding: chunked</code> and not being sure of exactly how to cache
+the content.</p>
+<p>If you need the maintenance advantage of a modular system, look no further than
+<a href="#graceful-shutdown--handover">Kvarn’s handover</a>.</p>
 <h1 id="php"><a href="/php.">PHP</a></h1>
 <blockquote>
 <p>Part of <code>kvarn_extensions</code> under the feature <code>php</code> (part of <code>default</code>)</p>
 </blockquote>
-<p>Kvarn can interpret <code>.php</code> files and send them back, with all of Kvarn’s other features.
-Server caching can be set with the <a href="/cache.#kvarn-cache-control"><code>kvarn-cache-control</code></a> header.</p>
+<p>Kvarn can interpret <code>.php</code> files and send them back, with all of Kvarn’s other
+features. Server caching can be set with the
+<a href="/cache.#kvarn-cache-control"><code>kvarn-cache-control</code></a> header.</p>
 <h1 id="markdown"><a href="/chute/">MarkDown</a></h1>
 <blockquote>
 <p>Part of <a href="/chute/">Chute</a></p>
 </blockquote>
 <p>Sometimes you need to write a consistent website easily, with minimal effort.
-That’s where <em>Kvarn Chute</em> comes in. You write MarkDown, Chute translates it to HTML, using
-<a href="/templates.">Kvarn’s templating system</a>.</p>
-<p>Long pages are hard to navigate. Therefore, Chute offers a <strong>table of contents</strong> generator.
-Just insert <code>${toc}</code> in your document, run <code>chute -y &lt;doc&gt;</code>. You now have a high-quality HTML-only TOC.</p>
-<p>This page is written using this features, reducing boilerplate <em>even more</em> and speeding up documentation.</p>
-<p>You can add tags to the head of the HTML by starting the MD document (after the extensions declaration) with a <code>&lt;head&gt;</code> tag.
-You’ll of course have to close it when all the metadata is written.</p>
-<p>As with normal files, you can run extensions.
-Chute will automatically add the <code>tmpl</code> (template) extension with the <code>standard.html</code> and <code>md.html</code>
-templates present. If you add <code>!&gt; hide</code> to hide the MD source, it’ll be removed, so users can view the HTML.</p>
+That’s where <em>Kvarn Chute</em> comes in. You write MarkDown, Chute translates it to
+HTML, using <a href="/templates.">Kvarn’s templating system</a>.</p>
+<p>Long pages are hard to navigate. Therefore, Chute offers a <strong>table of contents</strong>
+generator. Just insert <code>${toc}</code> in your document, run <code>chute -y &lt;doc&gt;</code>. You now
+have a high-quality HTML-only TOC.</p>
+<p>This page is written using this features, reducing boilerplate <em>even more</em> and
+speeding up documentation.</p>
+<p>You can add tags to the head of the HTML by starting the MD document (after the
+extensions declaration) with a <code>&lt;head&gt;</code> tag. You’ll of course have to close it
+when all the metadata is written.</p>
+<p>As with normal files, you can run extensions. Chute will automatically add the
+<code>tmpl</code> (template) extension with the <code>standard.html</code> and <code>md.html</code> templates
+present. If you add <code>!&gt; hide</code> to hide the MD source, it’ll be removed, so users
+can view the HTML.</p>
 <h1 id="templates"><a href="/templates.">Templates</a></h1>
 <blockquote>
 <p>Part of <code>kvarn_extensions</code> under the feature <code>templates</code> (part of <code>default</code>)</p>
 </blockquote>
-<p>To build a consistent website, you need templates. Copying your header and footer isn’t viable!
-As a simple, fast, and easy to use template system,
-this can virtually copy-paste bytes from a template file
-(located in <code>&lt;webroot&gt;/templates/</code>), but does not, for example,
-handle conditional inclusion or loops. Only simple inclusion.</p>
-<p>The nav-bar on this page is powered by the templates.
-HTML documents are about 15 lines for a title, heading, and a paragraph,
-and of course the nav-bar.</p>
-<p>See <a href="https://github.com/Icelk/kvarn.org/tree/main/templates/">this directory in the source code of this website</a> for an example of the format of templates.</p>
+<p>To build a consistent website, you need templates. Copying your header and
+footer isn’t viable! As a simple, fast, and easy to use template system, this
+can virtually copy-paste bytes from a template file (located in
+<code>&lt;webroot&gt;/templates/</code>), but does not, for example, handle conditional inclusion
+or loops. Only simple inclusion.</p>
+<p>The nav-bar on this page is powered by the templates. HTML documents are about
+15 lines for a title, heading, and a paragraph, and of course the nav-bar.</p>
+<p>See
+<a href="https://github.com/Icelk/kvarn.org/tree/main/templates/">this directory in the source code of this website</a>
+for an example of the format of templates.</p>
 <h1 id="full-text-search-engine"><a href="/search.">Full text search engine</a></h1>
-<p>A search engine with typo tolerance, no index set-up, and fast (1-4ms) responses.</p>
-<p>Boasts an API for accessing the search hits.
-This means you can implement your own frontend,
-or use mine at <a href="https://icelk.dev">icelk.dev</a>. All the code for that is summarized at <a href="/search.#frontend">the example</a>.</p>
+<p>A search engine with typo tolerance, no index set-up, and fast (1-4ms)
+responses.</p>
+<p>Boasts an API for accessing the search hits. This means you can implement your
+own frontend, or use mine at <a href="https://icelk.dev">icelk.dev</a>. All the code for
+that is summarized at <a href="/search.#frontend">the example</a>.</p>
 <p>See the link for more information.</p>
 <h1 id="cors"><a href="/cors.">CORS</a></h1>
-<p>As the web has expanded and complexity increased, cross-site requests have become essential.</p>
+<p>As the web has expanded and complexity increased, cross-site requests have
+become essential.</p>
 <blockquote>
-<p>Many of the best-practises of HTTP/1.1; loading from multiple domains and chunking together content
-is irrelevant when using HTTP/2, as it resolves these issues.</p>
+<p>Many of the best-practises of HTTP/1.1; loading from multiple domains and
+chunking together content is irrelevant when using HTTP/2, as it resolves
+these issues.</p>
 </blockquote>
-<p>Kvarn features a CORS handling (using extensions), backed by testing, which blocks unauthorized CORS requests
-before they get to your API. This ensures all CORS requests, even from faulty user agents, don’t change server state.</p>
+<p>Kvarn features a CORS handling (using extensions), backed by testing, which
+blocks unauthorized CORS requests before they get to your API. This ensures all
+CORS requests, even from faulty user agents, don’t change server state.</p>
 <h1 id="graceful-shutdown--handover"><a href="/shutdown-handover.">Graceful shutdown &amp; handover</a></h1>
 <blockquote>
 <p>Requires the feature <code>graceful-shutdown</code> (part of <code>default</code> and <code>full</code>)</p>
 </blockquote>
-<p>To enable upgrade of the server, you need to shut it down and then start it up, with <em>no</em> downtime.
-The way Kvarn solves this is through graceful shutdown and handover.</p>
+<p>To enable upgrade of the server, you need to shut it down and then start it up,
+with <em>no</em> downtime. The way Kvarn solves this is through graceful shutdown and
+handover.</p>
 <h1 id="reverse-proxy"><a href="/reverse-proxy.">Reverse proxy</a></h1>
 <blockquote>
-<p>Part of <code>kvarn_extensions</code> under the feature <code>reverse-proxy</code> (part of <code>default</code>)</p>
+<p>Part of <code>kvarn_extensions</code> under the feature <code>reverse-proxy</code> (part of
+<code>default</code>)</p>
 </blockquote>
-<p>If you want to develop your web application in another language, Kvarn can act as a reverse proxy, with all the benefits of
-HTTP/2, caching, and easy upgrades.</p>
-<p>In contrast to writing extensions in Rust, the speed and throughput is greatly reduced.</p>
+<p>If you want to develop your web application in another language, Kvarn can act
+as a reverse proxy, with all the benefits of HTTP/2, caching, and easy upgrades.</p>
+<p>In contrast to writing extensions in Rust, the speed and throughput is greatly
+reduced.</p>
 <h1 id="guaranteed-memorysafety">Guaranteed memory-safety</h1>
 <p>Kvarn is written in <a href="https://rust-lang.org">Rust</a>.</p>
-<p>This greatly improves security (resilience against buffer overflows) and reliability,
-as Rust guarantees pointers to be valid through it’s strict borrowing rules.
-This, together with phenomenal error handling and strong tooling makes for maintainable and predictable code.</p>
-<p>The borrow rules ensure memory safety without runtime overhead, while being as fast as C
-(assuming the code is optimal, which is easier to accomplish with Rust).</p>
-<p>The compiler catches <em>nearly all</em> errors. The quote, “if it compiles, it runs” is indeed true.
-Compare Rust vs C++ to TS vs JS, only in one case silly bugs cause production to go offline.</p>
+<p>This greatly improves security (resilience against buffer overflows) and
+reliability, as Rust guarantees pointers to be valid through it’s strict
+borrowing rules. This, together with phenomenal error handling and strong
+tooling makes for maintainable and predictable code.</p>
+<p>The borrow rules ensure memory safety without runtime overhead, while being as
+fast as C (assuming the code is optimal, which is easier to accomplish with
+Rust).</p>
+<p>The compiler catches <em>nearly all</em> errors. The quote, “if it compiles, it runs”
+is indeed true. Compare Rust vs C++ to TS vs JS, only in one case silly bugs
+cause production to go offline.</p>
 <h1 id="other-fundamental-features--systems">Other fundamental features &amp; systems</h1>
 <ul>
-<li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>, the runtime used by <a href="https://deno.land">Deno</a>.</li>
-<li><a href="/limiting.">Limiting</a> of requests to provide availability to all users. This is a <em>primitive</em> defence against small DOS attacks.</li>
-<li><a href="/errors.#overriding-http-errors">Error handling</a> for customizing HTTP errors, with support for all extensions, including templates.
-If you visit <a href="/intentional-404">a page which doesn’t exist on kvarn.org</a>, you’ll see the same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>
-<li><a href="/cargo-features.">Optional features</a> offer the best of both worlds; HTTP/2, HTTPS, and graceful shutdown
-results in a larger binary and slower compile-times,
-but disabling those features makes Kvarn <a href="https://github.com/Icelk/httPWM/#state-of-project">viable to compile on a Raspberry Pi</a>.</li>
-<li><a href="/host.">Virtual hosts</a> allow multiple domains and sub-domains to be hosted on the same system.
-All configuration is defined per host.</li>
+<li>Completely <a href="/async.">asynchronous</a>, powered by <a href="https://tokio.rs">Tokio</a>,
+the runtime used by <a href="https://deno.land">Deno</a>.</li>
+<li><a href="/limiting.">Limiting</a> of requests to provide availability to all users.
+This is a <em>primitive</em> defence against small DOS attacks.</li>
+<li><a href="/errors.#overriding-http-errors">Error handling</a> for customizing HTTP
+errors, with support for all extensions, including templates. If you visit
+<a href="/intentional-404">a page which doesn’t exist on kvarn.org</a>, you’ll see the
+same nav-bar as everywhere else. That took 10 lines of HTML to set up.</li>
+<li><a href="/cargo-features.">Optional features</a> offer the best of both worlds; HTTP/2,
+HTTPS, and graceful shutdown results in a larger binary and slower
+compile-times, but disabling those features makes Kvarn
+<a href="https://github.com/Icelk/httPWM/#state-of-project">viable to compile on a Raspberry Pi</a>.</li>
+<li><a href="/host.">Virtual hosts</a> allow multiple domains and sub-domains to be hosted
+on the same system. All configuration is defined per host.</li>
 <li>IPv6 support.</li>
-<li><a href="/utils.">Utilities</a> for extracting data from HTTP requests. This will include a basic authentication system soon.</li>
-<li><a href="/testing.">Testing</a> with a public frontend to test your APIs before production.
-To run a Kvarn server and send a request takes 2 lines of code.</li>
+<li><a href="/utils.">Utilities</a> for extracting data from HTTP requests. This will
+include a basic authentication system soon.</li>
+<li><a href="/testing.">Testing</a> with a public frontend to test your APIs before
+production. To run a Kvarn server and send a request takes 2 lines of code.</li>
 </ul>
 <h1 id="back-to-the-basics">Back to the basics</h1>
 <blockquote>
-<p>Doesn’t mean they’re more simple or easier to implement, as development time has shown. ಠ_ಠ</p>
+<p>Doesn’t mean they’re more simple or easier to implement, as development time
+has shown. ಠ_ಠ</p>
 </blockquote>
 <ul>
-<li>Compression automatically applied to the response. This handles negotiating the algorithm. Brotli and Gzip support.</li>
+<li>Compression automatically applied to the response. This handles negotiating
+the algorithm. Brotli and Gzip support.</li>
 <li><a href="../csp.">CSP</a> support.</li>
 <li>Extremely simple to use <a href="../nonce.">nonce</a> support.</li>
-<li>If-Modified-Since for more effective caching. This is directly integrated with <code>lifetime</code>s in the Kvarn cache.</li>
-<li><a href="/extensions/redirects.">URL handling</a> of requests ending in <code>/</code> (becomes <code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
-<li>Logging using Rust’s standard logger, enabling you to chose a log implementation which works for you.</li>
-<li>Idiomatic Rust, guaranteed by <a href="https://github.com/rust-lang/rust-clippy">Clippy</a>.</li>
+<li>If-Modified-Since for more effective caching. This is directly integrated
+with <code>lifetime</code>s in the Kvarn cache.</li>
+<li><a href="/extensions/redirects.">URL handling</a> of requests ending in <code>/</code> (becomes
+<code>/index.html</code> by default) and <code>.</code> (becomes <code>.html</code> by default).</li>
+<li>Logging using Rust’s standard logger, enabling you to chose a log
+implementation which works for you.</li>
+<li>Idiomatic Rust, guaranteed by
+<a href="https://github.com/rust-lang/rust-clippy">Clippy</a>.</li>
 </ul>
 </md></main>
 $[footer]

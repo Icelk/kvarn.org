@@ -4,30 +4,44 @@ $[head]
     <meta name="permalinks" content="enabled"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="How to use HTML templates through the Kvarn templating engine.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>A goal of the Kvarn web server is to be modular. It’s also designed to be <em>fast</em>. Therefore, some default tools are provided to give good performance. You can naturally write other tools with the same level of integration as the Kvarn-branded ones.</p>
-<p>Kvarn’s templating engine works using a <a href="extensions/#present">present extension</a> to expand template names.
-The extension takes arguments of which templates to include (e.g. <code>!&gt; tmpl standard.html markdown.html</code>).
-It reads those files in the <code>templates/&lt;template file&gt;</code>. <code>templates/</code> is a sibling of the <code>public</code> directory.</p>
+<main><md><p>A goal of the Kvarn web server is to be modular. It’s also designed to be
+<em>fast</em>. Therefore, some default tools are provided to give good performance. You
+can naturally write other tools with the same level of integration as the
+Kvarn-branded ones.</p>
+<p>Kvarn’s templating engine works using a <a href="extensions/#present">present extension</a>
+to expand template names. The extension takes arguments of which templates to
+include (e.g. <code>!&gt; tmpl standard.html markdown.html</code>). It reads those files in
+the <code>templates/&lt;template file&gt;</code>. <code>templates/</code> is a sibling of the <code>public</code>
+directory.</p>
 <blockquote>
-<p>This system also works for file types other than HTML. The same pattern of template files (preferably with the same extension as the file being templated) and present extensions works.</p>
+<p>This system also works for file types other than HTML. The same pattern of
+template files (preferably with the same extension as the file being
+templated) and present extensions works.</p>
 </blockquote>
-<p>You can define templates (in e.g. <code>templates/standard.html</code>) using names inside brakets prepended by a dollar sign: <code>\$[template name]</code>. Everything after the template name (a space or newline is required after) is part of that template.</p>
-<p>In your document, include templates by writing their name in brackets the same was as described above. The text will be “copy and pasted” to override the template. These don’t have to have newlines or spaces after them.</p>
+<p>You can define templates (in e.g. <code>templates/standard.html</code>) using names inside
+brakets prepended by a dollar sign: <code>\$[template name]</code>. Everything after the
+template name (a space or newline is required after) is part of that template.</p>
+<p>In your document, include templates by writing their name in brackets the same
+was as described above. The text will be “copy and pasted” to override the
+template. These don’t have to have newlines or spaces after them.</p>
 <blockquote>
-<p>The template definitions and usages can be indented. This allows formatting tools to run.</p>
+<p>The template definitions and usages can be indented. This allows formatting
+tools to run.</p>
 </blockquote>
 <h1 id="escaping">Escaping</h1>
-<p>If you don’t want a template, but only brackets <code>\$[]</code>, you can escape. Just insert a backslash <code>\</code> before: <code>\​\$[]</code>.</p>
+<p>If you don’t want a template, but only brackets <code>\$[]</code>, you can escape. Just
+insert a backslash <code>\</code> before: <code>\​\$[]</code>.</p>
 <blockquote>
-<p>See <a href="/chute/#escaping">/chute/#escaping</a> on how to write the above in Markdown source. The same applies to this.</p>
+<p>See <a href="/chute/#escaping">/chute/#escaping</a> on how to write the above in Markdown
+source. The same applies to this.</p>
 </blockquote>
-<p>If you see an unwanted <code>\</code> in the HTML, consider removing the escape. It shouldn’t be needed.
-See the section below for some exceptions.</p>
+<p>If you see an unwanted <code>\</code> in the HTML, consider removing the escape. It
+shouldn’t be needed. See the section below for some exceptions.</p>
 <h1 id="issues-with-square-brackets-">Issues with square brackets \$[]</h1>
-<p>See <a href="/chute/#issues-with-square-brackets-">/chute/#issues-with-square-brackets</a> and
-<a href="/chute/#escaping">/chute/#escaping</a>.</p>
+<p>See <a href="/chute/#issues-with-square-brackets-">/chute/#issues-with-square-brackets</a>
+and <a href="/chute/#escaping">/chute/#escaping</a>.</p>
 <h2 id="limitations">Limitations</h2>
-<p>You can’t start a line with <code>\$[</code> (or just have whitespace before) (even when using escaping) in a template.
-This is due to how data is copied from templates.</p>
+<p>You can’t start a line with <code>\$[</code> (or just have whitespace before) (even when
+using escaping) in a template. This is due to how data is copied from templates.</p>
 </md></main>
 $[footer]

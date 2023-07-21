@@ -4,12 +4,16 @@ $[head]
     <meta name="permalinks" content="not-titles"> <!-- part of JS on icelk.dev & kvarn.org, options: disabled|enabled|not-titles -->
     <meta name="description" content="Method of testing Kvarn applications and the Kvarn library">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>Testing is integral to smooth deployment. Kvarn is covered by many unit and integration tests.
-Using <a href="https://github.com/Icelk/kvarn/actions">GitHub Actions</a>, the whole codebase is linted and tested for every change.</p>
+<main><md><p>Testing is integral to smooth deployment. Kvarn is covered by many unit and
+integration tests. Using
+<a href="https://github.com/Icelk/kvarn/actions">GitHub Actions</a>, the whole codebase is
+linted and tested for every change.</p>
 <p>It is available at <a href="https://crates.io/crates/kvarn_testing/">crates.io</a>.</p>
 <h1 id="application-testing">Application testing</h1>
-<p>If you’re an author of an application powered by Kvarn and want to test it, you’ve come to the right place.</p>
-<p>Below is an example of a production test. Unit tests are naturally also supported, and look exactly the same.</p>
+<p>If you’re an author of an application powered by Kvarn and want to test it,
+you’ve come to the right place.</p>
+<p>Below is an example of a production test. Unit tests are naturally also
+supported, and look exactly the same.</p>
 <p><code>Cargo.toml</code>:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-toml"><span style="color:#747369;"># add the following to the bottom (or add to you dev-dependencies if you already have that section)
 </span><span style="color:#6699cc;">[dev-dependencies]
@@ -55,6 +59,7 @@ async </span><span style="color:#cc99cc;">fn </span><span style="color:#6699cc;"
     )
 }
 </span></code></pre>
-<p>The documentation for the testing library can be found at <a href="https://doc.kvarn.org/kvarn_testing/">doc.kvarn.org</a>.</p>
+<p>The documentation for the testing library can be found at
+<a href="https://doc.kvarn.org/kvarn_testing/">doc.kvarn.org</a>.</p>
 </md></main>
 $[footer]

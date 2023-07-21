@@ -11,26 +11,31 @@ $[head]
         }
     </style>
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>Mölla (often written moella, pronounced /mœla/ (œ as in b<strong>ir</strong>d with a British accent))
-is a binary that reads config file(s) and spinns up a Kvarn web server.
-It supports all the major Kvarn extensions and gives you most options Kvarn supports.</p>
-<p>Mölla can serve multiple hosts on a single server (with automatic certificates!),
-extending to serving multiple sets of hosts on different ports / NICs—all within 1 process.
-When you run <code>kvarnctl reload</code>, Mölla will restart and load any changes made to the config (or run a new version of the binary),
+<main><md><p>Mölla (often written moella, pronounced /mœla/ (œ as in b<strong>ir</strong>d with a British
+accent)) is a binary that reads config file(s) and spinns up a Kvarn web server.
+It supports all the major Kvarn extensions and gives you most options Kvarn
+supports.</p>
+<p>Mölla can serve multiple hosts on a single server (with automatic
+certificates!), extending to serving multiple sets of hosts on different ports /
+NICs—all within 1 process. When you run <code>kvarnctl reload</code>, Mölla will restart
+and load any changes made to the config (or run a new version of the binary),
 with 0 milliseconds of downtime.</p>
 <h1 id="getting-started">Getting started</h1>
-<p>Download the binary for your platform from <a href="https://github.com/Icelk/moella/releases">this page</a>.</p>
+<p>Download the binary for your platform from
+<a href="https://github.com/Icelk/moella/releases">this page</a>.</p>
 <ul>
 <li>Platform specifics:
 <ul>
-<li>If you run Linux: run <code>chmod +x &lt;downloaded binary&gt;</code> to make it executable.</li>
-<li>If you run macOS: run <code>chmod +x &lt;downloaded binary&gt;</code>, then open Finder and find
-the binary. Right click and press <code>Open</code>. Accept the warning.</li>
+<li>If you run Linux: run <code>chmod +x &lt;downloaded binary&gt;</code> to make it
+executable.</li>
+<li>If you run macOS: run <code>chmod +x &lt;downloaded binary&gt;</code>, then open Finder
+and find the binary. Right click and press <code>Open</code>. Accept the warning.</li>
 <li>On Windows, it should just run</li>
 </ul>
 </li>
-<li>Lastly, run the command <code>./&lt;downloaded binary&gt; --help</code> (maybe replace <code>/</code> with <code>\</code> on Windows)
-in your shell (<code>cmd.exe</code> in Windows) to get usage information.</li>
+<li>Lastly, run the command <code>./&lt;downloaded binary&gt; --help</code> (maybe replace <code>/</code>
+with <code>\</code> on Windows) in your shell (<code>cmd.exe</code> in Windows) to get usage
+information.</li>
 </ul>
 <p>Now, create a Mölla config in a file named <code>host.ron</code>:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#747369;">// My Moella config
@@ -52,10 +57,12 @@ in your shell (<code>cmd.exe</code> in Windows) to get usage information.</li>
     ports: Standard(Host(&quot;</span><span style="color:#99cc99;">mywebsite.org</span><span style="color:#d3d0c8;">&quot;)),
 )
 </span></code></pre>
-<p>Next, run the web server using <code>./&lt;downloaded binary&gt; --config host.ron --high-ports</code> and go to <code>http://localhost:8080</code>.
-The contents of <code>./public/index.html</code> will be loaded in your browser (refresh page to update content).
-The <code>--high-ports</code> tells Mölla to use port 8080 instead of 80 (the default for the unencrypted web),
-because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
+<p>Next, run the web server using
+<code>./&lt;downloaded binary&gt; --config host.ron --high-ports</code> and go to
+<code>http://localhost:8080</code>. The contents of <code>./public/index.html</code> will be loaded in
+your browser (refresh page to update content). The <code>--high-ports</code> tells Mölla to
+use port 8080 instead of 80 (the default for the unencrypted web), because you
+have to run <code>sudo</code> to get access to port 80 on Linux.</p>
 <h1 id="config-schema">Config schema</h1>
 <p>Here, all the options of the config are documented.</p>
 <pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#747369;">// optional to specify `KvarnConfig`
@@ -427,30 +434,35 @@ because you have to run <code>sudo</code> to get access to port 80 on Linux.</p>
 <p>That’s the whole config!</p>
 <h1 id="command-line-options">Command line options</h1>
 <ul>
-<li><code>--high-ports</code> avoid port permission problems on Linux by binding to 8080 and 8443</li>
+<li><code>--high-ports</code> avoid port permission problems on Linux by binding to 8080
+and 8443</li>
 <li><code>-c | --config &lt;CONFIG FILE&gt;</code> tells Mölla which config to use</li>
-<li><code>-d | --host &lt;DEFAULT HOST&gt;</code> for local development, which host to show if you have several defined</li>
+<li><code>-d | --host &lt;DEFAULT HOST&gt;</code> for local development, which host to show if
+you have several defined</li>
 <li><code>-p | --ctl-path &lt;INSTANCE&gt;</code> the instance name / control socket path to use.
-This is critical to change if you want multiple instances of Mölla to run on the same machine.
-If you run Mölla again with the same <code>INSTANCE</code>, it will take over and shut down the previous.
-You must specity the same <code>INSTANCE</code> when running <a href="/ctl/"><code>kvarnctl</code></a></li>
+This is critical to change if you want multiple instances of Mölla to run on
+the same machine. If you run Mölla again with the same <code>INSTANCE</code>, it will
+take over and shut down the previous. You must specity the same <code>INSTANCE</code>
+when running <a href="/ctl/"><code>kvarnctl</code></a></li>
 </ul>
 <h1 id="history-and-why-this-exists">History and why this exists</h1>
-<p>Before Mölla, you had to write the host and extension descriptors in Rust,
-and recompile after every change. This made for a way too high barrier to entry and
-way too slow development cycle.
-For <a href="https://icelk.dev">icelk.dev</a>, I need <a href="https://github.com/Icelk/icelk.dev/blob/6127d3f/icelk.dev.ron#L93-L95">custom extensions</a>,
-which are <a href="https://github.com/Icelk/icelk.dev/blob/659df7f/server/src/main.rs#L15-L19">easily integrated</a>
+<p>Before Mölla, you had to write the host and extension descriptors in Rust, and
+recompile after every change. This made for a way too high barrier to entry and
+way too slow development cycle. For <a href="https://icelk.dev">icelk.dev</a>, I need
+<a href="https://github.com/Icelk/icelk.dev/blob/6127d3f/icelk.dev.ron#L93-L95">custom extensions</a>,
+which are
+<a href="https://github.com/Icelk/icelk.dev/blob/659df7f/server/src/main.rs#L15-L19">easily integrated</a>
 into Mölla!</p>
 <h1 id="examples">Examples</h1>
 <h2 id="kvarnorg"><a href="/">kvarn.org</a> and <a href="https://doc.kvarn.org">doc.kvarn.org</a></h2>
-<p>You might notice the following doesn’t include a <code>ports</code> property.
-That’s due to this config being imported from another.
-Since the main config contains <code>ports: Standard(All)</code>, all the hosts defined here are included.</p>
-<p>You may also notice that the extension set <code>base</code> isn’t found anywhere.
-That’s because it’s defined in the “parent” config that imports this.
-The implicit usage of undefined extension sets might be deprecated in the future
-(forcing you to import the relevant config in this file too, instead of relying on the parent config).</p>
+<p>You might notice the following doesn’t include a <code>ports</code> property. That’s due to
+this config being imported from another. Since the main config contains
+<code>ports: Standard(All)</code>, all the hosts defined here are included.</p>
+<p>You may also notice that the extension set <code>base</code> isn’t found anywhere. That’s
+because it’s defined in the “parent” config that imports this. The implicit
+usage of undefined extension sets might be deprecated in the future (forcing you
+to import the relevant config in this file too, instead of relying on the parent
+config).</p>
 <pre style="background-color:#2d2d2d;"><code class="language-ron"><span style="color:#d3d0c8;">(
     extensions: {
         &quot;</span><span style="color:#99cc99;">kvarn</span><span style="color:#d3d0c8;">&quot;: [

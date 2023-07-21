@@ -13,26 +13,31 @@
     </style>
 </head>
 
-Mölla (often written moella, pronounced /mœla/ (œ as in b**ir**d with a British accent))
-is a binary that reads config file(s) and spinns up a Kvarn web server.
-It supports all the major Kvarn extensions and gives you most options Kvarn supports.
+Mölla (often written moella, pronounced /mœla/ (œ as in b**ir**d with a British
+accent)) is a binary that reads config file(s) and spinns up a Kvarn web server.
+It supports all the major Kvarn extensions and gives you most options Kvarn
+supports.
 
-Mölla can serve multiple hosts on a single server (with automatic certificates!),
-extending to serving multiple sets of hosts on different ports / NICs—all within 1 process.
-When you run `kvarnctl reload`, Mölla will restart and load any changes made to the config (or run a new version of the binary),
+Mölla can serve multiple hosts on a single server (with automatic
+certificates!), extending to serving multiple sets of hosts on different ports /
+NICs—all within 1 process. When you run `kvarnctl reload`, Mölla will restart
+and load any changes made to the config (or run a new version of the binary),
 with 0 milliseconds of downtime.
 
 # Getting started
 
-Download the binary for your platform from [this page](https://github.com/Icelk/moella/releases).
+Download the binary for your platform from
+[this page](https://github.com/Icelk/moella/releases).
 
 -   Platform specifics:
-    -   If you run Linux: run `chmod +x <downloaded binary>` to make it executable.
-    -   If you run macOS: run `chmod +x <downloaded binary>`, then open Finder and find
-        the binary. Right click and press `Open`. Accept the warning.
+    -   If you run Linux: run `chmod +x <downloaded binary>` to make it
+        executable.
+    -   If you run macOS: run `chmod +x <downloaded binary>`, then open Finder
+        and find the binary. Right click and press `Open`. Accept the warning.
     -   On Windows, it should just run
--   Lastly, run the command `./<downloaded binary> --help` (maybe replace `/` with `\` on Windows)
-    in your shell (`cmd.exe` in Windows) to get usage information.
+-   Lastly, run the command `./<downloaded binary> --help` (maybe replace `/`
+    with `\` on Windows) in your shell (`cmd.exe` in Windows) to get usage
+    information.
 
 Now, create a Mölla config in a file named `host.ron`:
 
@@ -57,10 +62,12 @@ Now, create a Mölla config in a file named `host.ron`:
 )
 ```
 
-Next, run the web server using `./<downloaded binary> --config host.ron --high-ports` and go to `http://localhost:8080`.
-The contents of `./public/index.html` will be loaded in your browser (refresh page to update content).
-The `--high-ports` tells Mölla to use port 8080 instead of 80 (the default for the unencrypted web),
-because you have to run `sudo` to get access to port 80 on Linux.
+Next, run the web server using
+`./<downloaded binary> --config host.ron --high-ports` and go to
+`http://localhost:8080`. The contents of `./public/index.html` will be loaded in
+your browser (refresh page to update content). The `--high-ports` tells Mölla to
+use port 8080 instead of 80 (the default for the unencrypted web), because you
+have to run `sudo` to get access to port 80 on Linux.
 
 # Config schema
 
@@ -438,35 +445,40 @@ That's the whole config!
 
 # Command line options
 
--   `--high-ports` avoid port permission problems on Linux by binding to 8080 and 8443
+-   `--high-ports` avoid port permission problems on Linux by binding to 8080
+    and 8443
 -   `-c | --config <CONFIG FILE>` tells Mölla which config to use
--   `-d | --host <DEFAULT HOST>` for local development, which host to show if you have several defined
+-   `-d | --host <DEFAULT HOST>` for local development, which host to show if
+    you have several defined
 -   `-p | --ctl-path <INSTANCE>` the instance name / control socket path to use.
-    This is critical to change if you want multiple instances of Mölla to run on the same machine.
-    If you run Mölla again with the same `INSTANCE`, it will take over and shut down the previous.
-    You must specity the same `INSTANCE` when running [`kvarnctl`](/ctl/)
+    This is critical to change if you want multiple instances of Mölla to run on
+    the same machine. If you run Mölla again with the same `INSTANCE`, it will
+    take over and shut down the previous. You must specity the same `INSTANCE`
+    when running [`kvarnctl`](/ctl/)
 
 # History and why this exists
 
-Before Mölla, you had to write the host and extension descriptors in Rust,
-and recompile after every change. This made for a way too high barrier to entry and
-way too slow development cycle.
-For [icelk.dev](https://icelk.dev), I need [custom extensions](https://github.com/Icelk/icelk.dev/blob/6127d3f/icelk.dev.ron#L93-L95),
-which are [easily integrated](https://github.com/Icelk/icelk.dev/blob/659df7f/server/src/main.rs#L15-L19)
+Before Mölla, you had to write the host and extension descriptors in Rust, and
+recompile after every change. This made for a way too high barrier to entry and
+way too slow development cycle. For [icelk.dev](https://icelk.dev), I need
+[custom extensions](https://github.com/Icelk/icelk.dev/blob/6127d3f/icelk.dev.ron#L93-L95),
+which are
+[easily integrated](https://github.com/Icelk/icelk.dev/blob/659df7f/server/src/main.rs#L15-L19)
 into Mölla!
 
 # Examples
 
 ## [kvarn.org](/) and [doc.kvarn.org](https://doc.kvarn.org)
 
-You might notice the following doesn't include a `ports` property.
-That's due to this config being imported from another.
-Since the main config contains `ports: Standard(All)`, all the hosts defined here are included.
+You might notice the following doesn't include a `ports` property. That's due to
+this config being imported from another. Since the main config contains
+`ports: Standard(All)`, all the hosts defined here are included.
 
-You may also notice that the extension set `base` isn't found anywhere.
-That's because it's defined in the "parent" config that imports this.
-The implicit usage of undefined extension sets might be deprecated in the future
-(forcing you to import the relevant config in this file too, instead of relying on the parent config).
+You may also notice that the extension set `base` isn't found anywhere. That's
+because it's defined in the "parent" config that imports this. The implicit
+usage of undefined extension sets might be deprecated in the future (forcing you
+to import the relevant config in this file too, instead of relying on the parent
+config).
 
 ```ron
 (

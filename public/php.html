@@ -5,20 +5,28 @@ $[head]
     <meta name="description" content="Details on the usage and implementation of PHP / FastCGI in Kvarn.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>PHP support is now production ready.</p>
-<p>I use it to serve <a href="https://github.com/postfixadmin/postfixadmin">PostfixAdmin</a> for my mail servers.</p>
-<p>The implementation works by capturing requests and serving them by sending a request to a FastCGI server at a provided location (such as a UNIX socket or UDP port).
-Then, the body is returned if no errors were reported.</p>
+<p>I use it to serve <a href="https://github.com/postfixadmin/postfixadmin">PostfixAdmin</a>
+for my mail servers.</p>
+<p>The implementation works by capturing requests and serving them by sending a
+request to a FastCGI server at a provided location (such as a UNIX socket or UDP
+port). Then, the body is returned if no errors were reported.</p>
 <h1 id="usage">Usage</h1>
-<p>Mount the <a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.">PHP extension</a>.
-Now, all queries ending in <code>.php</code> will be redirected to the FastCGI server at <code>connection</code>.
-You can add additional predicates for capturing pages to be served by PHP.</p>
-<p>Also consider the <a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php_with_working_directory.">working directory version</a>
-of the <code>mount_php</code> function. It allows for PHP usage on a limited route on your web application.</p>
+<p>Mount the
+<a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.">PHP extension</a>. Now,
+all queries ending in <code>.php</code> will be redirected to the FastCGI server at
+<code>connection</code>. You can add additional predicates for capturing pages to be served
+by PHP.</p>
+<p>Also consider the
+<a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php_with_working_directory.">working directory version</a>
+of the <code>mount_php</code> function. It allows for PHP usage on a limited route on your
+web application.</p>
 <blockquote>
 <p>Some of these features are not available before v0.4.0.</p>
 </blockquote>
 <h1 id="wordpress">WordPress</h1>
 <p>WordPress should work without any further work.</p>
-<p>If you’re using <a href="https://github.com/Icelk/kvarn-search">Kvarn search</a>, enable the <code>Options::index_wordpress_sitemap</code> flag to automatically index the sitemap supplied by WordPress.</p>
+<p>If you’re using <a href="https://github.com/Icelk/kvarn-search">Kvarn search</a>, enable
+the <code>Options::index_wordpress_sitemap</code> flag to automatically index the sitemap
+supplied by WordPress.</p>
 </md></main>
 $[footer]

@@ -8,15 +8,18 @@
 
 CSP tells the browser where it's OK to load resources from.
 
-This can help prevent certain attacks, such as [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting). CSP disables the ability to load malicious scripts and styles.
+This can help prevent certain attacks, such as
+[XSS](https://en.wikipedia.org/wiki/Cross-site_scripting). CSP disables the
+ability to load malicious scripts and styles.
 
-Like [CORS](cors.), CSP is handled through a ruleset. This allows parts of a site to use different policies.
+Like [CORS](cors.), CSP is handled through a ruleset. This allows parts of a
+site to use different policies.
 
-Note that previous versions of Kvarn (before v0.4.0), the `new` method meant `empty`.
-You should probably always use `default`.
-See the example below.
+Note that previous versions of Kvarn (before v0.4.0), the `new` method meant
+`empty`. You should probably always use `default`. See the example below.
 
-In situations where you want a clean slate, use the `empty` method. Then, I'd recommend setting a catch-all method (using path `*`).
+In situations where you want a clean slate, use the `empty` method. Then, I'd
+recommend setting a catch-all method (using path `*`).
 
 # Reverse proxy CSP getting overridden
 

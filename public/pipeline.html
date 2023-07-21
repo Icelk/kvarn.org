@@ -3,10 +3,13 @@ $[head]
     <title>Request pipeline | Kvarn</title>
     <meta name="permalinks" content="enabled">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>This document will contain all information about how incoming requests are handled in Kvarn.</p>
-<p>This is here to make development easier; to have a clear plan of what to do, where to implement it, and the branching of functions.</p>
+<main><md><p>This document will contain all information about how incoming requests are
+handled in Kvarn.</p>
+<p>This is here to make development easier; to have a clear plan of what to do,
+where to implement it, and the branching of functions.</p>
 <h1 id="layer-1--transport">Layer 1 / Transport</h1>
-<p>This is the layer managing the transport layer of the connections. Currently, it’s not implemented, but that should be easy (said that before, haven’t you?).</p>
+<p>This is the layer managing the transport layer of the connections. Currently,
+it’s not implemented, but that should be easy (said that before, haven’t you?).</p>
 <p>This is needed for HTTP/3 with its QUIC protocol.</p>
 <p>TCP will not get effected.</p>
 <h1 id="layer-2--encryption">Layer 2 / Encryption</h1>
@@ -16,13 +19,15 @@ $[dependencies]$[md-imports]$[close-head]$[navigation]
 <h1 id="layer-3--http">Layer 3 / HTTP</h1>
 <p>This is where all HTTP versions (1, 2 and 3) are managed to give a common API.</p>
 <p>Here, the compressed headers of HTTP/2 and HTTP/3 are resolved.</p>
-<p>Body still stream
-(at least kinda, see <a href="https://doc.kvarn.org/kvarn/application/enum.Body.html"><code>application.rs#Body</code></a> for more info).
-Headers are parsed.</p>
+<p>Body still stream (at least kinda, see
+<a href="https://doc.kvarn.org/kvarn/application/enum.Body.html"><code>application.rs#Body</code></a>
+for more info). Headers are parsed.</p>
 <p>After the response has been sent, Post extensions are resolved.</p>
 <h1 id="layer-4--caching-and-compression">Layer 4 / Caching and compression</h1>
-<p>All outgoing data from this layer is cached based on the output of <a href="#layer-5--pathing">layer 5</a>.</p>
-<p>Rules can be created to get hits from other pages (the Prime extensions) when accessing a page; server-side redirecting, above the caching level.</p>
+<p>All outgoing data from this layer is cached based on the output of
+<a href="#layer-5--pathing">layer 5</a>.</p>
+<p>Rules can be created to get hits from other pages (the Prime extensions) when
+accessing a page; server-side redirecting, above the caching level.</p>
 <p>Compression can be <code>None</code> or <code>Full</code> to regulate automatic caching.</p>
 <p>Caching has two options:</p>
 <ul>
@@ -30,19 +35,25 @@ Headers are parsed.</p>
 <code>None</code> (<code>no-store</code>), <code>Changing</code> (2 minutes), <code>Full</code> (1 week), or
 <code>MaxAge(u32)</code> (same as <code>Full</code>, but with <code>max-age</code> set to the integer.)</li>
 <li><a href="https://doc.kvarn.org/kvarn/comprash/enum.ServerCachePreference.html">Server cache</a>,
-<code>None</code>, <code>QueryMatters</code> (requested path has to match query) or <code>Full</code> (query of path is ignored, to prevent DDOS attacks circumventing the <em>fast</em> cache)</li>
+<code>None</code>, <code>QueryMatters</code> (requested path has to match query) or <code>Full</code> (query
+of path is ignored, to prevent DDOS attacks circumventing the <em>fast</em> cache)</li>
 </ul>
-<p>After the response is created by <a href="#layer-5--pathing">layer 5</a>, Present extensions are run here.</p>
+<p>After the response is created by <a href="#layer-5--pathing">layer 5</a>, Present
+extensions are run here.</p>
 <p>Then, each time the response is sent, Package extensions are run.</p>
 <h1 id="layer-5--pathing">Layer 5 / Pathing</h1>
-<p>This is where the data of <code>::http::Request</code> is interpreted to either read a file, run a Prepare extension, call PHP, or any <em>path</em>.</p>
-<p>This whole layer can be customised, to for example implement a proxy. You have complete control over the outgoing data
-(except for the first response; this is a HTTP server!), cache method, and suggested compression.</p>
+<p>This is where the data of <code>::http::Request</code> is interpreted to either read a
+file, run a Prepare extension, call PHP, or any <em>path</em>.</p>
+<p>This whole layer can be customised, to for example implement a proxy. You have
+complete control over the outgoing data (except for the first response; this is
+a HTTP server!), cache method, and suggested compression.</p>
 <h2 id="layer-6--lib-api">Layer 6 / Lib API</h2>
 <p>Only meant to be used from <a href="#layer-5--pathing">layer 5</a>.</p>
-<p>This translates header values to more helpful structs, such as <code>accept*</code> and <code>authentication</code>
-Can be found using Kvarns public API, through the module <code>utils</code>.</p>
-<p>It’s also here the <a href="https://doc.kvarn.org/kvarn/websocket/"><code>websocket</code></a> module operates.
-<a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a> utilizes this layer too.</p>
+<p>This translates header values to more helpful structs, such as <code>accept*</code> and
+<code>authentication</code> Can be found using Kvarns public API, through the module
+<code>utils</code>.</p>
+<p>It’s also here the <a href="https://doc.kvarn.org/kvarn/websocket/"><code>websocket</code></a> module
+operates. <a href="https://crates.io/crates/kvarn-auth">Kvarn auth</a> utilizes this layer
+too.</p>
 </md></main>
 $[footer]

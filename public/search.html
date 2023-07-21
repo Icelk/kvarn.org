@@ -5,21 +5,31 @@ $[head]
     <meta name="description" content="Full text search engine for your site. Returns results as you type. No index setup.">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><h1 id="kvarn-search">Kvarn search</h1>
-<p>Over Christmas, I made a <a href="https://github.com/Icelk/elipdotter">full text search engine</a>.
-You can read my <a href="https://icelk.dev/articles/search-engine.html">article</a> for more details.</p>
+<p>Over Christmas, I made a
+<a href="https://github.com/Icelk/elipdotter">full text search engine</a>. You can read my
+<a href="https://icelk.dev/articles/search-engine.html">article</a> for more details.</p>
 <blockquote>
-<p>This is currently used on this website. To try it out, search using the box on the <a href="/">front page</a>.</p>
+<p>This is currently used on this website. To try it out, search using the box on
+the <a href="/">front page</a>.</p>
 </blockquote>
-<p>Now, you can easily set up a API endpoint for search on your website, powered by Kvarn.</p>
-<p>Using the <a href="https://github.com/Icelk/kvarn-search"><code>kvarn-search</code></a> <a href="https://crates.io/crates/kvarn-search">crate</a>
-you can add a search engine to Kvarn and customize it.</p>
-<p>See <a href="https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221">these two lines</a> from the reference implementation for an example on how to set it up.</p>
+<p>Now, you can easily set up a API endpoint for search on your website, powered by
+Kvarn.</p>
+<p>Using the <a href="https://github.com/Icelk/kvarn-search"><code>kvarn-search</code></a>
+<a href="https://crates.io/crates/kvarn-search">crate</a> you can add a search engine to
+Kvarn and customize it.</p>
+<p>See
+<a href="https://github.com/Icelk/kvarn-reference/blob/main/src/hosts.rs#L220-L221">these two lines</a>
+from the reference implementation for an example on how to set it up.</p>
 <h2 id="integrations">Integrations</h2>
-<p>This will index all the pages of the site (except those provided by <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.add_prepare_fn">PrepareFn</a>).</p>
+<p>This will index all the pages of the site (except those provided by
+<a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.add_prepare_fn">PrepareFn</a>).</p>
 <p>Check out <a href="php.#wordpress">the WordPress integration here</a>.</p>
 <h2 id="frontend">Frontend</h2>
-<p><a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/script.js#L237-L395">This function</a> handles the searching in JS.<br />
-<a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/templates/standard.html#L105-L127">This HTML</a> is the search bar.<br />
-<a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/style.css#L350-L434">And this</a> is the styling.</p>
+<p><a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/script.js#L237-L395">This function</a>
+handles the searching in JS.<br />
+<a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/templates/standard.html#L105-L127">This HTML</a>
+is the search bar.<br />
+<a href="https://github.com/Icelk/icelk.dev/blob/3525fb532f18a1d532ca08046fabe21a95c6e73d/public/style.css#L350-L434">And this</a>
+is the styling.</p>
 </md></main>
 $[footer]

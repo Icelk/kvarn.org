@@ -5,56 +5,80 @@ $[head]
     <meta name="description" content="Features of Kvarn which can be choosen when compiling">
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Certain features, such as HTTP/2, HTTPS, or compression might not be needed.
-When Kvarn is deployed to an IOT device controlled from within the network, these features aren’t needed.
-Disabling them cuts down on compilation time, memory requirements, and space requirements.</p>
+When Kvarn is deployed to an IOT device controlled from within the network,
+these features aren’t needed. Disabling them cuts down on compilation time,
+memory requirements, and space requirements.</p>
 <blockquote>
-<p>To view the dependencies used by each feature, see the <a href="https://github.com/Icelk/kvarn/blob/main/Cargo.toml">Cargo.toml file</a>.</p>
+<p>To view the dependencies used by each feature, see the
+<a href="https://github.com/Icelk/kvarn/blob/main/Cargo.toml">Cargo.toml file</a>.</p>
 </blockquote>
 <p>These can be enabled in your <code>Cargo.toml</code>:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-toml"><span style="color:#6699cc;">[dependencies]
 kvarn</span><span style="color:#d3d0c8;"> = { version = &quot;</span><span style="color:#99cc99;">0.5</span><span style="color:#d3d0c8;">&quot;, default-features = false, features = </span><span style="color:#cc99cc;">[</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">base</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">https</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">http2</span><span style="color:#d3d0c8;">&quot;, &quot;</span><span style="color:#99cc99;">all-compression</span><span style="color:#d3d0c8;">&quot;</span><span style="color:#cc99cc;">] </span><span style="color:#d3d0c8;">}
 </span></code></pre>
-<p>See the <a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a> on the matter.</p>
+<p>See the
+<a href="https://doc.rust-lang.org/cargo/reference/features.html">official Cargo guide</a>
+on the matter.</p>
 <hr />
-<p>Which Cargo features are required for certain items are also shown in the <a href="https://doc.kvarn.org/">docs</a>
-(e.g. the <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new"><code>Host::new</code></a> function).</p>
+<p>Which Cargo features are required for certain items are also shown in the
+<a href="https://doc.kvarn.org/">docs</a> (e.g. the
+<a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new"><code>Host::new</code></a>
+function).</p>
 <p>Please always enable <code>base</code> (see below for more details).</p>
 <ul>
-<li><a href="/uring."><code>uring</code></a>: Use the <a href="https://en.wikipedia.org/wiki/Io_uring">io-uring</a> API for network and file system IO on Linux. ~0-15% better performance, depending on use-case. Do your own benchmarks!</li>
+<li><a href="/uring."><code>uring</code></a>: Use the
+<a href="https://en.wikipedia.org/wiki/Io_uring">io-uring</a> API for network and file
+system IO on Linux. ~0-15% better performance, depending on use-case. Do
+your own benchmarks!</li>
 <li><a href="/http3."><code>http3</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/3">HTTP/3</a>.
-Strongly recommended, since HTTP/3 is faster than both HTTP/1 &amp; HTTP/2, due to the new protocol, QUIC.
-Enabling HTTP/2 in tandem is also recommended, since the initial connection is done over TCP,
-so having the fastest TCP protocol (HTTP/2) available is beneficial.
-Works both with and without <code>uring</code> (world first!).</li>
-<li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>, the secure HTTP protocol.
-This is strongly recommended if you’re doing anything that’s not resource constrained and local.</li>
+Strongly recommended, since HTTP/3 is faster than both HTTP/1 &amp; HTTP/2, due
+to the new protocol, QUIC. Enabling HTTP/2 in tandem is also recommended,
+since the initial connection is done over TCP, so having the fastest TCP
+protocol (HTTP/2) available is beneficial. Works both with and without
+<code>uring</code> (world first!).</li>
+<li><a href="/https."><code>https</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTPS">HTTPS</a>,
+the secure HTTP protocol. This is strongly recommended if you’re doing
+anything that’s not resource constrained and local.</li>
 <li><a href="/http2."><code>http2</code></a>: Enables <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP/2</a>.
-This is strongly recommended as it’s considerably faster and less resource intensive than HTTP/1.1, which is always supported.
-This also reduces latency due to implementation details.</li>
+This is strongly recommended as it’s considerably faster and less resource
+intensive than HTTP/1.1, which is always supported. This also reduces
+latency due to implementation details.</li>
 <li><code>br</code>: <a href="https://en.wikipedia.org/wiki/Brotli">Brotli compression</a></li>
 <li><code>gzip</code>: <a href="https://en.wikipedia.org/wiki/Gzip#File_format">Gzip compression</a></li>
-<li><a href="/shutdown-handover."><code>graceful-shutdown</code></a>: Enables <a href="https://doc.kvarn.org/kvarn/shutdown/">graceful shutdown</a> and handover.
-This means you can upgrade the Kvarn server without ANY downtime - using UNIX socket magic we bind the new server on the same sockets,
-then tell the old instance to shut down. All pending and current requests are waited for.</li>
-<li><code>auto-hostname</code>: Populates the <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.name">host name</a> and <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.alternative_names">alternative names</a>
+<li><a href="/shutdown-handover."><code>graceful-shutdown</code></a>: Enables
+<a href="https://doc.kvarn.org/kvarn/shutdown/">graceful shutdown</a> and handover.
+This means you can upgrade the Kvarn server without ANY downtime - using
+UNIX socket magic we bind the new server on the same sockets, then tell the
+old instance to shut down. All pending and current requests are waited for.</li>
+<li><code>auto-hostname</code>: Populates the
+<a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.name">host name</a>
+and
+<a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#structfield.alternative_names">alternative names</a>
 automatically. This uses the info stored in the certificate.</li>
-<li><a href="/nonce."><code>nonce</code></a>: enables usage of <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce">nonce</a> on inline <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements.</li>
-<li><a href="https://doc.kvarn.org/kvarn/websocket/"><code>websocket</code></a>: enables the <code>websocket</code> module in Kvarn which allows easy and fast WebSockets from you web application.</li>
-<li><code>async-networking</code>: use Tokio’s async networking primitives instead of the blocking <code>std::net</code> variants.
-Recommended for every application that can enable it.
-See <a href="#embedded">embedded</a> for more details.</li>
+<li><a href="/nonce."><code>nonce</code></a>: enables usage of
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce">nonce</a>
+on inline <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements.</li>
+<li><a href="https://doc.kvarn.org/kvarn/websocket/"><code>websocket</code></a>: enables the
+<code>websocket</code> module in Kvarn which allows easy and fast WebSockets from you
+web application.</li>
+<li><code>async-networking</code>: use Tokio’s async networking primitives instead of the
+blocking <code>std::net</code> variants. Recommended for every application that can
+enable it. See <a href="#embedded">embedded</a> for more details.</li>
 </ul>
 <p>There are additionally several <em>feature sets</em>:</p>
 <ul>
 <li><code>full</code>: enables all the features above.</li>
-<li><code>base</code>: enables <code>async-networking</code>, a feature considered critical for all platforms except embedded (e.g. ESP32-IDF)</li>
-<li><code>all-http</code>: enables all HTTP standards and versions available - <code>https</code> &amp; <code>http2</code> &amp; <code>http3</code></li>
+<li><code>base</code>: enables <code>async-networking</code>, a feature considered critical for all
+platforms except embedded (e.g. ESP32-IDF)</li>
+<li><code>all-http</code>: enables all HTTP standards and versions available - <code>https</code> &amp;
+<code>http2</code> &amp; <code>http3</code></li>
 <li><code>all-compression</code>: enables all compression features - <code>br</code> &amp; <code>gzip</code></li>
 </ul>
 <h1 id="embedded">Embedded</h1>
-<p>Some embedded platforms have <code>std</code> support (e.g. ESP32-IDF) but don’t support <code>mio</code>.
-Disabling the feature <code>async-networking</code> causes Kvarn to block on every request,
-but removes the dependency on <code>mio</code>. It’s very useful for IOT devices which don’t need large throughput nor
-sub-ms responsiveness (which the embedded controllers doesn’t have computing power to achieve anyway).</p>
+<p>Some embedded platforms have <code>std</code> support (e.g. ESP32-IDF) but don’t support
+<code>mio</code>. Disabling the feature <code>async-networking</code> causes Kvarn to block on every
+request, but removes the dependency on <code>mio</code>. It’s very useful for IOT devices
+which don’t need large throughput nor sub-ms responsiveness (which the embedded
+controllers doesn’t have computing power to achieve anyway).</p>
 </md></main>
 $[footer]

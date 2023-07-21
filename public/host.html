@@ -6,22 +6,39 @@ $[head]
 $[dependencies]$[md-imports]$[close-head]$[navigation]
 <main><md><p>Kvarn provides a few web server primitives:</p>
 <ul>
-<li><a href="https://doc.kvarn.org/kvarn/host/struct.Host.">Host</a>s: can be thought of representing a <em>domain</em>.
-Using hosts have some advantages, namely the ability to serve the same content from several domains and over several protocols (i.e. using both HTTP and HTTPS).</li>
-<li><a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.">PortDescriptor</a>: the settings of how to bind a port, and the associated <em>Hosts</em> to serve.
-Binding to several ports for each <em>Host</em> is useful when serving multiple protocols (HTTP over port 80 and HTTPS over port 443).
-These can be combined in the <a href="https://doc.kvarn.org/kvarn/struct.RunConfig."><code>RunConfig</code></a>.</li>
-<li><a href="https://doc.kvarn.org/kvarn/struct.RunConfig.">Server instance</a>: an instance of a web server.</li>
+<li><a href="https://doc.kvarn.org/kvarn/host/struct.Host.">Host</a>s: can be thought of
+representing a <em>domain</em>. Using hosts have some advantages, namely the
+ability to serve the same content from several domains and over several
+protocols (i.e. using both HTTP and HTTPS).</li>
+<li><a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.">PortDescriptor</a>: the
+settings of how to bind a port, and the associated <em>Hosts</em> to serve. Binding
+to several ports for each <em>Host</em> is useful when serving multiple protocols
+(HTTP over port 80 and HTTPS over port 443). These can be combined in the
+<a href="https://doc.kvarn.org/kvarn/struct.RunConfig."><code>RunConfig</code></a>.</li>
+<li><a href="https://doc.kvarn.org/kvarn/struct.RunConfig.">Server instance</a>: an
+instance of a web server.</li>
 </ul>
 <hr />
-<p>When creating a host, it’s name and alternative names can be derived from the certificate, using <a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new_name_from_cert">this constructor</a>.</p>
-<p>Combining these means you can meet complex requirements, using minimal resources (all everything is ran on one process).</p>
-<p>Example: You’re running 3 websites, with both HTTP &amp; HTTPS. You also have a mail server using <a href="https://postfixadmin.sourceforge.io/">Postfix Admin</a>, so you need to serve the PHP site.
-You set up 4 hosts, one for each website and 1 for the <a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.">PHP</a> Postfix Admin.
-Then, you add the 3 website hosts to a <a href="https://doc.kvarn.org/kvarn/host/struct.Collection."><code>HostCollection</code></a> and bind them to the standard
-<a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.http">HTTP</a> and <a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.https">HTTPS</a> posts.
-After some port forwarding and a domain name, these will be accessible on the internet.
-You create a <code>HostCollection</code> with the PHP host and bind that to the port <code>8080</code> using the <a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.unsecure"><code>PortDescriptor::unsecure</code></a>.</p>
-<p>The three public websites operate intependently with their own extensions and Postfix Admin is only accessible to the local network (assuming you didn’t port forward port <code>8080</code>).</p>
+<p>When creating a host, it’s name and alternative names can be derived from the
+certificate, using
+<a href="https://doc.kvarn.org/kvarn/host/struct.Host.html#method.new_name_from_cert">this constructor</a>.</p>
+<p>Combining these means you can meet complex requirements, using minimal resources
+(all everything is ran on one process).</p>
+<p>Example: You’re running 3 websites, with both HTTP &amp; HTTPS. You also have a mail
+server using <a href="https://postfixadmin.sourceforge.io/">Postfix Admin</a>, so you need
+to serve the PHP site. You set up 4 hosts, one for each website and 1 for the
+<a href="https://doc.kvarn.org/kvarn_extensions/php/fn.mount_php.">PHP</a> Postfix Admin.
+Then, you add the 3 website hosts to a
+<a href="https://doc.kvarn.org/kvarn/host/struct.Collection."><code>HostCollection</code></a> and bind
+them to the standard
+<a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.http">HTTP</a> and
+<a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.https">HTTPS</a> posts.
+After some port forwarding and a domain name, these will be accessible on the
+internet. You create a <code>HostCollection</code> with the PHP host and bind that to the
+port <code>8080</code> using the
+<a href="https://doc.kvarn.org/kvarn/struct.PortDescriptor.#method.unsecure"><code>PortDescriptor::unsecure</code></a>.</p>
+<p>The three public websites operate intependently with their own extensions and
+Postfix Admin is only accessible to the local network (assuming you didn’t port
+forward port <code>8080</code>).</p>
 </md></main>
 $[footer]

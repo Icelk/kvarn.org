@@ -2,10 +2,10 @@
 $[head]
     <title>Extensions | Kvarn</title>
 $[dependencies]$[md-imports]$[close-head]$[navigation]
-<main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>.
-They are ran in an async context, so you can call async APIs to fetch data.
-They provide options for attaching to all parts of the request pipeline,
-with virtually no overhead compared to editing Kvarn’s source.</p>
+<main><md><p>To extend the core functionality of Kvarn, you’ll use <em>extensions</em>. They are ran
+in an async context, so you can call async APIs to fetch data. They provide
+options for attaching to all parts of the request pipeline, with virtually no
+overhead compared to editing Kvarn’s source.</p>
 <table id="toc"><thead><tr><th>Contents</th></tr></thead><tbody>
 <tr><td><a href="#details">1 Details</a></td></tr>
 <tr><td><a href="#building-an-api">2 Building an API</a></td></tr>
@@ -23,58 +23,67 @@ with virtually no overhead compared to editing Kvarn’s source.</p>
 <tr><td><a href="#example">5 Example</a></td></tr>
 </tbody></table>
 <h1 id="details">Details</h1>
-<p>The following pages are details on implementation useful to read if you’re working with Kvarn, even just as the web server to host your files.</p>
+<p>The following pages are details on implementation useful to read if you’re
+working with Kvarn, even just as the web server to host your files.</p>
 <ul>
 <li><a href="redirects.">Redirects</a></li>
-<li>APIs under the path <code>/./</code> are not accessible from the outside, as Kvarn’s security guarantees forbid this.<br />
+<li>APIs under the path <code>/./</code> are not accessible from the outside, as Kvarn’s
+security guarantees forbid this.<br />
 A common pattern is to make <a href="https://doc.kvarn.org/kvarn/extensions/type.Prime.html">Prime</a>
-extensions which redirect to <a href="https://doc.kvarn.org/kvarn/extensions/type.Prepare.html">Prepare</a> APIs located here.
-Then, you can conditionally change the path of a request to internal APIs (e.g. authentication, special admin panels).</li>
+extensions which redirect to <a href="https://doc.kvarn.org/kvarn/extensions/type.Prepare.html">Prepare</a>
+APIs located here. Then, you can conditionally change the path of a request to
+internal APIs (e.g. authentication, special admin panels).</li>
 </ul>
 <h1 id="building-an-api">Building an API</h1>
-<p>In Kvarn, you can attach to single URLs
-or provide a function which takes the request and
-determines whether or not your code should override the deafult.</p>
+<p>In Kvarn, you can attach to single URLs or provide a function which takes the
+request and determines whether or not your code should override the deafult.</p>
 <blockquote>
-<p>In the immediate future, you should be able to say “I want to capture <code>/api/{string}/{0..=100}</code>”</p>
+<p>In the immediate future, you should be able to say “I want to capture
+<code>/api/{string}/{0..=100}</code>”</p>
 </blockquote>
-<p>You then get request, a reference to the target host, an optional path, and the IP and port the request came from.
-You provide a response, which can be asynchronous,
-and Kvarn will handle all comression, <code>content-length</code>,
-delivery, HTTP protocols, caching (according to your preference, returned as part of the reponse),
-other extension, and encryption.</p>
-<p>This is in contrast to Node.js where you have to handle all cases,
-resulting in large <code>if else</code> statements
-(if you don’t use a library, in which case Kvarn is a lot faster and just as convenient).</p>
+<p>You then get request, a reference to the target host, an optional path, and the
+IP and port the request came from. You provide a response, which can be
+asynchronous, and Kvarn will handle all comression, <code>content-length</code>, delivery,
+HTTP protocols, caching (according to your preference, returned as part of the
+reponse), other extension, and encryption.</p>
+<p>This is in contrast to Node.js where you have to handle all cases, resulting in
+large <code>if else</code> statements (if you don’t use a library, in which case Kvarn is a
+lot faster and just as convenient).</p>
 <h1 id="the-five-ps">The five <em>P</em>s</h1>
-<p>Kvarn is very extensible. Therefore, several pluggable interfaces (called extensions) exist to make integration fast and seamless.</p>
+<p>Kvarn is very extensible. Therefore, several pluggable interfaces (called
+extensions) exist to make integration fast and seamless.</p>
 <p>Here are the five <em>P</em>s chronologically ordered from the request’s perspective.</p>
 <h2 id="prime"><a href="https://doc.kvarn.org/kvarn/macro.prime.html">Prime</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
 </ul>
-<p>This is where you can add cache redirects.
-If you for example want to load the login page on all privileged pages (when the user is not logged in),
-you can check for the <code>authentication</code> HTTP header
-and from there decide to intercept the request.</p>
-<p>It is also here where all HTTP requests are upgraded to HTTPS, by redirecting the request to
-a special page where a 307 redirect is responded with.</p>
+<p>This is where you can add cache redirects. If you for example want to load the
+login page on all privileged pages (when the user is not logged in), you can
+check for the <code>authentication</code> HTTP header and from there decide to intercept
+the request.</p>
+<p>It is also here where all HTTP requests are upgraded to HTTPS, by redirecting
+the request to a special page where a 307 redirect is responded with.</p>
 <h2 id="prepare"><a href="https://doc.kvarn.org/kvarn/macro.prepare.html">Prepare</a></h2>
 <ul>
 <li><input disabled="" type="checkbox" checked=""/>
-Optional. If the response contains a future (WebSockets), it’ll never cache.</li>
+Optional. If the response contains a future (WebSockets), it’ll never
+cache.</li>
 </ul>
-<p>You provide either a URI or a function of when to activate your code.
-Will still get all other extensions applied.</p>
+<p>You provide either a URI or a function of when to activate your code. Will still
+get all other extensions applied.</p>
 <blockquote>
-<p>The <code>path</code> variable you get here will be <code>None</code> if the <code>fs</code> feature of a <code>Host</code> isn’t enabled or percent decoding failed.
-Be sure to handle percent encoding when taking the <code>request.uri().path()</code>. Using the <code>path</code> handles this for you.</p>
+<p>The <code>path</code> variable you get here will be <code>None</code> if the <code>fs</code> feature of a
+<code>Host</code> isn’t enabled or percent decoding failed. Be sure to handle percent
+encoding when taking the <code>request.uri().path()</code>. Using the <code>path</code> handles this
+for you.</p>
 </blockquote>
-<p><strong>You have to handle all HTTP methods</strong>, as Kvarn passes all, except for <code>HEAD</code>, which it handles by simply omitting the body.
-<strong>If your <code>response-type</code> is something other than HTML, you must set the header.</strong></p>
+<p><strong>You have to handle all HTTP methods</strong>, as Kvarn passes all, except for <code>HEAD</code>,
+which it handles by simply omitting the body. <strong>If your <code>response-type</code> is
+something other than HTML, you must set the header.</strong></p>
 <p>It’s very useful for APIs (both REST and GraphQL!)</p>
-<p>Here, you could, for example, implement reading from the file system, like Kvarn does by default.</p>
+<p>Here, you could, for example, implement reading from the file system, like Kvarn
+does by default.</p>
 <h3 id="single"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_prepare_single">Single</a></h3>
 <p>These bind to a single page.</p>
 <h3 id="fn"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_prepare_fn">fn</a></h3>
@@ -84,18 +93,23 @@ Be sure to handle percent encoding when taking the <code>request.uri().path()</c
 <li><input disabled="" type="checkbox" checked=""/>
 Cached</li>
 </ul>
-<p>Here, files can opt in to extensions to manipulate data, such as the template system and <code>hide</code> extension.</p>
+<p>Here, files can opt in to extensions to manipulate data, such as the template
+system and <code>hide</code> extension.</p>
 <p>This type can modify most data in response and will be executed in series.</p>
 <p>Extensions can also attach to filetypes.</p>
 <h3 id="internal"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_internal">Internal</a></h3>
-<p>These are declared on the first line in a file, acording to the following syntax:</p>
-<pre style="background-color:#2d2d2d;"><code class="language-md"><span style="color:#d3d0c8;">!&gt; extension arg1 arg2 &amp;&gt; second-extension-name with these four arguments &amp;&gt; and-so-on
+<p>These are declared on the first line in a file, acording to the following
+syntax:</p>
+<pre style="background-color:#2d2d2d;"><code class="language-md"><span style="color:#d3d0c8;">!&gt; extension arg1 arg2 &amp;&gt; second-extension-name with these four arguments &amp;&gt;
+and-so-on
 
 My blog...
 </span></code></pre>
-<p>There can be arbitrarily many extensions. The are separated by <a href="https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html"><code>&amp;&gt;</code></a>.</p>
-<p>The first word (space-separated) is the extension name. The others are arguments. Extensions might not look for arguments, or error if any invalid input is given,
-just like applications.</p>
+<p>There can be arbitrarily many extensions. The are separated by
+<a href="https://doc.kvarn.org/kvarn_utils/extensions/constant.PRESENT_INTERNAL_AND.html"><code>&amp;&gt;</code></a>.</p>
+<p>The first word (space-separated) is the extension name. The others are
+arguments. Extensions might not look for arguments, or error if any invalid
+input is given, just like applications.</p>
 <p>You can naturally also give just one extension:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-md"><span style="color:#d3d0c8;">!&gt; nonce
 
@@ -103,31 +117,39 @@ My vlog...
 </span></code></pre>
 <p>When Kvarn serves the file, this line is removed.</p>
 <p>Extensions are processed left to right.</p>
-<p><a href="#file">File</a> extensions are processed after the internal ones. Keep in mind that some file extensions might read from the file system.
-Changes to the response isn’t written, so the changes will be lost.</p>
+<p><a href="#file">File</a> extensions are processed after the internal ones. Keep in mind
+that some file extensions might read from the file system. Changes to the
+response isn’t written, so the changes will be lost.</p>
 <h3 id="file"><a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.#method.add_present_file">File</a></h3>
 <p>These are set on a per filename basis.</p>
-<p><code>.php</code> files can be bound to be processed by <code>fastcgi</code>, as the <a href="https://doc.kvarn.org/kvarn_extensions/php/index."><code>kvarn-extensions</code> extension</a> does.</p>
+<p><code>.php</code> files can be bound to be processed by <code>fastcgi</code>, as the
+<a href="https://doc.kvarn.org/kvarn_extensions/php/index."><code>kvarn-extensions</code> extension</a>
+does.</p>
 <h2 id="package"><a href="https://doc.kvarn.org/kvarn/macro.package.html">Package</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
 </ul>
-<p>Here, you can define headers to add to the final response.
-These headers are not cached, but applied every time. You can therefore compare things like other headers and the version of the request.</p>
+<p>Here, you can define headers to add to the final response. These headers are not
+cached, but applied every time. You can therefore compare things like other
+headers and the version of the request.</p>
 <p>Cookies can be defined here, since they won’t be cached.</p>
 <h2 id="post"><a href="https://doc.kvarn.org/kvarn/macro.post.html">Post</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Not cached</li>
 </ul>
-<p>These extensions are called after all data are written to the user. This will almost exclusively be used for HTTP/2 push.</p>
-<p>Maybe, it can be used to sync data to a database after the request is written to not block it?</p>
+<p>These extensions are called after all data are written to the user. This will
+almost exclusively be used for HTTP/2 push.</p>
+<p>Maybe, it can be used to sync data to a database after the request is written to
+not block it?</p>
 <h1 id="writing-an-extension">Writing an extension</h1>
-<p>Using <a href="https://doc.kvarn.org/kvarn/index.html#macros">the macros</a> is recommended.</p>
-<p>You can however writing them manually.
-The adding methods of <a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html"><code>Extensions</code></a>
-expect a boxed struct which implements the <a href="https://doc.kvarn.org/kvarn/extensions/index.html#traits">appropriate <code>*Call</code> trait</a>.</p>
+<p>Using <a href="https://doc.kvarn.org/kvarn/index.html#macros">the macros</a> is
+recommended.</p>
+<p>You can however writing them manually. The adding methods of
+<a href="https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html"><code>Extensions</code></a>
+expect a boxed struct which implements the
+<a href="https://doc.kvarn.org/kvarn/extensions/index.html#traits">appropriate <code>*Call</code> trait</a>.</p>
 <pre style="background-color:#2d2d2d;"><code class="language-rust"><span style="color:#cc99cc;">use </span><span style="color:#d3d0c8;">kvarn::prelude::*;
 
 </span><span style="color:#cc99cc;">struct </span><span style="color:#d3d0c8;">Ext {
@@ -161,11 +183,14 @@ expect a boxed struct which implements the <a href="https://doc.kvarn.org/kvarn/
 extensions.</span><span style="color:#66cccc;">add_prepare_single</span><span style="color:#d3d0c8;">(&quot;</span><span style="color:#99cc99;">/index.html</span><span style="color:#d3d0c8;">&quot;, Box::new(ext));
 </span></code></pre><h1 id="example">Example</h1>
 <p>Let’s build one of each extension to see how they fit together.</p>
-<p>This example requires basic knowledge about Rust to be understood, but the general workflow should be clear.</p>
-<p>Note how we create extensions by calling <a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>.
-This does a lot under the hood.</p>
-<p>If any variables or names confuse you, copy the code and inspect it with your IDE (i.e. <code>rust-analyzer</code>).
-The macros are designed to cooperate with Rust tools to give the best possible feedback.</p>
+<p>This example requires basic knowledge about Rust to be understood, but the
+general workflow should be clear.</p>
+<p>Note how we create extensions by calling
+<a href="https://doc.kvarn.org/kvarn/#macros">their respective macros</a>. This does a lot
+under the hood.</p>
+<p>If any variables or names confuse you, copy the code and inspect it with your
+IDE (i.e. <code>rust-analyzer</code>). The macros are designed to cooperate with Rust tools
+to give the best possible feedback.</p>
 <p><code>Cargo.toml</code>:</p>
 <pre style="background-color:#2d2d2d;"><code class="language-javascript"><span style="color:#d3d0c8;">[</span><span style="color:#f2777a;">package</span><span style="color:#d3d0c8;">]
 </span><span style="color:#f2777a;">name </span><span style="color:#d3d0c8;">= &quot;</span><span style="color:#99cc99;">unicorn-backend</span><span style="color:#d3d0c8;">&quot;
