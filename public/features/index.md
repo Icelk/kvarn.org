@@ -59,15 +59,6 @@ any code.
 Kvarn passes the [h2spec test](https://github.com/summerwind/h2spec). If
 something doesn't work, it's the user agent not conforming.
 
-# [io_uring](/uring.)
-
-> Requires the feature `uring` (not `default`)
-
-Kvarn can be compiled to use
-[`io_uring`](https://en.wikipedia.org/wiki/io_uring), the hottest IO platform
-under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 & HTTP/2), and
-HTTP/3 (using a custom QUIC interop).
-
 ## [HTTP/2 Push](/push.)
 
 > Part of `kvarn_extensions` under the feature `push` (part of `default`)
@@ -78,6 +69,15 @@ with pushing to the client when it's already got the resource in a cache.
 
 Kvarn aims to solve this by making it simple to integrate, _not requiring any
 configuration_ and not sending the same resource twice to a client.
+
+# [io_uring](/uring.)
+
+> Requires the feature `uring` (not `default`)
+
+Kvarn can be compiled to use
+[`io_uring`](https://en.wikipedia.org/wiki/io_uring), the hottest IO platform
+under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 & HTTP/2), and
+HTTP/3 (using a custom QUIC interop).
 
 # [HTTPS](/https.)
 
