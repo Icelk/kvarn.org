@@ -65,6 +65,13 @@ intact.
 If you use `\${toc}`, Chute outputs a table of contents from the headings in
 your document.
 
+### Date
+
+Using `\${date}`, Chute injects the date when the conversion took place. You can
+specify a date time format (following
+[this spec](https://time-rs.github.io/book/api/format-description.html)) as such
+to customize the look: `\${date xxx-format-xxx}`.
+
 ### Escaping
 
 As you may have noticed, I was able to write `\${toc}` in the document. That's

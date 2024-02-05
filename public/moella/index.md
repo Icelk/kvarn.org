@@ -15,7 +15,7 @@
 
 Mölla (often written moella, pronounced /mœla/ (œ as in b**ir**d with a British
 accent)) is a binary that reads config file(s) and spinns up a Kvarn web server.
-It supports all the major Kvarn extensions and gives you most options Kvarn
+It supports all the major Kvarn extensions and presents most options Kvarn
 supports.
 
 Mölla can serve multiple hosts on a single server (with automatic
@@ -25,6 +25,14 @@ and load any changes made to the config (or run a new version of the binary),
 with 0 milliseconds of downtime.
 
 # Getting started
+
+## cargo install
+
+Moella is [available at crates.io](https://crates.io/crates/moella). You can
+install it using `cargo install moella`. Alternatively, you can download
+pre-built binaries:
+
+## Download binary
 
 Download the binary for your platform from
 [this page](https://github.com/Icelk/moella/releases).

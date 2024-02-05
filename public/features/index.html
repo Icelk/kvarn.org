@@ -38,7 +38,7 @@ extensions are available in
 </tbody></table>
 <h1 id="batteries-included-but-not-required">Batteries included, but not required</h1>
 <p>The Kvarn <a href="/ecosystem/">ecosystem</a> has extensions for many common website
-features.</p>
+features, all included in <a href="/moella/">Mölla</a>.</p>
 <ul>
 <li><a href="#automatic-certificates">Automatic HTTPS certificates</a>: Kvarn handles your
 certificates for you—no need to renew or use <code>certbot</code> to get certificates.</li>
@@ -61,7 +61,7 @@ defaults, which optimize security; speed; and help mitigate DOS attacks.</p>
 <p>Using a modern transport protocol, QUIC, enables HTTP/3 to be what HTTP/2 aimed
 to be: fault-tolerant and massively parallel. Add way faster handshakes on top
 on that, and HTTP/3 is groundbreaking. You can naturally
-<a href="cargo-features.">disable</a> the feature.</p>
+<a href="/cargo-features.">disable</a> the feature.</p>
 <h1 id="http2"><a href="/http2.">HTTP/2</a></h1>
 <blockquote>
 <p>Requires the feature <code>http2</code> (part of <code>default</code> and <code>full</code>)</p>
@@ -87,7 +87,7 @@ configuration</em> and not sending the same resource twice to a client.</p>
 <p>Kvarn can be compiled to use
 <a href="https://en.wikipedia.org/wiki/io_uring"><code>io_uring</code></a>, the hottest IO platform
 under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 &amp; HTTP/2), and
-HTTP/3 (using a custom QUIC interop).</p>
+HTTP/3 (using a custom, first-of-a-kind QUIC interop).</p>
 <h1 id="https"><a href="/https.">HTTPS</a></h1>
 <blockquote>
 <p>Requires the feature <code>https</code> (part of <code>default</code> and <code>full</code>)</p>

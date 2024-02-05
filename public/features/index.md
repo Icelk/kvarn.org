@@ -21,7 +21,7 @@ ${toc}
 # Batteries included, but not required
 
 The Kvarn [ecosystem](/ecosystem/) has extensions for many common website
-features.
+features, all included in [Mölla](/moella/).
 
 -   [Automatic HTTPS certificates](#automatic-certificates): Kvarn handles your
     certificates for you—no need to renew or use `certbot` to get certificates.
@@ -46,7 +46,7 @@ defaults, which optimize security; speed; and help mitigate DOS attacks.
 Using a modern transport protocol, QUIC, enables HTTP/3 to be what HTTP/2 aimed
 to be: fault-tolerant and massively parallel. Add way faster handshakes on top
 on that, and HTTP/3 is groundbreaking. You can naturally
-[disable](cargo-features.) the feature.
+[disable](/cargo-features.) the feature.
 
 # [HTTP/2](/http2.)
 
@@ -77,7 +77,7 @@ configuration_ and not sending the same resource twice to a client.
 Kvarn can be compiled to use
 [`io_uring`](https://en.wikipedia.org/wiki/io_uring), the hottest IO platform
 under Linux. io_uring can be used with both HTTP over TCP (HTTP/1 & HTTP/2), and
-HTTP/3 (using a custom QUIC interop).
+HTTP/3 (using a custom, first-of-a-kind QUIC interop).
 
 # [HTTPS](/https.)
 

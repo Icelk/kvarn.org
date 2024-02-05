@@ -135,9 +135,9 @@ $[close-head]$[navigation]
     </p>
     <p>
         Kvarn is batteries-included (optional defaults) with support for
-        <b>automatic HTTPS certificates</b>, HTTP/3, io_uring everywhere,
-        reverse proxying, auto <b>HTTP/2 push</b>, in-memory caching (proper
-        cache invalidation), server communication through
+        <b>automatic HTTPS certificates</b>, <b>HTTP/3</b>, io_uring everywhere,
+        reverse proxying, auto HTTP/2 push, in-memory caching (proper cache
+        invalidation), server communication provided by
         <a href="https://github.com/Icelk/kvarn/tree/main/ctl/">a simple CLI</a
         >, and easy website creation through Markdown and
         <a href="https://github.com/Icelk/kvarn/tree/main/chute/">Chute</a>.
@@ -160,12 +160,12 @@ $[close-head]$[navigation]
 
     <p>
         We recommend using <a href="/chute/">Kvarn Chute</a> for writing
-        documents. It allows you to use Markdown on web pages. It utilizes
-        <a href="/templates.">Kvarn templates</a>
-        for integration with headers and footers.
+        documents. It allows you to use Markdown on web pages. Providing
+        automatic table of contents, date widgets, and other features, it's a
+        convenient way to write text documents without limiting HTML use.
     </p>
 
-    <h2>Using Kvarn as a library</h2>
+    <h2>Using Kvarn as a development library (advanced)</h2>
     <p>
         Kvarn is programmed using <a href="https://rust-lang.org">Rust</a>.
         You'll need to
@@ -274,10 +274,12 @@ async fn main() {
     <p>
         Kvarn's performance is within margin of error of
         <a href="https://github.com/iron/iron#performance">Iron's</a>, while
-        being easier to work with, comes with
-        <a href="/features/">more, integrated features out of the box</a>, and
-        is more agile.
-        <br />
+        being easier to work with, brings more to the table with
+        <a href="/features/"
+            >a robust set of integrated features out of the box</a
+        >, all while being more agile.
+    </p>
+    <p>
         Kvarn also features zero-downtime upgrades without any config - just
         push a new binary to the server and run
         <code>kvarnctl reload</code>.
@@ -286,23 +288,25 @@ async fn main() {
     <h1 id="applications">Applications</h1>
     <p>
         Kvarn can be used for anything ranging from large-scale websites in need
-        of throughput and availability, to personal websites with the ability to
-        host unlimited domains from one IP, to IOT devices, like the Raspberry
-        Pi.
+        of massive throughput and availability, to personal websites with the
+        ability to host unlimited domains from one IP, to IOT devices, like the
+        Raspberry Pi or even ESP32.
     </p>
     <p>
-        All features are configurable; if you want the latest HTTP and Web
-        features, you can enable those features at compile-time. Of you on the
-        other hand run Kvarn as a web interface for a local device and don't
-        need security or the latest features, but require compile-time and only
-        have spare resources, you can disable those features, not compiling in
+        All features are optional; if you want the latest HTTP and Web features,
+        you can enable those features at
+        <a href="/cargo-features.">compile-time</a>. If you on the other hand
+        run Kvarn as a web interface for a local device and don't need security
+        or the latest features, but rather prioritize fast compile-time with
+        minimal resources, you can disable those features, not compiling in
         HTTPS or HTTP/2 support.
     </p>
     <p>
-        The extension system allows for easy creation of APIs and can interact
-        with the host machine asynchronously. It can access databases, change
-        the GPIO pins, or anything else a program can do. When disabling
-        features, no APIs change. You always get the same developer experience.
+        The extension system allows for simple creation of APIs that can
+        interact with the host machine asynchronously. You can access databases,
+        change GPIO pins, or anything else a program can do, synchronously or
+        asynchronously. When disabling build-time features, no APIs change. You
+        always get the same developer experience.
     </p>
 
     <h1 id="license">License</h1>
