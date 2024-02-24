@@ -70,7 +70,10 @@ const initTopBar = () => {
                     if (e.metaKey || e.ctrlKey) {
                         return
                     }
-                    document.documentElement.scrollTo({ top: 0, behavior: "smooth" })
+                    document.documentElement.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    })
                     e.preventDefault()
                 })
                 return
@@ -110,7 +113,10 @@ const initCopyHeading = () => {
         return
     }
 
-    let queryString = content === "not-titles" ? "h2, h3, h4, h5, h6" : "h1, h2, h3, h4, h5, h6"
+    let queryString =
+        content === "not-titles"
+            ? "h2, h3, h4, h5, h6"
+            : "h1, h2, h3, h4, h5, h6"
 
     document.querySelectorAll(queryString).forEach((heading) => {
         let id = heading.getAttribute("id")
@@ -138,6 +144,7 @@ initTopBar()
 initSmoothScrolling()
 initCopyHeading()
 
+let wordMatcher = /[\p{L}\p{N}]*/u
 /**
  * @param {string | { path: string, rating: number, occurrences: { start: number, ctx_byte_idx: number, ctx_char_idx: number, ctx: string }[] }[] } output
  */
@@ -147,7 +154,11 @@ function setSearchOutput(output) {
      * @returns {string}
      */
     function text(s) {
-        return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+        return s
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
     }
     if (typeof output == "string") {
         if (output.length === 0) {
@@ -159,21 +170,33 @@ function setSearchOutput(output) {
         searchOutput.innerHTML = ""
         output.forEach((value, index) => {
             const occurrence = value.occurrences[0]
-            const keywordRaw = occurrence.ctx.substring(occurrence.ctx_char_idx).match(/[a-zA-Z0-9]*/)[0]
+            const keywordRaw = occurrence.ctx
+                .substring(occurrence.ctx_char_idx)
+                .match(wordMatcher)[0]
             const keyword = text(keywordRaw)
             const pre = occurrence.ctx.substring(0, occurrence.ctx_char_idx)
-            const post = occurrence.ctx.substring(occurrence.ctx_char_idx + keywordRaw.length)
+            const post = occurrence.ctx.substring(
+                occurrence.ctx_char_idx + keywordRaw.length,
+            )
             const context = `... ${pre}<b>${keyword}</b>${post} ...`
             const span = document.createElement("span")
             if (value.path.endsWith("index.html")) {
-                value.path = value.path.substring(0, value.path.length - "index.html".length)
+                value.path = value.path.substring(
+                    0,
+                    value.path.length - "index.html".length,
+                )
             }
             if (value.path.endsWith(".html")) {
-                value.path = value.path.substring(0, value.path.length - "html".length)
+                value.path = value.path.substring(
+                    0,
+                    value.path.length - "html".length,
+                )
             }
             span.innerHTML = `<a class="uri">${value.path}</a>${context}`
             span.tabIndex = -1
-            span.addEventListener("click", (e) => to(value.path, e.metaKey || e.ctrlKey))
+            span.addEventListener("click", (e) =>
+                to(value.path, e.metaKey || e.ctrlKey),
+            )
             searchOutput.appendChild(span)
         })
     }
@@ -190,7 +213,10 @@ function search(query) {
                     return
                 }
                 let errorMessage = response.headers.get("reason")
-                errorMessage = errorMessage === undefined ? "Server error" : `Query error: ${errorMessage}`
+                errorMessage =
+                    errorMessage === undefined
+                        ? "Server error"
+                        : `Query error: ${errorMessage}`
                 setSearchOutput(errorMessage)
             } else {
                 const json = await response.json()
@@ -259,7 +285,11 @@ if (logo !== null) {
         logo.outerHTML = data
         // @ts-ignore
         logo = logo_container.firstElementChild
-        logo.setAttributeNS(null, "viewBox", `64 ${64 * (1 - 0.125 * 2)} 128 ${128 * 1.125}`)
+        logo.setAttributeNS(
+            null,
+            "viewBox",
+            `64 ${64 * (1 - 0.125 * 2)} 128 ${128 * 1.125}`,
+        )
         logo.id = "main-logo"
         let style = document.createElement("style")
         style.innerText =
