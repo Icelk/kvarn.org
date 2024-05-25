@@ -8,9 +8,7 @@
         ],
         "kvarn-doc": [
             Redirect(Exact("/index.html"), "kvarn/"),
-            Csp({
-                "/*": FromDefault({ img_src: [ Uri("https://kvarn.org") ] }),
-            }),
+            Csp({ "/*": Empty }),
         ]
     },
     hosts: [

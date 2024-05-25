@@ -325,7 +325,7 @@ cause production to go offline.
 > has shown. ಠ_ಠ
 
 -   Compression automatically applied to the response. This handles negotiating
-    the algorithm. Brotli and Gzip support.
+    the algorithm. Zstd, Brotli, and Gzip support.
 -   [CSP](../csp.) support.
 -   Extremely simple to use [nonce](../nonce.) support.
 -   If-Modified-Since for more effective caching. This is directly integrated

@@ -45,6 +45,8 @@ After the response has been sent, Post extensions are resolved.
 All outgoing data from this layer is cached based on the output of
 [layer 5](#layer-5--pathing).
 
+> The new Zstd compression is supported.
+
 Rules can be created to get hits from other pages (the Prime extensions) when
 accessing a page; server-side redirecting, above the caching level.
 

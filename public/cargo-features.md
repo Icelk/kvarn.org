@@ -51,6 +51,11 @@ Please always enable `base` (see below for more details).
     This is strongly recommended as it's considerably faster and less resource
     intensive than HTTP/1.1, which is always supported. This also reduces
     latency due to implementation details.
+-   `zstd`: [Zstd compression](https://en.wikipedia.org/wiki/Zstd)
+-   `zstd-multithread`: utilize multithreading when compressing with zstd.
+    Unknown if this helps; the overhead of transferring between threads will
+    make it slower when many requests are handled. If a site has low traffic and
+    a slow processor and is serving large files, this may help.
 -   `br`: [Brotli compression](https://en.wikipedia.org/wiki/Brotli)
 -   `gzip`: [Gzip compression](https://en.wikipedia.org/wiki/Gzip#File_format)
 -   [`graceful-shutdown`](/shutdown-handover.): Enables
