@@ -344,12 +344,12 @@ KvarnConfig (
                 // If you set this to `.`, make sure no certificates are exposed at `path`!
                 public_data_dir: "public",
                 // limit the number of requests from an IP
-                limiter: Limit ({
+                limiter: Limit (
                     // all of these are required
                     max_requests_per_interval: 10,
                     interval: 10.3,
                     check_one_in_n_requests: 10,
-                }),
+                ),
                 // Disable limiter
                 limiter: AllowAll,
             ),
