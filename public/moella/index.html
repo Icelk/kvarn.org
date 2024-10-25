@@ -93,6 +93,7 @@ have to run <code>sudo</code> to get access to port 80 on Linux.</p>
 </span><span style="color:#d3d0c8;">    extensions: {
         </span><span style="color:#747369;">// define sets of extensions, and then add one or more sets of extensions to hosts
         // several of the same extension can be used (if they don't override the previous)
+        // the name is arbitrary and is just used as a name
         </span><span style="color:#d3d0c8;">&quot;</span><span style="color:#99cc99;">icelk</span><span style="color:#d3d0c8;">&quot;: [
             </span><span style="color:#747369;">// don't add the default extensions: https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.new
 </span><span style="color:#d3d0c8;">            NoDefaults,
@@ -216,8 +217,10 @@ have to run <code>sudo</code> to get access to port 80 on Linux.</p>
                 // The part of the website to capture
 </span><span style="color:#d3d0c8;">                route: &quot;</span><span style="color:#99cc99;">/private-ical/</span><span style="color:#d3d0c8;">&quot;,
                 </span><span style="color:#747369;">// required
-                // connection to backend server. Assumes HTTP/1.1 without TLS
-</span><span style="color:#d3d0c8;">                connection: &quot;</span><span style="color:#99cc99;">tcp://localhost:5232</span><span style="color:#d3d0c8;">&quot;,
+                // connection to backend server. Assumes HTTP/1.1 without TLS.
+                // tcp: is an alias to http:
+                // udp: and unix: can also be used, but they also use HTTP, but over a different transport
+</span><span style="color:#d3d0c8;">                connection: &quot;</span><span style="color:#99cc99;">http://localhost:5232</span><span style="color:#d3d0c8;">&quot;,
                 </span><span style="color:#747369;">// in seconds, decimals are allowed
 </span><span style="color:#d3d0c8;">                timeout: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
                 options: [
@@ -315,9 +318,15 @@ have to run <code>sudo</code> to get access to port 80 on Linux.</p>
                 disable_response_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
                 disable_server_cache: </span><span style="color:#f99157;">false</span><span style="color:#d3d0c8;">,
                 </span><span style="color:#747369;">// compresson level
-</span><span style="color:#d3d0c8;">                brotli_level: </span><span style="color:#f99157;">7</span><span style="color:#d3d0c8;">,
+                // the actual defaults are listed here
+</span><span style="color:#d3d0c8;">                brotli_level: </span><span style="color:#f99157;">4</span><span style="color:#d3d0c8;">,
                 </span><span style="color:#747369;">// compresson level
-</span><span style="color:#d3d0c8;">                gzip_level: </span><span style="color:#f99157;">7</span><span style="color:#d3d0c8;">,
+</span><span style="color:#d3d0c8;">                gzip_level: </span><span style="color:#f99157;">2</span><span style="color:#d3d0c8;">,
+                zstd_level: </span><span style="color:#f99157;">4</span><span style="color:#d3d0c8;">,
+                </span><span style="color:#747369;">// compresson level for when the response isn't cached
+</span><span style="color:#d3d0c8;">                brotli_oneshot_level: </span><span style="color:#f99157;">3</span><span style="color:#d3d0c8;">,
+                gzip_oneshot_level: </span><span style="color:#f99157;">1</span><span style="color:#d3d0c8;">,
+                zstd_oneshot_level: </span><span style="color:#f99157;">1</span><span style="color:#d3d0c8;">,
                 </span><span style="color:#747369;">// Tell browsers to only use HTTPS when connecting to us.
                 // Use with care, since setting this will disallow browsers
                 // from connecting to your website via HTTP for the next two years!
@@ -332,12 +341,12 @@ have to run <code>sudo</code> to get access to port 80 on Linux.</p>
                 // If you set this to `.`, make sure no certificates are exposed at `path`!
 </span><span style="color:#d3d0c8;">                public_data_dir: &quot;</span><span style="color:#99cc99;">public</span><span style="color:#d3d0c8;">&quot;,
                 </span><span style="color:#747369;">// limit the number of requests from an IP
-</span><span style="color:#d3d0c8;">                limiter: Limit ({
+</span><span style="color:#d3d0c8;">                limiter: Limit (
                     </span><span style="color:#747369;">// all of these are required
 </span><span style="color:#d3d0c8;">                    max_requests_per_interval: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
                     interval: </span><span style="color:#f99157;">10.3</span><span style="color:#d3d0c8;">,
                     check_one_in_n_requests: </span><span style="color:#f99157;">10</span><span style="color:#d3d0c8;">,
-                }),
+                ),
                 </span><span style="color:#747369;">// Disable limiter
 </span><span style="color:#d3d0c8;">                limiter: AllowAll,
             ),

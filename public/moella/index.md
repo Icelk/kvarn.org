@@ -105,6 +105,7 @@ KvarnConfig (
     extensions: {
         // define sets of extensions, and then add one or more sets of extensions to hosts
         // several of the same extension can be used (if they don't override the previous)
+        // the name is arbitrary and is just used as a name
         "icelk": [
             // don't add the default extensions: https://doc.kvarn.org/kvarn/extensions/struct.Extensions.html#method.new
             NoDefaults,
@@ -228,8 +229,10 @@ KvarnConfig (
                 // The part of the website to capture
                 route: "/private-ical/",
                 // required
-                // connection to backend server. Assumes HTTP/1.1 without TLS
-                connection: "tcp://localhost:5232",
+                // connection to backend server. Assumes HTTP/1.1 without TLS.
+                // tcp: is an alias to http:
+                // udp: and unix: can also be used, but they also use HTTP, but over a different transport
+                connection: "http://localhost:5232",
                 // in seconds, decimals are allowed
                 timeout: 10,
                 options: [
@@ -327,9 +330,15 @@ KvarnConfig (
                 disable_response_cache: false,
                 disable_server_cache: false,
                 // compresson level
-                brotli_level: 7,
+                // the actual defaults are listed here
+                brotli_level: 4,
                 // compresson level
-                gzip_level: 7,
+                gzip_level: 2,
+                zstd_level: 4,
+                // compresson level for when the response isn't cached
+                brotli_oneshot_level: 3,
+                gzip_oneshot_level: 1,
+                zstd_oneshot_level: 1,
                 // Tell browsers to only use HTTPS when connecting to us.
                 // Use with care, since setting this will disallow browsers
                 // from connecting to your website via HTTP for the next two years!
