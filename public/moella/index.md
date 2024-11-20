@@ -351,7 +351,7 @@ KvarnConfig (
                 extension_default: "html",
                 // The directory to serve files from.
                 // If you set this to `.`, make sure no certificates are exposed at `path`!
-                public_data_dir: "public",
+                public_data_directory: "public",
                 // limit the number of requests from an IP
                 limiter: Limit (
                     // all of these are required
