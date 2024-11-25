@@ -125,10 +125,18 @@ have to run <code>sudo</code> to get access to port 80 on Linux.</p>
 </span><span style="color:#d3d0c8;">                check_every_request: </span><span style="color:#f99157;">8</span><span style="color:#d3d0c8;">,
             ),
 
+            </span><span style="color:#747369;">// Mount component only when running in dev mode
+            // Same as `If({predicate: Dev, extension: ...})`
+</span><span style="color:#d3d0c8;">            Dev(Cors({ &quot;</span><span style="color:#99cc99;">/*</span><span style="color:#d3d0c8;">&quot;: { origins: [&quot;</span><span style="color:#99cc99;">http://localhost:5173</span><span style="color:#d3d0c8;">&quot;], methods: [</span><span style="color:#f99157;">ALL</span><span style="color:#d3d0c8;">] } })),
+            </span><span style="color:#747369;">// Mount component only when running in production mode
+            // Same as `If({predicate: Prod, extension: ...})`
+</span><span style="color:#d3d0c8;">            Prod(CorsSafe),
             </span><span style="color:#747369;">// Only runs if predicate is true
 </span><span style="color:#d3d0c8;">            If (
                 </span><span style="color:#747369;">// required
                 // predicate can also be Not(a), And ([a,b,c,..]), and Or ([a,b,c,..])
+                // Dev can also be used, which is enabled when the --dev flag is present
+                // Prod in a similar vein is enabled only in production, synonymous with Not(Dev).
 </span><span style="color:#d3d0c8;">                predicate: Exists(&quot;</span><span style="color:#99cc99;">../php/cgi-bin</span><span style="color:#d3d0c8;">&quot;),
                 </span><span style="color:#747369;">// required
                 // can be any other extension

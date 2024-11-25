@@ -137,10 +137,18 @@ KvarnConfig (
                 check_every_request: 8,
             ),
 
+            // Mount component only when running in dev mode
+            // Same as `If({predicate: Dev, extension: ...})`
+            Dev(Cors({ "/*": { origins: ["http://localhost:5173"], methods: [ALL] } })),
+            // Mount component only when running in production mode
+            // Same as `If({predicate: Prod, extension: ...})`
+            Prod(CorsSafe),
             // Only runs if predicate is true
             If (
                 // required
                 // predicate can also be Not(a), And ([a,b,c,..]), and Or ([a,b,c,..])
+                // Dev can also be used, which is enabled when the --dev flag is present
+                // Prod in a similar vein is enabled only in production, synonymous with Not(Dev).
                 predicate: Exists("../php/cgi-bin"),
                 // required
                 // can be any other extension
